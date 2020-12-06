@@ -1,4 +1,4 @@
-package org.launchcode.helloworld;
+package org.launchcode.brewpub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

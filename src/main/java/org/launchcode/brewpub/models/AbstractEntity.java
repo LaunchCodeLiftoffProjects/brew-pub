@@ -1,4 +1,4 @@
-package org.launchcode.helloworld.models;
+package org.launchcode.brewpub.models;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
