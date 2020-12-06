@@ -10,14 +10,14 @@ import javax.validation.constraints.Size;
 @Entity
 public class Review extends AbstractEntity{
 
-    @ManyToOne
-    private User user;
-
-    @ManyToOne
-    private Pub pub;
-
-    @ManyToOne
-    private Brew brew;
+//    @ManyToOne
+//    private User user;
+//
+//    @ManyToOne
+//    private Pub pub;
+//
+//    @ManyToOne
+//    private Brew brew;
 
     @NotBlank(message = "Title must not be blank")
     @Size(min = 3, max = 80, message = "Title must be between 3 and 80 characters")
@@ -60,17 +60,17 @@ public class Review extends AbstractEntity{
     }
 
 
-    public User getUser() {
-        return user;
-    }
-
-    public Pub getPub() {
-        return pub;
-    }
-
-    public Brew getBrew() {
-        return brew;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public Pub getPub() {
+//        return pub;
+//    }
+//
+//    public Brew getBrew() {
+//        return brew;
+//    }
 
 
 }

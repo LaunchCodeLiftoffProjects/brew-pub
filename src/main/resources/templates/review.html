@@ -10,7 +10,7 @@
 <div class="container body-content">
     <h1 th:text="${brewpub}">brew-pub-name</h1>
 
-    <form th:action="@{/rate}" method="post">
+    <form th:action="@{/review}" method="post">
         <p>
             <h2>Title of Review</h2>
             <input type="text" size="58" name="reviewTitle" placeholder="Enter review title..." required>
