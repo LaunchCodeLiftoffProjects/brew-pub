@@ -8,34 +8,49 @@
 
 
 <div class="container body-content">
+
     <h1 th:text="${brewpub}">brew-pub-name</h1>
 
     <form th:action="@{/review}" method="post">
-        <p>
-            <h2>Title of Review</h2>
-            <input type="text" size="58" name="reviewTitle" placeholder="Enter review title..." required>
 
-            <h2>Rating</h2>
-            <select name="rating" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+        <div class="form-group">
+            <label>Title of Review</label>
+            <input class="form-control"
+                   placeholder="Enter review title..."
+                   th:field="${review.reviewTitle}"/>
+            <span th:errors="${review.reviewTitle}"
+                                          class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Rating</label>
+            <span th:errors="${review.rating}"
+                  class="error"></span>
+            <select class="form-control" th:field="${review.rating}">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+                <option value=6>6</option>
+                <option value=7>7</option>
+                <option value=8>8</option>
+                <option value=9>9</option>
+                <option value=10>10</option>
             </select>
+        </div>
 
-            <h2>Review</h2>
-            <textarea rows="4" cols="60" name="reviewField" placeholder="Enter review here... (Optional)"></textarea>
-        </p>
-        <p>
-            <input type="submit">
-            <button type="button"><a th:href="@{/}">Cancel</a> </button>
-        </p>
+        <div class="form-group">
+            <label>Review</label>
+            <span th:errors="${review.reviewText}"
+                  class="errors"></span>
+            <textarea class="form-control" th:field="${review.reviewText}"
+                      placeholder="Enter review here... (Optional)"></textarea>
+        </div>
+
+        <input type="submit">
+        <button type="button"><a th:href="@{/}">Cancel</a> </button>
+
     </form>
 
 </div>
