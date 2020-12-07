@@ -29,6 +29,16 @@ public class Review extends AbstractEntity{
     @NotEmpty(message = "Must select rating between 1 and 10")
     private int rating;
 
+    // Constructors
+
+    public Review() {
+    }
+
+    public Review(String reviewTitle, String review, int rating) {
+        this.reviewTitle = reviewTitle;
+        this.review = review;
+        this.rating = rating;
+    }
 
     // Getters / Setters
 
