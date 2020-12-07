@@ -7,50 +7,64 @@
 <div class="container body-content">
 
     <h1>Create Account</h1>
-        <form th:action="@{/createAccount}" method="post">
+        <form th:action="@{/createAccount}" onsubmit="return validateForm()" method="post" required>
+            <p>
+                <label>First Name</label>
+                <input type="text" placeholder="Enter First Name" name="firstName" required>
+            </p>
 
-        <p>
-            <label>First name</label>
-            <input type = "text"
-               id = "firstName"
-               value = "First name" />
+            <p>
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter Last Name" name="lastName" required>
+            </p>
 
-        </p>
+            <p>
+                <label>Email</label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+            </p>
 
-        <p>
-            <label>Last name</label>
-            <input type = "text"
-            id = "lastName"
-            value = "Last name" />
-        </p>
+            <p>
+                <label>Username</label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+            </p>
 
-        <p>
-            <label>Email</label>
-            <input type = "text"
-                   id = "email"
-                   value = "Email" />
-        </p>
+            <p>
+                <label>Password</label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+            </p>
 
-        <p>
-            <label>Username</label>
-            <input type = "text"
-                   id = "username"
-                   value = "Username" />
-        </p>
+            <p>
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+            </p>
 
-        <p>
-            <label>Password</label>
-            <input type = "password"
-            id = "myPassword"
-            value = "secret" />
-        </p>
+            <p>
+                <label for="birth-date">Birthdate:</label>
+                <input type="date" id="birth-date" name="birth_date" />
+            </p>
 
-        <p>
-            <label>Verify Password</label>
-            <input type = "password"
-            id = "verifyPassword"
-            value = "secret" />
-        </p>
+            <p>
+                <form action="">
+                    <input type="radio" name="gender" value="male"> Male<br>
+                    <input type="radio" name="gender" value="female"> Female<br>
+                    <input type="radio" name="gender" value="other"> Prefer not to answer
+                </form>
+            </p>
+
+            <p>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+                </label>
+            </p>
+
+            <p>
+                By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
+            </p>
+
+            <div class="clearfix">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Sign Up</button>
+            </div>
     </form>
 </div>
 </body>
