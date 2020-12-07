@@ -26,6 +26,7 @@ public class ReviewController {
 //                                , @PathVariable int pubId
                                 ) {
         // TODO: pass-in brew-pub info to model using pubId
+        // TODO: pass-in userId using session ID and session cookie to look up
         model.addAttribute("title", "Review");
         model.addAttribute("brewpub", "name-of-a-brewpub");
 
