@@ -19,7 +19,7 @@
                    placeholder="Enter review title..."
                    th:field="${review.reviewTitle}"/>
             <span th:errors="${review.reviewTitle}"
-                                          class="error"></span>
+                  class="error"></span>
         </div>
 
         <div class="form-group">
@@ -49,6 +49,8 @@
         </div>
 
         <input type="submit">
+
+<!--        TODO: CANCEL returns user to brew-pub info page-->
         <button type="button"><a th:href="@{/}">Cancel</a> </button>
 
     </form>

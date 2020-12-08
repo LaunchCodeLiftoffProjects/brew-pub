@@ -12,16 +12,20 @@ public class Review extends AbstractEntity{
 //    @ManyToOne
 //    private User user;
 //
+//    TODO: Create Subclass for brewReview and pubReview ?
+//
 //    @ManyToOne
 //    private Pub pub;
 //
 //    @ManyToOne
 //    private Brew brew;
 
+    // TODO: make optional
     @NotBlank(message = "Title must not be blank")
     @Size(min = 3, max = 80, message = "Title must be between 3 and 80 characters")
     private String reviewTitle;
 
+    // Optional
     @Column(columnDefinition = "TEXT")
     @Size(max = 800, message = "Review cannot be longer than 800 characters")
     private String reviewText;
@@ -72,6 +76,8 @@ public class Review extends AbstractEntity{
 //    public User getUser() {
 //        return user;
 //    }
+//
+//    TODO: Create Subclass for brewReview and pubReview ?
 //
 //    public Pub getPub() {
 //        return pub;
