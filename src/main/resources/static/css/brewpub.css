@@ -9,3 +9,7 @@ h1 {
 body {
     background-color: gray;
 }
+
+.body-content {
+    margin-top: 72px;
+}

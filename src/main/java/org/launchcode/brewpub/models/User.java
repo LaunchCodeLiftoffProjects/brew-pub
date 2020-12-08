@@ -1,4 +1,4 @@
-package org.launchcode.helloworld;
+package org.launchcode.brewpub.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
