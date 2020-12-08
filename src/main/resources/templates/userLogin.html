@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+<link th:href="@{/css/helloWorld.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+<head th:replace="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: page-header"></div>
+<div>
+    <form method="post">
+        <div class="form-group">
+            <p>
+            <h2>Login</h2>
+            </p>
+        </div>
+        <div class="form-group">
+            <label>Email
+                <input class="form-control" field="">
+            </label>
+            <p class="error" errors=""></p>
+        </div>
+        <div class="form-group">
+            <label>Password
+                <input class="form-control" field="" type="password">
+            </label>
+            <p class="error" errors=""></p>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Log In" />
+    </form>
+
+    <p> <a href="/forgotPassword">Forgot password?</a><a</p>
+    <p><a href="/register">Register</a></p>
+</div>
+</body>
+</html>
