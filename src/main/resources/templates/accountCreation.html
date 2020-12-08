@@ -4,7 +4,7 @@
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-<div class="container body-content">
+
 
     <h1>Create Account</h1>
         <form th:action="@{/createAccount}" onsubmit="return validateForm()" method="post" required>
@@ -30,12 +30,12 @@
 
             <p>
                 <label>Password</label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <input type="password" placeholder="Enter Password" name="password" required>
             </p>
 
             <p>
                 <label>Confirm Password</label>
-                <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                <input type="password" placeholder="Repeat Password" name="passwordVerify" required>
             </p>
 
             <p>
@@ -44,6 +44,8 @@
             </p>
 
             <p>
+                <label> Gender: </label>
+            <br>
                 <form action="">
                     <input type="radio" name="gender" value="male"> Male<br>
                     <input type="radio" name="gender" value="female"> Female<br>
