@@ -12,10 +12,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("review")
 public class ReviewController {
 
     @Autowired
@@ -27,7 +29,7 @@ public class ReviewController {
 
     // Pub Review
 
-    @GetMapping("/review/pub"
+    @GetMapping("pub"
 //            + "/{pubId}"
     )
     public String viewPubReviewForm(Model model
@@ -42,7 +44,7 @@ public class ReviewController {
         return "reviews/reviewPub";
     }
 
-    @PostMapping("/review/pub")
+    @PostMapping("pub")
     public String processPubReviewForm(@ModelAttribute @Valid PubReview newPubReview,
                                     Errors errors,
                                     Model model) {
@@ -65,7 +67,7 @@ public class ReviewController {
 
     // Brew Review
 
-    @GetMapping("/review/brew"
+    @GetMapping("brew"
 //            + "/{brewId}"
     )
     public String viewBrewReviewForm(Model model
@@ -80,7 +82,7 @@ public class ReviewController {
         return "reviews/reviewBrew";
     }
 
-    @PostMapping("/review/brew")
+    @PostMapping("brew")
     public String processBrewReviewForm(@ModelAttribute @Valid BrewReview newBrewReview,
                                     Errors errors,
                                     Model model) {
