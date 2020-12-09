@@ -1,4 +1,4 @@
-package org.launchcode.helloworld.controllers;
+package org.launchcode.brewpub.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
