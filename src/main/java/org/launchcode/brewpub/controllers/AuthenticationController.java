@@ -62,12 +62,19 @@ public class AuthenticationController {
             return "createAccount";
         }
 
-        User existingUser = userRepository.findByUsername(createAccountDTO.getUsername());
+        User existingUsername = userRepository.findByUsername(createAccountDTO.getUsername());
+        User existingEmail = userRepository.findByEmail(createAccountDTO.getEmail());
 
-        if (existingUser != null) {
+        if (existingUsername != null) {
             errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
             model.addAttribute("title", "createAccount");
             return "createAccount";
+        }
+
+        if (existingEmail != null) {
+            errors.rejectValue("email", "email.alreadyexists", "A user with that email already exists");
+            model.addAttribute("title", "createAccount");
+            return "accountCreation";
         }
 
         String password = createAccountDTO.getPassword();
