@@ -49,7 +49,7 @@ public class AuthenticationController {
     public String displayCreateAccountForm(Model model) {
         model.addAttribute(new CreateAccountDTO());
         model.addAttribute("title", "createAccount");
-        return "accountCreation";
+        return "/createAccount";
     }
     @PostMapping("/createAccount")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
@@ -59,7 +59,7 @@ public class AuthenticationController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "createAccount");
             model.addAttribute("errors", errors);
-            return "accountCreation";
+            return "createAccount";
         }
 
         User existingUser = userRepository.findByUsername(createAccountDTO.getUsername());
@@ -67,7 +67,7 @@ public class AuthenticationController {
         if (existingUser != null) {
             errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         String password = createAccountDTO.getPassword();
@@ -75,7 +75,7 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         User newUser = new User(createAccountDTO.getFirstName(),createAccountDTO.getLastName(), createAccountDTO.getEmail(), createAccountDTO.getUsername(), createAccountDTO.getPassword());
