@@ -7,61 +7,60 @@
 
 
     <h1>Create Account</h1>
-        <form th:action="@{/createAccount}" onsubmit="return validateForm()" method="post" required>
-            <p>
-                <label>First Name</label>
-                <input type="text" placeholder="Enter First Name" name="firstName" required>
-            </p>
+        <form th:action="@{/createAccount}" method="post">
+            <div class="form-group">
 
-            <p>
-                <label>Last Name</label>
-                <input type="text" placeholder="Enter Last Name" name="lastName" required>
-            </p>
+            <label>First Name</label>
+                <input placeholder="Enter First Name"
+                       th:field="${createAccountDTO.firstName}"/>
+                <span th:errors="${createAccountDTO.firstName}"
+                      class="error"></span>
+            </div>
 
-            <p>
-                <label>Email</label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-            </p>
+            <div class="form-group">
 
-            <p>
-                <label>Username</label>
-                <input type="text" placeholder="Enter Username" name="username" required>
-            </p>
+            <label>Last Name</label>
+                <input placeholder="Enter Last Name"
+                       th:field="${createAccountDTO.lastName}"/>
+                <span th:errors="${createAccountDTO.lastName}"
+                      class="error"></span>
+            </div>
 
-            <p>
-                <label>Password</label>
-                <input type="password" placeholder="Enter Password" name="password" required>
-            </p>
+            <div class="form-group">
 
-            <p>
-                <label>Confirm Password</label>
-                <input type="password" placeholder="Repeat Password" name="passwordVerify" required>
-            </p>
+            <label>Email</label>
+                <input placeholder="Enter Email"
+                       th:field="${createAccountDTO.email}"/>
+                <span th:errors="${createAccountDTO.email}"
+                      class="error"></span>
+            </div>
 
-            <p>
-                <label for="birth-date">Birthdate:</label>
-                <input type="date" id="birth-date" name="birth_date" />
-            </p>
+            <div class="form-group">
 
-            <p>
-                <label> Gender: </label>
-            <br>
-                <form action="">
-                    <input type="radio" name="gender" value="male"> Male<br>
-                    <input type="radio" name="gender" value="female"> Female<br>
-                    <input type="radio" name="gender" value="other"> Prefer not to answer
-                </form>
-            </p>
+            <label>Username</label>
+                <input placeholder="Enter Username"
+                       th:field="${createAccountDTO.username}"/>
+                <span th:errors="${createAccountDTO.username}"
+                      class="error"></span>
+            </div>
 
-            <p>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-                </label>
-            </p>
+            <div class="form-group">
 
-            <p>
-                By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
-            </p>
+            <label>Password</label>
+                <input placeholder="Enter Password"
+                       th:field="${createAccountDTO.password}"/>
+                <span th:errors="${createAccountDTO.password}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+
+            <label>Confirm Password</label>
+                <input placeholder="Repeat Password"
+                       th:field="${createAccountDTO.verifyPassword}"/>
+                <span th:errors="${createAccountDTO.verifyPassword}"
+                      class="error"></span>
+            </div>
 
             <div class="clearfix">
                 <button type="button" class="cancelbtn">Cancel</button>
