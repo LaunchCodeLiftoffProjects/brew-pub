@@ -1,10 +1,25 @@
 package org.launchcode.brewpub.models.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class CreateAccountDTO extends LoginDTO {
-    private String firstName;
-    private String lastName;
-    private String email;
     private String verifyPassword;
+
+
+    @NotBlank
+    @Size(min =2, max = 40, message = "First name must be between 2 and 40 characters")
+    private String firstName;
+
+    @NotBlank
+    @Size(min =2, max = 40, message = "Last name must be between 2 and 40 characters")
+    private String lastName;
+
+    @NotBlank
+    @Email(message = "Please enter a valid email")
+    @Size(max = 120)
+    private String email;
 
     public String getFirstName() {
         return firstName;

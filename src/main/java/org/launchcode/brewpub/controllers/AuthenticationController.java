@@ -58,6 +58,7 @@ public class AuthenticationController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "createAccount");
+            model.addAttribute("errors", errors);
             return "accountCreation";
         }
 

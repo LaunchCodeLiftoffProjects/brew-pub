@@ -47,7 +47,7 @@
             <div class="form-group">
 
             <label>Password</label>
-                <input placeholder="Enter Password"
+                <input type= "password" placeholder="Enter Password"
                        th:field="${createAccountDTO.password}"/>
                 <span th:errors="${createAccountDTO.password}"
                       class="error"></span>
@@ -56,7 +56,7 @@
             <div class="form-group">
 
             <label>Confirm Password</label>
-                <input placeholder="Repeat Password"
+                <input type= "password" placeholder="Repeat Password"
                        th:field="${createAccountDTO.verifyPassword}"/>
                 <span th:errors="${createAccountDTO.verifyPassword}"
                       class="error"></span>

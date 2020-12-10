@@ -10,21 +10,16 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class User extends AbstractEntity{
-    @NotBlank
-    @Size(min =2, max = 40, message = "First name must be between 2 and 40 characters")
+    @NotNull
     private String firstName;
 
-    @NotBlank
-    @Size(min =2, max = 40, message = "Last name must be between 2 and 40 characters")
+    @NotNull
     private String lastName;
 
-    @NotBlank
-    @Email(message = "Please enter a valid email")
-    @Size(max = 120)
+    @NotNull
     private String email;
 
-    @NotBlank
-    @Size(min = 5, max = 40, message = "Username must be between 5 and 40 characters")
+    @NotNull
     private String username;
 
     @NotNull
