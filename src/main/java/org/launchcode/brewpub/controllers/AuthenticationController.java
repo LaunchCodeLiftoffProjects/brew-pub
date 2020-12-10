@@ -85,20 +85,20 @@ public class AuthenticationController {
         return "redirect:";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/userLogin")
     public String displayLoginDTOForm(Model model) {
         model.addAttribute(new LoginDTO());
         model.addAttribute("title", "Log In");
-        return "login";
+        return "userLogin";
     }
-    @PostMapping("/login")
+    @PostMapping("/userLogin")
     public String processLoginDTOForm(@ModelAttribute @Valid LoginDTO loginDTO,
                                    Errors errors, HttpServletRequest request,
                                    Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         User theUser = userRepository.findByUsername(loginDTO.getUsername());
@@ -106,7 +106,7 @@ public class AuthenticationController {
         if (theUser == null) {
             errors.rejectValue("username", "user.invalid", "The given username does not exist");
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         String password = loginDTO.getPassword();
@@ -114,7 +114,7 @@ public class AuthenticationController {
         if (!theUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         setUserInSession(request.getSession(), theUser);
@@ -124,6 +124,6 @@ public class AuthenticationController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
-        return "redirect:/login";
+        return "redirect:/userLogin";
     }
 }
