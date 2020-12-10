@@ -1,10 +1,10 @@
-package org.launchcode.helloworld.controllers;
+package org.launchcode.brewpub.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloController {
+public class HomeController {
 
 
     @RequestMapping("")

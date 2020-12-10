@@ -72,3 +72,7 @@ div.job-listing {
     width: 80%;
     background-color: #e4e4e4;
 }
+
+.body-content {
+    margin-top: 72px;
+}
