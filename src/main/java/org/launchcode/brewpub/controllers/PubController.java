@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("pubs")
@@ -46,6 +44,24 @@ public class PubController {
 
         pubRepository.save(newPub);
         return "redirect:";
+    }
+
+    @GetMapping("view/{pubID}")
+    public String viewPubInfo(@PathVariable Integer pubID,
+                              Model model) {
+        if (pubID == null) {
+            return "pubs/index";
+        } else {
+            Optional<Pub> result = pubRepository.findById(pubID);
+            if (result.isEmpty()) {
+                model.addAttribute("title", "Invalid Pub ID");
+            } else
+                model.addAttribute("pub", pubRepository.findById(pubID));
+            Pub pub = result.get();
+            model.addAttribute("title", "Pub: " + pub.getName());
+            model.addAttribute("pub", pub);
+        }
+        return "pubs/view";
     }
 
 
