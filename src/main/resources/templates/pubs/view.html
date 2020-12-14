@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container  body-content">
-<h1 th:text="${'Pub: ' + pub.name}">Default Title</h1>
 
 <nav th:replace="fragments :: page-header"></nav>
 
-<div class="job-listing">
-<p th:text="${'Name: ' + pub.name}"></p>
+<div class="container body-content">
+
+    <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
+    <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
+
+
 </div>
 
 </body>
