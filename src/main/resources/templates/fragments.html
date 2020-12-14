@@ -16,6 +16,10 @@
     <div class="container">
         <div class="navbar-header">
             <a th:href="@{/}" class="navbar-brand">Home</a>
+            <a th:href="@{/userLogin}" class="navbar-brand">Login</a>
+        </div>
+        <div>
+        <span class="username" th:text="${#request.remoteUser}">Guest</span>
         </div>
     </div>
 </div>
