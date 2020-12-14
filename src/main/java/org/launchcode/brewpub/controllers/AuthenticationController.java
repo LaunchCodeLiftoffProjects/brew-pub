@@ -74,7 +74,7 @@ public class AuthenticationController {
         if (existingEmail != null) {
             errors.rejectValue("email", "email.alreadyexists", "A user with that email already exists");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         String password = createAccountDTO.getPassword();
