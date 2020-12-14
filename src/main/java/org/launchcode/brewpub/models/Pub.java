@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pub extends AbstractEntity{
@@ -31,6 +32,10 @@ public class Pub extends AbstractEntity{
 
     @Size(max = 5)
     private String areaCode;
+
+    @OneToMany
+    @JoinColumn
+    private List<PubReview> pubReviews = new ArrayList<>();
 
     //@OneToMany
     //@JoinColumn
