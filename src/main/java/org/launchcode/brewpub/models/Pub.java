@@ -33,9 +33,6 @@ public class Pub extends AbstractEntity{
     @Size(max = 5)
     private String areaCode;
 
-    @OneToMany
-    @JoinColumn
-    private List<PubReview> pubReviews = new ArrayList<>();
 
     //@OneToMany
     //@JoinColumn
