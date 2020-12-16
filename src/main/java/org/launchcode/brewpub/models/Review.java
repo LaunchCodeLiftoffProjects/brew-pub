@@ -14,7 +14,7 @@ public abstract class Review extends AbstractEntity{
 //    private User user;
 //
 
-    @Size(max = 80, message = "Title must be between 3 and 80 characters")
+    @Size(max = 80, message = "Title cannot be longer than 80 characters")
     private String reviewTitle;
 
     // Optional
