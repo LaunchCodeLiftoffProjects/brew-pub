@@ -9,7 +9,8 @@
     <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
     <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
 
-    <button type="button" class="btn btn-primary" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</button>
+    <h2 th:text="${'Reviews of: ' + pub.name}">Reviews of PUb</h2>
+    <a type="button" class="btn btn-primary" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a>
 
     <p>
         <table class="table table-striped">
@@ -25,17 +26,49 @@
             <tbody>
                 <th:block th:each="review : ${reviews}">
                     <tr class="text-center">
-                        <td scope="row" th:text="${review.id}">Rating</td>
-                        <td th:text="${review.pub.id}">Rating</td>
-                        <th th:text="${review.reviewTitle}">Rating</th>
+                        <td scope="row" th:text="${review.id}">ID</td>
+                        <td th:text="${review.pub.id}">PubID</td>
+                        <th th:text="${review.reviewTitle}">Title</th>
                         <td th:text="${review.rating}">Rating</td>
-                        <td th:text="${review.reviewText}">Rating</td>
+                        <td th:text="${review.reviewText}">ReviewText</td>
                     </tr>
                 </th:block>
             </tbody>
         </table>
     </p>
-    <!--    TODO: list of brews-->
+
+    <a type="button" class="btn btn-primary" th:href="@{'/pubs/brews/{pubId}/add'(pubId=${pub.id})}">Add Brew</a>
+
+    <p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">IBU</th>
+                <th scope="col">ABV</th>
+                <th scope="col">Brewer</th>
+                <th scope="col">Description</th>
+                <th scope="col">Style</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="brew : ${brews}">
+                <tr class="text-center">
+                    <td scope="row" th:text="${brew.name}">Name</td>
+                    <td th:text="${brew.ibu}">IBU</td>
+                    <th th:text="${brew.abv}">Rating</th>
+                    <td th:text="${brew.brewer}">Brewer</td>
+                    <td th:text="${brew.description}">Description</td>
+                    <td th:text="${brew.style}">Style</td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    </p>
+
+
+
+
 </div>
 
 </body>
