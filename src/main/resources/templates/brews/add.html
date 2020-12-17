@@ -8,7 +8,7 @@
 
     <div class="container body-content">
 
-        <h1 th:text="${brewpub} + ' : Add Brew to Menu'">Add Brew to Menu</h1>
+        <h1 th:text="${pub.name} + ' : Add Brew to Menu'">Add Brew to Menu</h1>
 
         <form th:action="@{/pubs/brews/add/}" method="post">
 
@@ -66,12 +66,12 @@
 
             <div hidden>
                 <label>pubId</label>
-                <input type="text" name="pubId" th:value="${brewpub.id}">
+                <input type="text" name="pubId" th:value="${pub.id}">
             </div>
 
             <input type="submit">
 
-            <button type="button"><a th:href="@{/pubs/view/{pubId}(pubId=${brewpub.id})}">Cancel</a> </button>
+            <button type="button"><a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}">Cancel</a> </button>
 
         </form>
     </div>
