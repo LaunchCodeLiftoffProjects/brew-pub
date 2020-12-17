@@ -3,6 +3,7 @@ package org.launchcode.brewpub.models;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Entity
 public class Brew extends AbstractEntity{
@@ -11,18 +12,16 @@ public class Brew extends AbstractEntity{
     private Pub pub;
 
 
-    @Size(min = 4, max = 80, message="Brew name must be between 4 and 80 characters")
-    @NotBlank
+    @Size(min = 4, max = 80, message="Name must be between 4 and 80 characters")
     private String name;
 
     @Min(value = 0, message = "IBU cannot be less than zero")
     @Max(value=3000, message = "IBU cannot be greater than 3,000")
-    private float ibu;
+    private Integer ibu;
 
     @Min(value = 0, message = "ABV cannot be less than zero")
     @Max(value = 100, message = "ABV cannot be greater than 100")
-    @NotNull
-    private float abv;
+    private BigDecimal abv;
 
     @Size(max = 80, message="Brewer name cannot be more than 80 characters")
     private String brewer;
@@ -37,7 +36,7 @@ public class Brew extends AbstractEntity{
     public Brew() {
     }
 
-    public Brew(String name, float ibu, float abv, String brewer, String description, String style) {
+    public Brew(String name, Integer ibu, BigDecimal abv, String brewer, String description, String style) {
         this.name = name;
         this.ibu = ibu;
         this.abv = abv;
@@ -62,19 +61,19 @@ public class Brew extends AbstractEntity{
         this.name = name;
     }
 
-    public float getIbu() {
+    public Integer getIbu() {
         return ibu;
     }
 
-    public void setIbu(float ibu) {
+    public void setIbu(Integer ibu) {
         this.ibu = ibu;
     }
 
-    public float getAbv() {
+    public BigDecimal getAbv() {
         return abv;
     }
 
-    public void setAbv(float abv) {
+    public void setAbv(BigDecimal abv) {
         this.abv = abv;
     }
 
