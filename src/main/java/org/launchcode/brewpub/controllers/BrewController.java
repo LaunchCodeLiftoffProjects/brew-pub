@@ -39,7 +39,7 @@ public class BrewController {
                 return "pubs/index";
             } else {
                 Pub pub = result.get();
-                model.addAttribute("brewpub", pub);
+                model.addAttribute("pub", pub);
                 model.addAttribute(new Brew());
                 return "brews/add";
             }
@@ -47,17 +47,21 @@ public class BrewController {
     }
 
     @RequestMapping("add")
-    public String processAddBrewForm(@RequestParam Integer pubId,
-                                     Model model,
-                                     @ModelAttribute @Valid Brew newBrew,
-                                     Errors errors) {
-        if (pubId == null) {
+    public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew,
+                                     Errors errors,
+                                     @RequestParam Integer pubId,
+                                     Model model) {
+
+        Optional<Pub> result = pubRepository.findById(pubId);
+
+        if (pubId == null || result.isEmpty()) {
             return "pubs/index";
         } else if (errors.hasErrors()) {
+            Pub pub = result.get();
             model.addAttribute("errors", errors);
+            model.addAttribute("pub", pub);
             return "brews/add";
         } else {
-            Optional<Pub> result = pubRepository.findById(pubId);
             Pub pub = result.get();
             newBrew.setPub(pub);
             brewRepository.save(newBrew);
