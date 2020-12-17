@@ -72,8 +72,7 @@ public class ReviewController {
             pubReviewRepository.save(newPubReview);
         }
 
-        // TODO: return (redirect) to brew-pub detail view
-        return "redirect:/";
+        return "redirect:/pubs/view/" + pubId;
     }
 
     // Brew Review
@@ -111,6 +110,7 @@ public class ReviewController {
         brewReviewRepository.save(newBrewReview);
 
         // TODO: return (redirect) to brew-pub detail view
+//        return "redirect:/pubs/view/" + pubId;
         return "redirect:/";
     }
 
