@@ -27,8 +27,4 @@ public class PubReview extends Review{
     }
 
 
-    //
-//    public Brew getBrew() {
-//        return brew;
-//    }
 }

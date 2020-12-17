@@ -18,8 +18,5 @@ public class BrewReview extends Review{
     }
 
 
-//
-//    public Brew getBrew() {
-//        return brew;
-//    }
+
 }
