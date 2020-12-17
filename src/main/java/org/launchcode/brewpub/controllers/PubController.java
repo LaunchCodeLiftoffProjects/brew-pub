@@ -1,6 +1,7 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.Pub;
+import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.data.PubReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PubController {
 
     @Autowired
     private PubReviewRepository pubReviewRepository;
+
+    @Autowired
+    private BrewRepository brewRepository;
 
     @RequestMapping("")
     public String index(Model model) {
@@ -62,6 +66,7 @@ public class PubController {
             } else
                 model.addAttribute("pub", pubRepository.findById(pubID));
                 model.addAttribute("reviews", pubReviewRepository.findAllByPubId(pubID));
+                model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
             Pub pub = result.get();
             model.addAttribute("title", "Pub: " + pub.getName());
             model.addAttribute("pub", pub);
