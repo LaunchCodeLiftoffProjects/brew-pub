@@ -2,10 +2,7 @@ package org.launchcode.brewpub.models;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class Brew extends AbstractEntity{
@@ -24,7 +21,7 @@ public class Brew extends AbstractEntity{
 
     @Min(value = 0, message = "ABV cannot be less than zero")
     @Max(value = 100, message = "ABV cannot be greater than 100")
-    @NotBlank
+    @NotNull
     private float abv;
 
     @Size(max = 80, message="Brewer name cannot be more than 80 characters")
@@ -47,6 +44,14 @@ public class Brew extends AbstractEntity{
         this.brewer = brewer;
         this.description = description;
         this.style = style;
+    }
+
+    public Pub getPub() {
+        return pub;
+    }
+
+    public void setPub(Pub pub) {
+        this.pub = pub;
     }
 
     public String getName() {
