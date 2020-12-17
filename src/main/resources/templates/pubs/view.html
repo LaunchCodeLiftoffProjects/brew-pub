@@ -9,46 +9,33 @@
     <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
     <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
 
-<!--    TODO: review pub link-->
-    <a th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a>
+    <button type="button" class="btn btn-primary" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</button>
 
-<!--    TODO: list of reviews-->
-<!--    TODO: for each loop-->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Review ID</th>
-                <th scope="col">Pub ID</th>
-                <th scope="col">Review Title</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Review</th>
-            </tr>
-        </thead>
-        <tbody>
-            <th:block th:each="review : ${reviews}">
-                <tr class="text-center">
-                    <td scope="row" th:text="${review.id}">Rating</td>
-                    <td th:text="${review.pub.id}">Rating</td>
-                    <th th:text="${review.reviewTitle}">Rating</th>
-                    <td th:text="${review.rating}">Rating</td>
-                    <td th:text="${review.reviewText}">Rating</td>
+    <p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Review ID</th>
+                    <th scope="col">Pub ID</th>
+                    <th scope="col">Review Title</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Review</th>
                 </tr>
-            </th:block>
-        </tbody>
-
-
-    </table>
-
-<!--            <th:block th:each="review : ${reviews}">-->
-<!--                <div>-->
-<!--                    <h1 th:text="'Pub ID: ' + ${review.pub.id} + ' Rating ID: ' + ${review.id}">Pub ID/Rating ID</h1>-->
-<!--                    <h1 th:text="'Rating: ' + ${review.rating}">Rating</h1>-->
-<!--                    <h1 th:text="'Review Title: ' + ${review.reviewTitle}"></h1>-->
-<!--                </div>-->
-<!--            </th:block>-->
-
-
-<!--    TODO: list of brews-->
+            </thead>
+            <tbody>
+                <th:block th:each="review : ${reviews}">
+                    <tr class="text-center">
+                        <td scope="row" th:text="${review.id}">Rating</td>
+                        <td th:text="${review.pub.id}">Rating</td>
+                        <th th:text="${review.reviewTitle}">Rating</th>
+                        <td th:text="${review.rating}">Rating</td>
+                        <td th:text="${review.reviewText}">Rating</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </p>
+    <!--    TODO: list of brews-->
 </div>
 
 </body>
