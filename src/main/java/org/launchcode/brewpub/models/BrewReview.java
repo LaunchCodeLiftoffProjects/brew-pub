@@ -17,6 +17,11 @@ public class BrewReview extends Review{
         super(reviewTitle, reviewText, rating);
     }
 
+    public Brew getBrew() {
+        return brew;
+    }
 
-
+    public void setBrew(Brew brew) {
+        this.brew = brew;
+    }
 }
