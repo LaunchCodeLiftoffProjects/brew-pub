@@ -12,7 +12,7 @@ public class Brew extends AbstractEntity{
     private Pub pub;
 
 
-    @Size(min = 4, max = 80, message="Name must be between 4 and 80 characters")
+    @Size(min = 3, max = 80, message="Name must be between 4 and 80 characters")
     private String name;
 
     @Min(value = 0, message = "IBU cannot be less than zero")
