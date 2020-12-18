@@ -2,6 +2,7 @@ package org.launchcode.brewpub.controllers;
 
 
 import org.launchcode.brewpub.models.Brew;
+import org.launchcode.brewpub.models.BrewReview;
 import org.launchcode.brewpub.models.Pub;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
@@ -68,4 +69,31 @@ public class BrewController {
             return "redirect:/pubs/view/" + pubId;
         }
     }
+
+    @GetMapping("{pubId}/view/{brewId}")
+    public String viewBrew(@PathVariable Integer pubId,
+                           @PathVariable Integer brewId,
+                           Model model) {
+
+        Optional<Pub> resultPub = pubRepository.findById(pubId);
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+        if (resultPub.isEmpty() || resultBrew.isEmpty()) {
+            return "pubs/index";
+        } else {
+            Pub pub = resultPub.get();
+            Brew brew = resultBrew.get();
+
+            if (resultPub.isEmpty() || resultBrew.isEmpty()) {
+                return "pubs/index";
+            } else {
+                model.addAttribute("brew", brew);
+                model.addAttribute("pub", pub);
+                model.addAttribute(new BrewReview());
+
+                return "brews/view";
+            }
+        }
+    }
+
 }
