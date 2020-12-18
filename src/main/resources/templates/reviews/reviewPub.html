@@ -9,7 +9,7 @@
 
 <div class="container body-content">
 
-    <h1 th:text="${brewpub.name}">brew-pub-name</h1>
+    <h1 th:text="${brewpub.name} + ' : Review'">brew-pub-name</h1>
 
     <form th:action="@{/review/pub/}" method="post">
 
