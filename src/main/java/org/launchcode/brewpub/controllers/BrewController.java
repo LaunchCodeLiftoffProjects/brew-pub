@@ -79,7 +79,7 @@ public class BrewController {
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
         if (resultPub.isEmpty() || resultBrew.isEmpty()) {
-            return "pubs/index";
+            return "redirect:/pubs";
         } else {
             Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
