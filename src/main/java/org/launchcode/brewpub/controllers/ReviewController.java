@@ -36,17 +36,15 @@ public class ReviewController {
     @GetMapping("pub/{pubId}")
     public String viewPubReviewForm(Model model, @PathVariable Integer pubId) {
         // TODO: pass-in userId using session ID and session cookie to look up
-        if (pubId == null) {
+
+        Optional<Pub> result = pubRepository.findById(pubId);
+
+        if (pubId == null || result.isEmpty()) {
             return "pubs/index";
         } else {
-            Optional<Pub> result = pubRepository.findById(pubId);
-            if (result.isEmpty()) {
-                return "pubs/index";
-            } else {
-                Pub pub = result.get();
-                model.addAttribute("brewpub", pub);
-                model.addAttribute("pubReview", new PubReview());
-            }
+            Pub pub = result.get();
+            model.addAttribute("brewpub", pub);
+            model.addAttribute("pubReview", new PubReview());
             return "reviews/reviewPub";
         }
     }
@@ -56,6 +54,7 @@ public class ReviewController {
                                        Errors errors,
                                        Model model,
                                        @RequestParam Integer pubId) {
+
         Optional<Pub> result = pubRepository.findById(pubId);
 
         if (pubId == null || result.isEmpty()) {
@@ -88,7 +87,6 @@ public class ReviewController {
                                      Model model) {
 
         // TODO: pass-in userId using session ID and session cookie to look up
-
 
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);

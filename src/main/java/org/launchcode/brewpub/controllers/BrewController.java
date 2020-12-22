@@ -2,7 +2,6 @@ package org.launchcode.brewpub.controllers;
 
 
 import org.launchcode.brewpub.models.Brew;
-import org.launchcode.brewpub.models.BrewReview;
 import org.launchcode.brewpub.models.Pub;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
@@ -32,18 +31,17 @@ public class BrewController {
     @GetMapping("{pubId}/add")
     public String displayAddBrewForm(@PathVariable Integer pubId,
                                      Model model) {
-        if (pubId == null) {
+
+        Optional<Pub> result = pubRepository.findById(pubId);
+
+        if (pubId == null || result.isEmpty()) {
             return "pubs/index";
         } else {
-            Optional<Pub> result = pubRepository.findById(pubId);
-            if (result.isEmpty()) {
-                return "pubs/index";
-            } else {
-                Pub pub = result.get();
-                model.addAttribute("pub", pub);
-                model.addAttribute(new Brew());
-                return "brews/add";
-            }
+            Pub pub = result.get();
+            model.addAttribute("pub", pub);
+            model.addAttribute(new Brew());
+            return "brews/add";
+
         }
     }
 
