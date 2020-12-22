@@ -43,7 +43,7 @@
         <thead>
         <tr>
             <th scope="col">Review ID</th>
-            <th scope="col">Pub ID</th>
+            <th scope="col">Brew ID</th>
             <th scope="col">Review Title</th>
             <th scope="col">Rating</th>
             <th scope="col">Review</th>
@@ -53,7 +53,7 @@
         <th:block th:each="review : ${reviews}">
             <tr class="text-center">
                 <td scope="row" th:text="${review.id}">ID</td>
-                <td th:text="${review.pub.id}">PubID</td>
+                <td th:text="${review.brew.id}">BrewID</td>
                 <th th:text="${review.reviewTitle}">Title</th>
                 <td th:text="${review.rating}">Rating</td>
                 <td th:text="${review.reviewText}">ReviewText</td>

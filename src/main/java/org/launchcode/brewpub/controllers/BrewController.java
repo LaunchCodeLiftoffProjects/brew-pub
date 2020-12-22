@@ -89,7 +89,7 @@ public class BrewController {
             } else {
                 model.addAttribute("brew", brew);
                 model.addAttribute("pub", pub);
-                model.addAttribute(new BrewReview());
+                model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
 
                 return "brews/view";
             }
