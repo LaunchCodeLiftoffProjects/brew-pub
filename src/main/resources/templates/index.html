@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-<link th:href="@{/css/helloWorld.css}" rel="stylesheet" />
-<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+
 <head th:replace="fragments :: head">
+
 </head>
 <body>
 <div th:replace="fragments :: page-header"></div>
-<div>
-    <p>.</p>
-    <p>.</p>
-</div>
-<div>
+
+<div class="container body-content">
     <h1>Hello, world!</h1>
 
     <form method="get" action="/createAccount">
         <button type="submit">Create new account?</button>
     </form>
+
+
+    <a th:href="@{'/pubs'}">List Pubs</a>
+
 
     <a th:href="@{'/pubs'}">List Pubs</a>
 

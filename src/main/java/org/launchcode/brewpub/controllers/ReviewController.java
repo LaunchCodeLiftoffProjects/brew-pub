@@ -1,21 +1,21 @@
 package org.launchcode.brewpub.controllers;
 
-import org.launchcode.brewpub.models.BrewReview;
-import org.launchcode.brewpub.models.Review;
+import org.launchcode.brewpub.models.*;
+import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
+import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.data.PubReviewRepository;
-import org.launchcode.brewpub.models.PubReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
+@RequestMapping("review")
 public class ReviewController {
 
     @Autowired
@@ -24,81 +24,121 @@ public class ReviewController {
     @Autowired
     private PubReviewRepository pubReviewRepository;
 
+    @Autowired
+    private PubRepository pubRepository;
+
+    @Autowired
+    private BrewRepository brewRepository;
+
 
     // Pub Review
 
-    @GetMapping("/review/pub"
-//            + "/{pubId}"
-    )
-    public String viewPubReviewForm(Model model
-//                                , @PathVariable int pubId
-                                ) {
-        // TODO: pass-in brew-pub info to model using pubId
+    @GetMapping("pub/{pubId}")
+    public String viewPubReviewForm(Model model, @PathVariable Integer pubId) {
         // TODO: pass-in userId using session ID and session cookie to look up
-        model.addAttribute("title", "Review");
-        model.addAttribute("brewpub", "name-of-a-brewpub");
 
-        model.addAttribute("pubReview", new PubReview());
-        return "reviews/reviewPub";
-    }
+        Optional<Pub> result = pubRepository.findById(pubId);
 
-    @PostMapping("/review/pub")
-    public String processPubReviewForm(@ModelAttribute @Valid PubReview newPubReview,
-                                    Errors errors,
-                                    Model model) {
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Review");
-            model.addAttribute("brewpub", "name-of-a-brewpub");
-            model.addAttribute("pubReview", newPubReview);
-            model.addAttribute("errors", errors);
-
-//            model.addAttribute("pubId",pubId);
-
+        if (pubId == null || result.isEmpty()) {
+            return "pubs/index";
+        } else {
+            Pub pub = result.get();
+            model.addAttribute("brewpub", pub);
+            model.addAttribute("pubReview", new PubReview());
             return "reviews/reviewPub";
         }
+    }
 
-        pubReviewRepository.save(newPubReview);
+    @PostMapping("pub")
+    public String processPubReviewForm(@ModelAttribute @Valid PubReview newPubReview,
+                                       Errors errors,
+                                       Model model,
+                                       @RequestParam Integer pubId) {
 
-        // TODO: return (redirect) to brew-pub detail view
-        return "redirect:/";
+        Optional<Pub> result = pubRepository.findById(pubId);
+
+        if (pubId == null || result.isEmpty()) {
+            return "pubs/index";
+        }
+
+        if (errors.hasErrors()) {
+
+            model.addAttribute("title", "Review");
+            model.addAttribute("pubReview", newPubReview);
+            model.addAttribute("errors", errors);
+            model.addAttribute("brewpub", result.get());
+
+            return "reviews/reviewPub";
+        } else {
+            Pub pub = result.get();
+            newPubReview.setPub(pub);
+
+            pubReviewRepository.save(newPubReview);
+        }
+
+        return "redirect:/pubs/view/" + pubId;
     }
 
     // Brew Review
 
-    @GetMapping("/review/brew"
-//            + "/{brewId}"
-    )
-    public String viewBrewReviewForm(Model model
-//                                , @PathVariable int brewId
-    ) {
-        // TODO: pass-in brew-pub info to model using pubId
+    @GetMapping("{pubId}/{brewId}")
+    public String viewBrewReviewForm(@PathVariable Integer pubId,
+                                     @PathVariable Integer brewId,
+                                     Model model) {
+
         // TODO: pass-in userId using session ID and session cookie to look up
-        model.addAttribute("title", "Review");
-        model.addAttribute("brewpub", "name-of-a-brewpub");
 
-        model.addAttribute("brewReview", new BrewReview());
-        return "reviews/reviewBrew";
-    }
+        Optional<Pub> resultPub = pubRepository.findById(pubId);
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
-    @PostMapping("/review/brew")
-    public String processBrewReviewForm(@ModelAttribute @Valid BrewReview newBrewReview,
-                                    Errors errors,
-                                    Model model) {
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Review");
-            model.addAttribute("brewpub", "name-of-a-brewpub");
-            model.addAttribute("brewReview", newBrewReview);
-            model.addAttribute("errors", errors);
+        if (resultPub.isEmpty() || resultBrew.isEmpty()) {
+            return "redirect:/pubs";
+        } else {
+            Pub pub = resultPub.get();
+            Brew brew = resultBrew.get();
 
-//            model.addAttribute("pubId",pubId);
+            model.addAttribute("brew", brew);
+            model.addAttribute("pub", pub);
+            model.addAttribute(new BrewReview());
 
             return "reviews/reviewBrew";
         }
 
-        brewReviewRepository.save(newBrewReview);
+    }
 
-        // TODO: return (redirect) to brew-pub detail view
-        return "redirect:/";
+    @PostMapping("brew")
+    public String processBrewReviewForm(@ModelAttribute @Valid BrewReview newBrewReview,
+                                        Errors errors,
+                                        Model model,
+                                        @RequestParam Integer pubId,
+                                        @RequestParam Integer brewId) {
+        Optional<Pub> resultPub = pubRepository.findById(pubId);
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+
+        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty()) {
+            return "pubs/index";
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Review Brew");
+            model.addAttribute("brewReview", newBrewReview);
+            model.addAttribute("errors", errors);
+            model.addAttribute("pub", resultPub.get());
+            model.addAttribute("brew", resultBrew.get());
+
+            return "reviews/reviewBrew";
+        } else {
+
+            Pub pub = resultPub.get();
+            Brew brew = resultBrew.get();
+
+            newBrewReview.setBrew(brew);
+            brewReviewRepository.save(newBrewReview);
+        }
+
+        return "redirect:/pubs/brews/" + pubId + "/view/" + brewId;
+
     }
 
 }
