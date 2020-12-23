@@ -26,10 +26,10 @@ public class ListController {
 
     public ListController() {
         columnChoices.put("all", "All");
-        columnChoices.put("pub", "Pub");
-        //columnChoices.put("address", "Address");
-        //columnChoices.put("city", "City");
-        //columnChoices.put("state", "State");
+        columnChoices.put("name", "Pub Name");
+        columnChoices.put("address", "Address");
+        columnChoices.put("city", "City");
+        columnChoices.put("state", "State");
     }
 
     @RequestMapping("")

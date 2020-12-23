@@ -47,7 +47,7 @@ public class PubData {
             theValue = pub.getAddress().toString();
         } else if (fieldName.equals("city")) {
             theValue = pub.getCity().toString();
-        } else if (fieldName.equals("State")){
+        } else if (fieldName.equals("state")){
             theValue = pub.getState().toString();
         }
 

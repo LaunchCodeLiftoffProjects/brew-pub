@@ -40,9 +40,10 @@
         <td>
             <p>
                 Pub Id:
-                <a th:href="@{'pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
             </p>
             <p th:text="${'Name: ' + pub.name}"></p>
+            <p th:text="${pub.state}"></p>
 
         </td>
     </tr>

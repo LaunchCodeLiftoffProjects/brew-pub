@@ -23,12 +23,27 @@
     <tr>
         <td>
             <li>
-                <a th:href="@{/list/jobs(column='All',value='View All')}">View All</a>
+                <a th:href="@{/list/pubs(column='All',value='View All')}">View All</a>
             </li>
         </td>
         <td>
             <li th:each="pub : ${pubs}">
-                <a th:href="@{/list/pubs(column=pub,value=${pub.name})}" th:text="${pub.name}"></a>
+                <a th:href="@{/list/pubs(column=name,value=${pub.name})}" th:text="${pub.name}"></a>
+            </li>
+        </td>
+        <td>
+            <li th:each="pub : ${pubs}">
+                <a th:href="@{/list/pubs(column=address,value=${pub.address})}" th:text="${pub.address}"></a>
+            </li>
+        </td>
+        <td>
+            <li th:each="pub : ${pubs}">
+                <a th:href="@{/list/pubs(column=city,value=${pub.city})}" th:text="${pub.city}"></a>
+            </li>
+        </td>
+        <td>
+            <li th:each="pub : ${pubs}">
+                <a th:href="@{/list/pubs(column=state,value=${pub.state})}" th:text="${pub.state}"></a>
             </li>
         </td>
     </tr>
