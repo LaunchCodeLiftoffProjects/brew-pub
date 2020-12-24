@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<p th:unless="${pubs} and ${pubs.size()}">no pubs!</p>
+
+<div class="container body-content">
+    <h2>Pubs</h2>
+    <ul>
+        <li th:each="pub : ${pubs}">
+            <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a>
+        </li>
+    </ul>
+    <a th:href="@{'/pubs/add'}">Add Pubs</a>
+
+</div>
+
+</body>
+</html>

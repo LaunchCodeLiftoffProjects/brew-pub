@@ -1,9 +1,9 @@
 package org.launchcode.brewpub.models;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,9 +13,8 @@ public abstract class Review extends AbstractEntity{
 //    @ManyToOne
 //    private User user;
 //
-    // TODO: make optional
-    @NotBlank(message = "Title must not be blank")
-    @Size(min = 3, max = 80, message = "Title must be between 3 and 80 characters")
+
+    @Size(max = 80, message = "Title cannot be longer than 80 characters")
     private String reviewTitle;
 
     // Optional
@@ -23,7 +22,9 @@ public abstract class Review extends AbstractEntity{
     @Size(max = 800, message = "Review cannot be longer than 800 characters")
     private String reviewText;
 
-    @NotNull(message = "Must select rating between 1 and 10")
+    @NotNull
+    @Min(value=1, message = "Must select rating between 1 and 5")
+    @Max(value=5, message = "Must select rating between 1 and 5")
     private int rating;
 
     // Constructors

@@ -4,12 +4,12 @@
 </head>
 <body>
 
-<div th:replace="fragments :: page-header"></div>
+<nav th:replace="fragments :: page-header"></nav>
 
 
 <div class="container body-content">
 
-    <h1 th:text="${brewpub}">brew-pub-name</h1>
+    <h1 th:text="${brewpub.name} + ' : Review'">brew-pub-name</h1>
 
     <form th:action="@{/review/pub/}" method="post">
 
@@ -32,11 +32,6 @@
                 <option value=3>3</option>
                 <option value=4>4</option>
                 <option value=5>5</option>
-                <option value=6>6</option>
-                <option value=7>7</option>
-                <option value=8>8</option>
-                <option value=9>9</option>
-                <option value=10>10</option>
             </select>
         </div>
 
@@ -48,11 +43,14 @@
                       placeholder="Enter review here... (Optional)"></textarea>
         </div>
 
+        <div hidden>
+            <label>pubId</label>
+            <input type="text" name="pubId" th:value="${brewpub.id}">
+        </div>
+
         <input type="submit">
 
-<!--        TODO: CANCEL returns user to brew-pub info page-->
-        <button type="button"><a th:href="@{/}">Cancel</a> </button>
-
+        <button type="button"><a th:href="@{/pubs/view/{pubId}(pubId=${brewpub.id})}">Cancel</a> </button>
     </form>
 
 </div>

@@ -1,14 +1,15 @@
 package org.launchcode.brewpub.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PubReview extends Review{
 
-//
-//    @ManyToOne
-//    private Pub pub;
-//
+
+    @ManyToOne
+    private Pub pub;
+
 
     public PubReview() {
     }
@@ -17,9 +18,13 @@ public class PubReview extends Review{
         super(reviewTitle, reviewText, rating);
     }
 
+    public Pub getPub() {
+        return pub;
+    }
 
-//
-//    public Brew getBrew() {
-//        return brew;
-//    }
+    public void setPub(Pub pub) {
+        this.pub = pub;
+    }
+
+
 }
