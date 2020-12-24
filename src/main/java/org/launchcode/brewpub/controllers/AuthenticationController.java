@@ -1,7 +1,7 @@
 package org.launchcode.brewpub.controllers;
 
-import org.launchcode.brewpub.models.User;
-import org.launchcode.brewpub.models.data.UserRepository;
+import org.launchcode.brewpub.models.BrewUser;
+import org.launchcode.brewpub.models.data.BrewUserRepository;
 import org.launchcode.brewpub.models.dto.CreateAccountDTO;
 import org.launchcode.brewpub.models.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,17 @@ import java.util.Optional;
 @Controller
 public class AuthenticationController {
     @Autowired
-    UserRepository userRepository;
+    BrewUserRepository brewUserRepository;
 
     private static final String userSessionKey = "user";
 
-    public User getUserFromSession(HttpSession session) {
+    public BrewUser getUserFromSession(HttpSession session) {
         Integer userId = (Integer) session.getAttribute(userSessionKey);
         if (userId == null) {
             return null;
         }
 
-        Optional<User> user = userRepository.findById(userId);
+        Optional<BrewUser> user = brewUserRepository.findById(userId);
 
         if (user.isEmpty()) {
             return null;
@@ -39,8 +39,8 @@ public class AuthenticationController {
         return user.get();
     }
 
-    private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
+    private static void setUserInSession(HttpSession session, BrewUser brewUser) {
+        session.setAttribute(userSessionKey, brewUser.getId());
     }
 
 
@@ -62,8 +62,8 @@ public class AuthenticationController {
             return "createAccount";
         }
 
-        User existingUsername = userRepository.findByUsername(createAccountDTO.getUsername());
-        User existingEmail = userRepository.findByEmail(createAccountDTO.getEmail());
+        BrewUser existingUsername = brewUserRepository.findByUsername(createAccountDTO.getUsername());
+        BrewUser existingEmail = brewUserRepository.findByEmail(createAccountDTO.getEmail());
 
         if (existingUsername != null) {
             errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
@@ -85,9 +85,9 @@ public class AuthenticationController {
             return "createAccount";
         }
 
-        User newUser = new User(createAccountDTO.getFirstName(),createAccountDTO.getLastName(), createAccountDTO.getEmail(), createAccountDTO.getUsername(), createAccountDTO.getPassword());
-        userRepository.save(newUser);
-        setUserInSession(request.getSession(), newUser);
+        BrewUser newBrewUser = new BrewUser(createAccountDTO.getFirstName(),createAccountDTO.getLastName(), createAccountDTO.getEmail(), createAccountDTO.getUsername(), createAccountDTO.getPassword());
+        brewUserRepository.save(newBrewUser);
+        setUserInSession(request.getSession(), newBrewUser);
 
         return "redirect:";
     }
@@ -109,9 +109,9 @@ public class AuthenticationController {
             return "userLogin";
         }
 
-        User theUser = userRepository.findByUsername(loginDTO.getUsername());
+        BrewUser theBrewUser = brewUserRepository.findByUsername(loginDTO.getUsername());
 
-        if (theUser == null) {
+        if (theBrewUser == null) {
             errors.rejectValue("username", "user.invalid", "The given username does not exist");
             model.addAttribute("title", "Log In");
             return "userLogin";
@@ -119,13 +119,13 @@ public class AuthenticationController {
 
         String password = loginDTO.getPassword();
 
-        if (!theUser.isMatchingPassword(password)) {
+        if (!theBrewUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
             return "userLogin";
         }
 
-        setUserInSession(request.getSession(), theUser);
+        setUserInSession(request.getSession(), theBrewUser);
 
         return "redirect:";
     }
