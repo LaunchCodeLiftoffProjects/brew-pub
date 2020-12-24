@@ -49,7 +49,7 @@ public class AuthenticationController {
     public String displayCreateAccountForm(Model model) {
         model.addAttribute(new CreateAccountDTO());
         model.addAttribute("title", "createAccount");
-        return "accountCreation";
+        return "/createAccount";
     }
     @PostMapping("/createAccount")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
@@ -59,7 +59,7 @@ public class AuthenticationController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "createAccount");
             model.addAttribute("errors", errors);
-            return "accountCreation";
+            return "createAccount";
         }
 
         User existingUsername = userRepository.findByUsername(createAccountDTO.getUsername());
@@ -68,13 +68,13 @@ public class AuthenticationController {
         if (existingUsername != null) {
             errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         if (existingEmail != null) {
             errors.rejectValue("email", "email.alreadyexists", "A user with that email already exists");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         String password = createAccountDTO.getPassword();
@@ -82,7 +82,7 @@ public class AuthenticationController {
         if (!password.equals(verifyPassword)) {
             errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
             model.addAttribute("title", "createAccount");
-            return "accountCreation";
+            return "createAccount";
         }
 
         User newUser = new User(createAccountDTO.getFirstName(),createAccountDTO.getLastName(), createAccountDTO.getEmail(), createAccountDTO.getUsername(), createAccountDTO.getPassword());
@@ -92,20 +92,21 @@ public class AuthenticationController {
         return "redirect:";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/userLogin")
     public String displayLoginDTOForm(Model model) {
         model.addAttribute(new LoginDTO());
         model.addAttribute("title", "Log In");
-        return "login";
+        return "userLogin";
     }
-    @PostMapping("/login")
+
+    @PostMapping("/userLogin")
     public String processLoginDTOForm(@ModelAttribute @Valid LoginDTO loginDTO,
                                    Errors errors, HttpServletRequest request,
                                    Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         User theUser = userRepository.findByUsername(loginDTO.getUsername());
@@ -113,7 +114,7 @@ public class AuthenticationController {
         if (theUser == null) {
             errors.rejectValue("username", "user.invalid", "The given username does not exist");
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         String password = loginDTO.getPassword();
@@ -121,16 +122,17 @@ public class AuthenticationController {
         if (!theUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
-            return "login";
+            return "userLogin";
         }
 
         setUserInSession(request.getSession(), theUser);
 
         return "redirect:";
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
-        return "redirect:/login";
+        return "redirect:/userLogin";
     }
 }
