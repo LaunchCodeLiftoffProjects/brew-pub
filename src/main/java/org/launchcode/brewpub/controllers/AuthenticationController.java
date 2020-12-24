@@ -135,4 +135,9 @@ public class AuthenticationController {
         request.getSession().invalidate();
         return "redirect:/userLogin";
     }
+
+    @GetMapping("login")
+    public String login(){
+        return "login";
+    }
 }
