@@ -1,5 +1,6 @@
 package org.launchcode.brewpub.controllers;
 
+import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.data.PubReviewRepository;
@@ -22,6 +23,9 @@ public class ListController {
     @Autowired
     private BrewReviewRepository brewReviewRepository;
 
+    @Autowired
+    private BrewRepository brewRepository;
+
     static HashMap<String, String> columnChoices = new HashMap<>();
 
     public ListController() {
@@ -35,7 +39,7 @@ public class ListController {
     @RequestMapping("")
     public String list(Model model) {
         model.addAttribute("pubs", pubRepository.findAll());
-        //model.addAttribute("brews", brewRepository.findAll());
+        model.addAttribute("brews", brewRepository.findAll());
 
         return "list";
     }

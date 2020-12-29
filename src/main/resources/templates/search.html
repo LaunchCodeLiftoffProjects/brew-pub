@@ -47,6 +47,18 @@
 
         </td>
     </tr>
+
+    <tr th:each="brew : ${brews}">
+        <td>
+            <!--<p>
+                Brew Id:
+                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+            </p>-->
+            <p th:text="${'Name: ' + brew.name}"></p>
+            <p th:text="${'Style: ' + brew.style}"></p>
+
+        </td>
+    </tr>
 </table>
 
 </div>
