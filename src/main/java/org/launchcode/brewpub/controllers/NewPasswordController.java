@@ -5,6 +5,7 @@ import org.launchcode.brewpub.models.data.UserRepository;
 import org.launchcode.brewpub.models.dto.CreateAccountDTO;
 import org.launchcode.brewpub.models.dto.NewPasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +20,8 @@ public class NewPasswordController {
 
     @Autowired
     UserRepository userRepository;
+
+
 
     @GetMapping("/forgotPassword")
     public String viewForgotPasswordForm(Model model) {
@@ -38,15 +41,33 @@ public class NewPasswordController {
         return "newPassword";
     }
 
-    @PostMapping("")
-    public String processNewPasswordForm(@ModelAttribute @Valid NewPasswordDTO newPasswordDTO, Errors errors, Model model) {
-        String password = newPasswordDTO.getPassword();
-        String verifyPassword = newPasswordDTO.getVerifyPassword();
+//    @PostMapping("")
+//    public String processNewPasswordForm(@ModelAttribute @Valid NewPasswordDTO newPasswordDTO, Errors errors, Model model) {
+//        String password = newPasswordDTO.getPassword();
+//        String verifyPassword = newPasswordDTO.getVerifyPassword();
+//
+//        if (password.equals(verifyPassword)) {
+//
+//        }
+//        return "did it";
 
-        if (password.equals(verifyPassword)) {
+//    }
 
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    public String resetUserPassword(Model model, NewPasswordDTO newPasswordDTO) {
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (newPasswordDTO.getEmail() != null && newPasswordDTO.getPassword().equals(newPasswordDTO.getVerifyPassword())) {
+       //  if (true) {
+            // Use email to find user
+            User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
+            existingUser.setPwhash(encoder.encode(newPasswordDTO.getPassword()));
+            userRepository.save(existingUser);
+            model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
+            model.addAttribute("successResetPassword");
+        } else {
+            model.addAttribute("message","Not a valid user");
         }
-        return "did it";
-
+        return "newPassword";
     }
 }
