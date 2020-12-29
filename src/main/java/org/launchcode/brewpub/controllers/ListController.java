@@ -30,7 +30,7 @@ public class ListController {
 
     public ListController() {
         columnChoices.put("all", "All");
-        columnChoices.put("name", "Pub Name");
+        columnChoices.put("name", "Name");
         columnChoices.put("address", "Address");
         columnChoices.put("city", "City");
         columnChoices.put("state", "State");
