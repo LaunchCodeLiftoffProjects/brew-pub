@@ -27,6 +27,7 @@ public class ListController {
     private BrewRepository brewRepository;
 
     static HashMap<String, String> columnChoices = new HashMap<>();
+    static HashMap<String, String> puborbrewChoices = new HashMap<>();
 
     public ListController() {
         columnChoices.put("all", "All");
@@ -34,6 +35,8 @@ public class ListController {
         columnChoices.put("address", "Address");
         columnChoices.put("city", "City");
         columnChoices.put("state", "State");
+        puborbrewChoices.put("pub", "Pub");
+        puborbrewChoices.put("brew", "Brew");
     }
 
     @RequestMapping("")

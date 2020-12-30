@@ -12,6 +12,25 @@
     <h2>Search by:</h2>
 
     <p>
+        <input
+                type="radio"
+                name="puborbrew"
+                th:id="puborbrew"
+                th:value="pub"
+                th:checked="pub"/>
+        <label th:for="puborbrew" th:text="Pub"></label>
+
+
+
+        <input
+                type="radio"
+                name="puborbrew"
+                th:id="puborbrew"
+                th:value="brew"/>
+        <label th:for="puborbrew" th:text="Brew"></label>
+    </p>
+
+    <p>
             <span th:each="column : ${columns}">
                 <input
                         type="radio"
