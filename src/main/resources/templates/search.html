@@ -20,16 +20,22 @@
                 th:checked="pub"/>
         <label th:for="puborbrew" th:text="Pub"></label>
 
-
-
         <input
                 type="radio"
                 name="puborbrew"
                 th:id="puborbrew"
                 th:value="brew"/>
         <label th:for="puborbrew" th:text="Brew"></label>
+
+        <input
+                type="radio"
+                name="puborbrew"
+                th:id="puborbrew"
+                th:value="both"/>
+        <label th:for="puborbrew" th:text="Both"></label>
     </p>
 
+    <h2>Category:</h2>
     <p>
             <span th:each="column : ${columns}">
                 <input

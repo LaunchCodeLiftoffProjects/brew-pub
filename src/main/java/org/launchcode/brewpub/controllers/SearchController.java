@@ -45,8 +45,14 @@ public class SearchController {
         }
         model.addAttribute("columns", columnChoices);
         model.addAttribute("title", "Results with " + puborbrewChoices.get(puborbrew) +" - " + columnChoices.get(searchType) + ": " + searchTerm);
-        model.addAttribute("pubs", pubs);
-        model.addAttribute("brews", brews);
+        if (puborbrew.toLowerCase().equals("pub")){
+            model.addAttribute("pubs", pubs);
+        } else if (puborbrew.toLowerCase().equals("brew")){
+            model.addAttribute("brews", brews);
+        } else {
+            model.addAttribute("pubs", pubs);
+            model.addAttribute("brews", brews);
+        }
 
         return "search";
     }

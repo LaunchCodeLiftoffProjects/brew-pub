@@ -37,6 +37,7 @@ public class ListController {
         columnChoices.put("state", "State");
         puborbrewChoices.put("pub", "Pub");
         puborbrewChoices.put("brew", "Brew");
+        puborbrewChoices.put("both", "Both");
     }
 
     @RequestMapping("")
