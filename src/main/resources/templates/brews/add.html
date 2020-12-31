@@ -10,7 +10,7 @@
 
         <h1 th:text="${pub.name} + ' : Add Brew to Menu'">Add Brew to Menu</h1>
 
-        <form th:action="@{/pubs/brews/add/}" method="post">
+        <form th:action="@{/pubs/brews/add/}" method="post" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label>Name</label>
@@ -64,6 +64,17 @@
                 <span th:errors="${brew.style}"
                       class="error"></span>
             </div>
+            <div class="form-group">
+                <label>Upload Image</label>
+                <input type="file"
+                       name="files"
+                       class="form-control"
+                       placeholder="Optional..."/>
+            </div>
+
+            <div th:if="${message}">
+                <span th:text="${message}"></span>
+            </div>
 
             <div hidden>
                 <label>pubId</label>
@@ -75,6 +86,7 @@
             <button type="button"><a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}">Cancel</a> </button>
 
         </form>
+
     </div>
 
 </body>

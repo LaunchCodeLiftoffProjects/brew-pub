@@ -11,8 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +32,8 @@ public class BrewController {
 
     @Autowired
     private BrewRepository brewRepository;
+
+    public static String uploadDirectory = System.getProperty("user.dir")+"/uploads";
 
     @GetMapping("{pubId}/add")
     public String displayAddBrewForm(@PathVariable Integer pubId,
@@ -46,12 +53,19 @@ public class BrewController {
     }
 
     @RequestMapping("add")
-    public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew,
+    public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew, @RequestParam("files") MultipartFile[] files,
                                      Errors errors,
                                      @RequestParam Integer pubId,
-                                     Model model) {
+                                     Model model) throws IOException {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+
+        StringBuilder fileNames = new StringBuilder();
+        for(MultipartFile file : files) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+            fileNames.append(file.getOriginalFilename());
+            Files.write(fileNameAndPath, file.getBytes());
+        }
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
@@ -93,5 +107,6 @@ public class BrewController {
             }
         }
     }
+
 
 }
