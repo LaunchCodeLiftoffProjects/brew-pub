@@ -21,8 +21,6 @@ public class NewPasswordController {
     @Autowired
     UserRepository userRepository;
 
-
-
     @GetMapping("/forgotPassword")
     public String viewForgotPasswordForm(Model model) {
         model.addAttribute("title", "forgotPassword");
@@ -41,25 +39,11 @@ public class NewPasswordController {
         return "newPassword";
     }
 
-//    @PostMapping("")
-//    public String processNewPasswordForm(@ModelAttribute @Valid NewPasswordDTO newPasswordDTO, Errors errors, Model model) {
-//        String password = newPasswordDTO.getPassword();
-//        String verifyPassword = newPasswordDTO.getVerifyPassword();
-//
-//        if (password.equals(verifyPassword)) {
-//
-//        }
-//        return "did it";
-
-//    }
-
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetUserPassword(Model model, NewPasswordDTO newPasswordDTO) {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (newPasswordDTO.getEmail() != null && newPasswordDTO.getPassword().equals(newPasswordDTO.getVerifyPassword())) {
-       //  if (true) {
-            // Use email to find user
             User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
             existingUser.setPwhash(encoder.encode(newPasswordDTO.getPassword()));
             userRepository.save(existingUser);
