@@ -66,7 +66,7 @@ public class NewPasswordController {
             model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
             model.addAttribute("successResetPassword");
         } else {
-            model.addAttribute("message","Not a valid user");
+            model.addAttribute("message","Passwords do not match.");
         }
         return "newPassword";
     }
