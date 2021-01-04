@@ -12,7 +12,7 @@ public class BrewData {
      * @param column Job field that should be searched.
      * @param value Value of the field to search for.
      * @param allBrews The list of brews to search.
-     * @return List of all jobs matching the criteria.
+     * @return List of all brews matching the criteria.
      */
 
     public static ArrayList<Brew> findByColumnAndValue(String column, String value, Iterable<Brew> allBrews) {
@@ -55,7 +55,7 @@ public class BrewData {
      *
      * @param value The search term to look for.
      * @param allBrews The list of jobs to search.
-     * @return      List of all jobs with at least one field containing the value.
+     * @return      List of all brewss with at least one field containing the value.
      */
 
     public static ArrayList<Brew> findByValue(String value, Iterable<Brew> allBrews) {

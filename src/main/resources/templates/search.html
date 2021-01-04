@@ -60,7 +60,7 @@
 <hr />
 
 
-<table class="job-listing">
+<table class="table table-striped job-listing">
     <tr th:each="pub : ${pubs}">
         <td>
             <p>
@@ -81,6 +81,8 @@
             </p>-->
             <p th:text="${'Name: ' + brew.name}"></p>
             <p th:text="${'Style: ' + brew.style}"></p>
+            <p th:text="${'ABV: ' + brew.abv}"></p>
+            <p th:text="${'Description: ' + brew.description}"></p>
 
         </td>
     </tr>

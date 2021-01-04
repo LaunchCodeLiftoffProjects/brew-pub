@@ -12,7 +12,7 @@ public class PubData {
      * @param column Job field that should be searched.
      * @param value Value of the field to search for.
      * @param allPubs The list of jobs to search.
-     * @return List of all jobs matching the criteria.
+     * @return List of all pubs matching the criteria.
      */
 
     public static ArrayList<Pub> findByColumnAndValue(String column, String value, Iterable<Pub> allPubs) {
@@ -59,7 +59,7 @@ public class PubData {
      *
      * @param value The search term to look for.
      * @param allPubs The list of jobs to search.
-     * @return      List of all jobs with at least one field containing the value.
+     * @return      List of all pubs with at least one field containing the value.
      */
 
     public static ArrayList<Pub> findByValue(String value, Iterable<Pub> allPubs) {
