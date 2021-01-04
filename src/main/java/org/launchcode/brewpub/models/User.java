@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class BrewUser extends AbstractEntity{
+public class User extends AbstractEntity{
     @NotNull
     private String firstName;
 
@@ -27,9 +27,9 @@ public class BrewUser extends AbstractEntity{
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public BrewUser() {};
+    public User() {};
 
-    public BrewUser(String firstName, String lastName, String email, String username, String password) {
+    public User(String firstName, String lastName, String email, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

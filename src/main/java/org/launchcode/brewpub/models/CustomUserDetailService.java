@@ -1,8 +1,7 @@
 package org.launchcode.brewpub.models;
 
-import org.launchcode.brewpub.models.data.BrewUserRepository;
+import org.launchcode.brewpub.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,16 +11,16 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailService implements UserDetailsService {
 
     @Autowired
-    private BrewUserRepository BrewUserRepository;
+    private UserRepository UserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final BrewUser brewUser = BrewUserRepository.findByUsername(username);
-        if (brewUser == null) {
+        final User user = UserRepository.findByUsername(username);
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        UserDetails user = User.withUsername(brewUser.getUsername()).password(brewUser.getPwhash()).authorities("USER").build();
-        return user;
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPwhash()).authorities("USER").build();
+        return userDetails;
     }
 
 }
