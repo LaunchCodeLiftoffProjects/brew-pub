@@ -8,18 +8,30 @@
     <nav th:replace="fragments :: page-header"></nav>
 
     <div class="container body-content">
+
         <div th:if="${param.error}">
             Invalid username and password.
         </div>
+
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
+
         <form th:action="@{/login}" method="post" class="form-group">
-            <div><label> User Name : <input class="form-control"  type="text" name="username"/> </label></div>
-            <div><label> Password: <input class="form-control"  type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+            <div>
+                <label> User Name : <input class="form-control"  type="text" name="username"/></label>
+            </div>
+
+            <div>
+                <label> Password: <input class="form-control"  type="password" name="password"/></label>
+            </div>
+
+            <div>
+                <input type="submit" value="Sign In"/>
+            </div>
         </form>
 
+        <p> <a th:href="@{/forgotPassword}">Forgot password?</a><a</p>
         <p> <a th:href="@{/createAccount}">Create account</a></p>
 
     </div>
