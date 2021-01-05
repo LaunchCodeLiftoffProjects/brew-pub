@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 public class AuthenticationController {
+
     @Autowired
     UserRepository userRepository;
 
@@ -43,14 +44,13 @@ public class AuthenticationController {
         session.setAttribute(userSessionKey, user.getId());
     }
 
-
-
     @GetMapping("/createAccount")
     public String displayCreateAccountForm(Model model) {
         model.addAttribute(new CreateAccountDTO());
         model.addAttribute("title", "createAccount");
         return "/createAccount";
     }
+
     @PostMapping("/createAccount")
     public String processCreateAccountForm(@ModelAttribute @Valid CreateAccountDTO createAccountDTO,
                                           Errors errors, HttpServletRequest request,
@@ -91,44 +91,6 @@ public class AuthenticationController {
 
         return "redirect:";
     }
-
-//    @GetMapping("/userLogin")
-//    public String displayLoginDTOForm(Model model) {
-//        model.addAttribute(new LoginDTO());
-//        model.addAttribute("title", "Log In");
-//        return "userLogin";
-//    }
-//
-//    @PostMapping("/userLogin")
-//    public String processLoginDTOForm(@ModelAttribute @Valid LoginDTO loginDTO,
-//                                   Errors errors, HttpServletRequest request,
-//                                   Model model) {
-//
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Log In");
-//            return "userLogin";
-//        }
-//
-//        User theUser = userRepository.findByUsername(loginDTO.getUsername());
-//
-//        if (theUser == null) {
-//            errors.rejectValue("username", "user.invalid", "The given username does not exist");
-//            model.addAttribute("title", "Log In");
-//            return "userLogin";
-//        }
-//
-//        String password = loginDTO.getPassword();
-//
-//        if (!theUser.isMatchingPassword(password)) {
-//            errors.rejectValue("password", "password.invalid", "Invalid password");
-//            model.addAttribute("title", "Log In");
-//            return "userLogin";
-//        }
-//
-//        setUserInSession(request.getSession(), theUser);
-//
-//        return "redirect:";
-//    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
