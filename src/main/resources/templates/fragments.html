@@ -12,22 +12,24 @@
     <div class="container">
         <div class="nav-item">
             <a th:href="@{/}" class="navbar-brand">Home</a>
-            <a th:href="@{/login}" class="navbar-brand">Login</a>
             <a th:href="@{/pubs}" class="navbar-brand">View-All-Pubs</a>
         </div>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn btn-secondary">Login</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <div class="nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
+                        UserMenu
+                    </button>
 
-        <th:block th:if="${#request.remoteUser}">
-            <div class="nav-item dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    UserMenu
-                </button>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" th:text="${#request.remoteUser}">User</a>
-                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:text="${#authentication.name}">User</a>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
                 </div>
             </div>
-        </th:block>
+
     </div>
 </div>
 
