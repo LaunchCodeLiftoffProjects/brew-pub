@@ -19,8 +19,9 @@
             <a th:href="@{/userLogin}" class="navbar-brand">Login</a>
             <a th:href="@{/pubs}" class="navbar-brand">View-All-Pubs</a>
         </div>
-        <div>
-        <span class="username" th:text="${#request.remoteUser}">Guest</span>
+        <div th:if="${#request.remoteUser}">
+            <span class="navbar-brand" th:text="${#request.remoteUser}">Guest</span>
+            <a class="navbar-brand" th:href="@{/logout}">Logout</a>
         </div>
     </div>
 </div>
