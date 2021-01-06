@@ -35,6 +35,9 @@ public class ListController {
         columnChoices.put("address", "Address");
         columnChoices.put("city", "City");
         columnChoices.put("state", "State");
+        columnChoices.put("abv", "ABV");
+        columnChoices.put("style", "Style");
+        columnChoices.put("description", "Description");
         puborbrewChoices.put("pub", "Pub");
         puborbrewChoices.put("brew", "Brew");
         puborbrewChoices.put("both", "Both");
