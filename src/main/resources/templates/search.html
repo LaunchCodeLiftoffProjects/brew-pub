@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
 </head>
-<body class="container  body-content">
+<body class="container  body-content" onload="disableBrew()">
 
 <div th:replace="fragments :: page-header"></div>
 
@@ -32,6 +32,7 @@
         <input
                 type="radio"
                 name="puborbrew"
+                th:onclick="enableBothOnly()"
                 th:id="both"
                 th:value="both"/>
         <label th:for="puborbrew" th:text="Both"></label>
@@ -55,6 +56,12 @@
                    th:value="all"
                    th:checked="all"/>
             <label th:for="all" th:text="All"></label>
+
+        <input type="radio"
+               name="searchType"
+               th:class="both"
+               th:value="name"/>
+        <label th:for="name" th:text="Name"></label>
 
             <input type="radio"
                    name="searchType"
@@ -160,6 +167,18 @@ function disablePub() {
     pubChoice[i].disabled = true;
     }
 }
+
+function enableBothOnly() {
+    var pubChoice = document.getElementsByClassName("pub");
+    var brewChoice = document.getElementsByClassName("brew");
+    var bothChoice = document.getElementsByClassName("both");
+        for(var i=0; i<pubChoice.length; i++) {
+
+    pubChoice[i].disabled = true;
+    brewChoice[i].disabled=true;
+    }
+}
+
 </script>
 
 </body>

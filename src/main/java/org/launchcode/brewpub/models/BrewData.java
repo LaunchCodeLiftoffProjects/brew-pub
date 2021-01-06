@@ -45,6 +45,10 @@ public class BrewData {
             theValue = brew.getName();
         } else if (fieldName.equals("style")) {
             theValue = brew.getStyle().toString();
+        } else if (fieldName.equals("abv")) {
+            theValue = brew.getAbv().toString();
+        } else if (fieldName.equals("description")) {
+            theValue = brew.getDescription().toString();
         }
 
         return theValue;
@@ -67,6 +71,10 @@ public class BrewData {
             if (brew.getName().toLowerCase().contains(lower_val)) {
                 results.add(brew);
             } else if (brew.getStyle().toString().toLowerCase().contains(lower_val)) {
+                results.add(brew);
+            } else if (brew.getAbv().toString().toLowerCase().contains(lower_val)) {
+                results.add(brew);
+            } else if (brew.getDescription().toString().toLowerCase().contains(lower_val)) {
                 results.add(brew);
             }
 
