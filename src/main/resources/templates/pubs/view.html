@@ -13,6 +13,8 @@
         <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
         <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
 
+        <a type="button" class="btn btn-primary" th:href="@{'/pubs/addFavoritePub/{pubId}/'(pubId=${pub.id})}">Add To Favorites</a>
+
         <h2 th:text="${'Reviews of: ' + pub.name}">Reviews of PUb</h2>
         <a type="button" class="btn btn-primary" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a>
 
