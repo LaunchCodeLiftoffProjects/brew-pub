@@ -100,8 +100,6 @@
                 <label th:for="description" th:text="Description"></label>
             </p>
 
-
-
             <p>
                 <label for="searchTerm">Keyword:</label>
                 <input type="text" name="searchTerm" id="searchTerm" />
@@ -111,7 +109,6 @@
         </form>
 
         <hr />
-
 
         <table class="table table-striped job-listing">
             <tr th:each="pub : ${pubs}">
@@ -143,48 +140,47 @@
 
     </div>
 
-
-
     <script>
-function disableBrew() {
-    var pubChoice = document.getElementsByClassName("pub");
-    var brewChoice = document.getElementsByClassName("brew");
-    for(var i=0; i<pubChoice.length; i++) {
-          if(pubChoice[i].disabled = true){
-        pubChoice[i].disabled = false;
+    function disableBrew() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+
+        for(var i=0; i<pubChoice.length; i++) {
+            if(pubChoice[i].disabled = true){
+                pubChoice[i].disabled = false;
+                brewChoice[i].disabled = true;
+            }
         brewChoice[i].disabled = true;
-      }
-    brewChoice[i].disabled = true;
+        }
     }
-}
 
-function disablePub() {
-    var pubChoice = document.getElementsByClassName("pub");
-    var brewChoice = document.getElementsByClassName("brew");
+    function disablePub() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+
         for(var i=0; i<pubChoice.length; i++) {
-          if(brewChoice[i].disabled = true){
-        brewChoice[i].disabled = false;
+            if(brewChoice[i].disabled = true){
+                brewChoice[i].disabled = false;
+                pubChoice[i].disabled = true;
+            }
         pubChoice[i].disabled = true;
-      }
-    pubChoice[i].disabled = true;
+        }
     }
-}
 
-function enableBothOnly() {
-    var pubChoice = document.getElementsByClassName("pub");
-    var brewChoice = document.getElementsByClassName("brew");
-    var bothChoice = document.getElementsByClassName("both");
+    function enableBothOnly() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+        var bothChoice = document.getElementsByClassName("both");
+
         for(var i=0; i<pubChoice.length; i++) {
-
-    pubChoice[i].disabled = true;
-    brewChoice[i].disabled=true;
+            pubChoice[i].disabled = true;
+            brewChoice[i].disabled=true;
+        }
     }
-}
 
-</script>
+    </script>
 
     </div>
-
 
     <footer th:replace="fragments :: page-footer"></footer>
 
