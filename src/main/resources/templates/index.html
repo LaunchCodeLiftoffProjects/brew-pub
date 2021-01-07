@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="fragments :: head">
+<head th:replace="fragments :: head"></head>
 
-</head>
 <body>
-<div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
+    <nav th:replace="fragments :: page-header"></nav>
 
-    <form method="get" action="/createAccount">
-        <button type="submit">Create new account?</button>
-    </form>
-    <a th:href="@{'/pubs'}">List Pubs</a>
-    <a th:href="@{'/temporaryGetUserInfoPage'}">Edit account</a>
-</div>
+    <div class="container body-content">
+
+        <h1>Welcome!</h1>
+
+        <form method="get" action="/createAccount">
+            <button type="submit">Create new account?</button>
+        </form>
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
 
 </body>
 </html>
