@@ -92,4 +92,8 @@ public class User extends AbstractEntity{
     public void addFavoritePub(Pub pub) {
         this.favoritePubs.add(pub);
     }
+
+    public void removeFavoritePub(Pub pub) {
+        this.favoritePubs.remove(pub);
+    }
 }
