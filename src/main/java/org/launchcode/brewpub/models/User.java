@@ -3,10 +3,17 @@ package org.launchcode.brewpub.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity{
+
+    @ManyToMany(mappedBy = "pubFavoriteUser")
+    private final List<Pub> favoritePubs = new ArrayList<>();
+
     @NotNull
     private String firstName;
 
@@ -78,4 +85,11 @@ public class User extends AbstractEntity{
         return encoder.matches(password, pwhash);
     }
 
+    public List<Pub> getFavoritePubs() {
+        return favoritePubs;
+    }
+
+    public void addFavoritePub(Pub pub) {
+        this.favoritePubs.add(pub);
+    }
 }

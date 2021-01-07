@@ -1,12 +1,19 @@
 package org.launchcode.brewpub.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pub extends AbstractEntity{
+
+    @ManyToMany
+    private final List<User> pubFavoriteUser = new ArrayList<>();
+
     @NotNull
     @NotBlank
     @Size(min =4, max = 125, message= "A Pub name must be entered.")
@@ -28,11 +35,6 @@ public class Pub extends AbstractEntity{
 
     @Size(max = 5)
     private String areaCode;
-
-
-    //@OneToMany
-    //@JoinColumn
-    //private final List<Brew> brews = new ArrayList<>();
 
     public Pub(String name, String address, String city, String state, String areaCode){
         this.name = name;
@@ -83,5 +85,13 @@ public class Pub extends AbstractEntity{
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
+    }
+
+    public List<User> getPubFavoriteUser() {
+        return pubFavoriteUser;
+    }
+
+    public void addPubFavoriteUser(User user) {
+        this.pubFavoriteUser.add(user);
     }
 }
