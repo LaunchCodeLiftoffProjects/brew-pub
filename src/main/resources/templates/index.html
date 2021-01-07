@@ -11,9 +11,11 @@
 
         <h1>Welcome!</h1>
 
-        <form method="get" action="/createAccount">
-            <button type="submit">Create new account?</button>
-        </form>
+        <div sec:authorize="!isAuthenticated()">
+            <form method="get" action="/createAccount">
+                <button type="submit">Create new account?</button>
+            </form>
+        </div>
     </div>
 
 
