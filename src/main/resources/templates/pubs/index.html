@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
-</head>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
 <body>
 
-<div th:replace="fragments :: page-header"></div>
+    <nav th:replace="fragments :: page-header"></nav>
 
-<p th:unless="${pubs} and ${pubs.size()}">no pubs!</p>
+    <div class="container body-content">
+        <p th:unless="${pubs} and ${pubs.size()}">no pubs!</p>
+        <h2>Pubs</h2>
+        <ul>
+            <li th:each="pub : ${pubs}">
+                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a>
+            </li>
+        </ul>
+        <a th:href="@{'/pubs/add'}">Add Pubs</a>
 
-<div class="container body-content">
-    <h2>Pubs</h2>
-    <ul>
-        <li th:each="pub : ${pubs}">
-            <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a>
-        </li>
-    </ul>
-    <a th:href="@{'/pubs/add'}">Add Pubs</a>
+    </div>
 
-</div>
+    <footer th:replace="fragments :: page-footer"></footer>
 
 </body>
 </html>
