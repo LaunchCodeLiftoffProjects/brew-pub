@@ -1,150 +1,151 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
-</head>
-<body class="container  body-content" onload="disableBrew()">
+<head th:replace="fragments :: head"></head>
+<body onload="disableBrew()">
 
-<div th:replace="fragments :: page-header"></div>
+    <nav th:replace="fragments :: page-header"></nav>
 
-<h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+    <div class="container body-content"><h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-<form th:action="@{/search/results}" method = "post">
-    <h2>Search by:</h2>
+        <form th:action="@{/search/results}" method = "post">
+            <h2>Search by:</h2>
 
-    <p>
-        <input
-                type="radio"
-                name="puborbrew"
-                th:id="pub"
-                th:onclick="disableBrew()"
-                th:value="pub"
-                th:checked="pub"/>
-        <label th:onclick="disableBrew()" th:for="puborbrew" th:text="Pub"></label>
-
-        <input
-                type="radio"
-                name="puborbrew"
-                th:id="brew"
-                th:onclick="disablePub()"
-                th:value="brew"/>
-        <label th:onclick="disablePub()" th:for="puborbrew" th:text="Brew"></label>
-
-        <input
-                type="radio"
-                name="puborbrew"
-                th:onclick="enableBothOnly()"
-                th:id="both"
-                th:value="both"/>
-        <label th:for="puborbrew" th:text="Both"></label>
-    </p>
-
-    <h2>Category:</h2>
-    <p>
-            <!--old code -->
-            <!--<span th:each="column : ${columns}">
+            <p>
                 <input
                         type="radio"
-                        name="searchType"
-                        th:id="${column.key}"
-                        th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
-                <label th:for="${column.key}" th:text="${column.value}"></label>
-            </span>-->
+                        name="puborbrew"
+                        th:id="pub"
+                        th:onclick="disableBrew()"
+                        th:value="pub"
+                        th:checked="pub"/>
+                <label th:onclick="disableBrew()" th:for="puborbrew" th:text="Pub"></label>
 
-            <input type="radio"
-                   name="searchType"
-                   th:class="both"
-                   th:value="all"
-                   th:checked="all"/>
-            <label th:for="all" th:text="All"></label>
+                <input
+                        type="radio"
+                        name="puborbrew"
+                        th:id="brew"
+                        th:onclick="disablePub()"
+                        th:value="brew"/>
+                <label th:onclick="disablePub()" th:for="puborbrew" th:text="Brew"></label>
 
-        <input type="radio"
-               name="searchType"
-               th:class="both"
-               th:value="name"/>
-        <label th:for="name" th:text="Name"></label>
-
-            <input type="radio"
-                   name="searchType"
-                   class="pub"
-                   th:value="address"/>
-            <label th:for="address" th:text="Address"></label>
-
-            <input type="radio"
-                   name="searchType"
-                   class="pub"
-                   th:value="city"/>
-            <label th:for="city" th:text="City"></label>
-
-            <input type="radio"
-                   name="searchType"
-                   class="pub"
-                   th:value="state"/>
-        <label th:for="state" th:text="State"></label>
-
-            <input type="radio"
-                   name="searchType"
-               class="brew"
-               th:value="style"/>
-        <label th:for="style" th:text="Style"></label>
-
-            <input type="radio"
-                   name="searchType"
-                   class="brew"
-                   th:value="abv"/>
-            <label th:for="abv" th:text="ABV"></label>
-
-            <input type="radio"
-                   name="searchType"
-                   class="brew"
-                   th:value="description"/>
-            <label th:for="description" th:text="Description"></label>
-    </p>
-
-
-
-    <p>
-        <label for="searchTerm">Keyword:</label>
-        <input type="text" name="searchTerm" id="searchTerm" />
-    </p>
-
-    <input type="submit" value="Search" />
-</form>
-
-<hr />
-
-
-<table class="table table-striped job-listing">
-    <tr th:each="pub : ${pubs}">
-        <td>
-            <p>
-                Pub Id:
-                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+                <input
+                        type="radio"
+                        name="puborbrew"
+                        th:onclick="enableBothOnly()"
+                        th:id="both"
+                        th:value="both"/>
+                <label th:for="puborbrew" th:text="Both"></label>
             </p>
-            <p th:text="${'Name: ' + pub.name}"></p>
-            <p th:text="${pub.state}"></p>
 
-        </td>
-    </tr>
+            <h2>Category:</h2>
+            <p>
+                <!--old code -->
+                <!--<span th:each="column : ${columns}">
+                    <input
+                            type="radio"
+                            name="searchType"
+                            th:id="${column.key}"
+                            th:value="${column.key}"
+                            th:checked="${column.key == 'all'}"/>
+                    <label th:for="${column.key}" th:text="${column.value}"></label>
+                </span>-->
 
-    <tr th:each="brew : ${brews}">
-        <td>
-            <!--<p>
-                Brew Id:
-                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
-            </p>-->
-            <p th:text="${'Name: ' + brew.name}"></p>
-            <p th:text="${'Style: ' + brew.style}"></p>
-            <p th:text="${'ABV: ' + brew.abv}"></p>
-            <p th:text="${'Description: ' + brew.description}"></p>
+                <input type="radio"
+                       name="searchType"
+                       th:class="both"
+                       th:value="all"
+                       th:checked="all"/>
+                <label th:for="all" th:text="All"></label>
 
-        </td>
-    </tr>
-</table>
+                <input type="radio"
+                       name="searchType"
+                       th:class="both"
+                       th:value="name"/>
+                <label th:for="name" th:text="Name"></label>
 
-</div>
+                <input type="radio"
+                       name="searchType"
+                       class="pub"
+                       th:value="address"/>
+                <label th:for="address" th:text="Address"></label>
 
-<script>
+                <input type="radio"
+                       name="searchType"
+                       class="pub"
+                       th:value="city"/>
+                <label th:for="city" th:text="City"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="pub"
+                       th:value="state"/>
+                <label th:for="state" th:text="State"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="style"/>
+                <label th:for="style" th:text="Style"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="abv"/>
+                <label th:for="abv" th:text="ABV"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="description"/>
+                <label th:for="description" th:text="Description"></label>
+            </p>
+
+
+
+            <p>
+                <label for="searchTerm">Keyword:</label>
+                <input type="text" name="searchTerm" id="searchTerm" />
+            </p>
+
+            <input type="submit" value="Search" />
+        </form>
+
+        <hr />
+
+
+        <table class="table table-striped job-listing">
+            <tr th:each="pub : ${pubs}">
+                <td>
+                    <p>
+                        Pub Id:
+                        <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+                    </p>
+                    <p th:text="${'Name: ' + pub.name}"></p>
+                    <p th:text="${pub.state}"></p>
+
+                </td>
+            </tr>
+
+            <tr th:each="brew : ${brews}">
+                <td>
+                    <!--<p>
+                        Brew Id:
+                        <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+                    </p>-->
+                    <p th:text="${'Name: ' + brew.name}"></p>
+                    <p th:text="${'Style: ' + brew.style}"></p>
+                    <p th:text="${'ABV: ' + brew.abv}"></p>
+                    <p th:text="${'Description: ' + brew.description}"></p>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+
+    <script>
 function disableBrew() {
     var pubChoice = document.getElementsByClassName("pub");
     var brewChoice = document.getElementsByClassName("brew");
@@ -181,6 +182,11 @@ function enableBothOnly() {
 }
 
 </script>
+
+    </div>
+
+
+    <footer th:replace="fragments :: page-footer"></footer>
 
 </body>
 </html>
