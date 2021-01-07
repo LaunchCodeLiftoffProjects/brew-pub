@@ -129,6 +129,10 @@
                         Brew Id:
                         <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
                     </p>-->
+                    <p> Brew Id:
+                        <a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}"
+                           th:text="${brew.id}"></a>
+                    </p>
                     <p th:text="${'Name: ' + brew.name}"></p>
                     <p th:text="${'Style: ' + brew.style}"></p>
                     <p th:text="${'ABV: ' + brew.abv}"></p>
