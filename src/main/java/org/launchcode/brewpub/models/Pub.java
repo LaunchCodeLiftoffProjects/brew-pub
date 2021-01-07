@@ -94,4 +94,8 @@ public class Pub extends AbstractEntity{
     public void addPubFavoriteUser(User user) {
         this.pubFavoriteUser.add(user);
     }
+
+    public void removePubFavoriteUser(User user) {
+        this.pubFavoriteUser.remove(user);
+    }
 }
