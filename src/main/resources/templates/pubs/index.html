@@ -8,14 +8,16 @@
     <nav th:replace="fragments :: page-header"></nav>
 
     <div class="container body-content">
+        <p th:unless="${pubs} and ${pubs.size()}">no pubs!</p>
+        <h2>Pubs</h2>
+        <ul>
+            <li th:each="pub : ${pubs}">
+                <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a>
+            </li>
+        </ul>
+        <a th:href="@{'/pubs/add'}">Add Pubs</a>
 
-        <h1>Welcome!</h1>
-
-        <form method="get" action="/createAccount">
-            <button type="submit">Create new account?</button>
-        </form>
     </div>
-
 
     <footer th:replace="fragments :: page-footer"></footer>
 
