@@ -62,28 +62,34 @@ public class PubController {
 
     @GetMapping("view/{pubID}")
     public String viewPubInfo(@PathVariable Integer pubID,
-                              Model model) {
+                              Model model,
+                              Principal principal) {
+
         if (pubID == null) {
             return "pubs/index";
         } else {
             Optional<Pub> result = pubRepository.findById(pubID);
+            User user = userRepository.findByUsername(principal.getName());
+
             if (result.isEmpty()) {
                 model.addAttribute("title", "Invalid Pub ID");
-            } else
-                model.addAttribute("pub", pubRepository.findById(pubID));
+            } else {
+                Pub pub = result.get();
+                Boolean isFavorite = user.getFavoritePubs().contains(pub);
+
+                model.addAttribute("pub", pub);
+                model.addAttribute("isFavorite", isFavorite);
+                model.addAttribute("title", "Pub: " + pub.getName());
                 model.addAttribute("reviews", pubReviewRepository.findAllByPubId(pubID));
                 model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
-            Pub pub = result.get();
-            model.addAttribute("title", "Pub: " + pub.getName());
-            model.addAttribute("pub", pub);
+            }
         }
         return "pubs/view";
     }
 
     @GetMapping("addFavoritePub/{pubId}/")
     public String processAddFavoritePub(@PathVariable Integer pubId,
-                                        Principal principal,
-                                        Model model) {
+                                        Principal principal) {
         Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
         Optional<Pub> resultPub = pubRepository.findById(pubId);
 
@@ -106,8 +112,28 @@ public class PubController {
         return "redirect:";
     }
 
-    @GetMapping("removeFavoritePUb")
-    public String processRemoveFavoritePub() {
+    @GetMapping("removeFavoritePub/{pubId}/")
+    public String processRemoveFavoritePub(@PathVariable Integer pubId,
+                                           Principal principal) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Pub> resultPub = pubRepository.findById(pubId);
+
+        if (pubId == null || resultPub.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            return "redirect:/pubs/view/" + pubId;
+        } else if (resultPub.isPresent() && resultUser.isPresent()) {
+            Pub pub = resultPub.get();
+            User user = resultUser.get();
+
+            user.removeFavoritePub(pub);
+            pub.removePubFavoriteUser(user);
+
+            userRepository.save(user);
+            pubRepository.save(pub);
+
+            return "redirect:/pubs/view/" + pubId;
+        }
         return "redirect:";
     }
 
