@@ -9,7 +9,7 @@
 
     <div class="container body-content">
 
-        <h1 th:text="${pub.name} + ' : Review'">brew-pub-name</h1>
+        <h1 th:text="${brew.name} + ' : Review'">brew-pub-name</h1>
 
         <form th:action="@{/review/brew/}" method="post">
 
@@ -52,6 +52,7 @@
                 <label>brewId</label>
                 <input type="text" name="brewId" th:value="${brew.id}">
             </div>
+
 
             <input type="submit">
 
