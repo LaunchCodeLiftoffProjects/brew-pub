@@ -1,9 +1,11 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.Pub;
+import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.data.PubReviewRepository;
+import org.launchcode.brewpub.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +28,9 @@ public class PubController {
 
     @Autowired
     private BrewRepository brewRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping("")
     public String index(Model model) {
@@ -72,6 +78,37 @@ public class PubController {
             model.addAttribute("pub", pub);
         }
         return "pubs/view";
+    }
+
+    @GetMapping("addFavoritePub/{pubId}/")
+    public String processAddFavoritePub(@PathVariable Integer pubId,
+                                        Principal principal,
+                                        Model model) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Pub> resultPub = pubRepository.findById(pubId);
+
+        if (pubId == null || resultPub.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            return "redirect:/pubs/view/" + pubId;
+        } else if (resultPub.isPresent() && resultUser.isPresent()) {
+            Pub pub = resultPub.get();
+            User user = resultUser.get();
+
+            user.addFavoritePub(pub);
+            pub.addPubFavoriteUser(user);
+
+            userRepository.save(user);
+            pubRepository.save(pub);
+
+            return "redirect:/pubs/view/" + pubId;
+        }
+        return "redirect:";
+    }
+
+    @GetMapping("removeFavoritePUb")
+    public String processRemoveFavoritePub() {
+        return "redirect:";
     }
 
 
