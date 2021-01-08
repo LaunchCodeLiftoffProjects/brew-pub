@@ -21,7 +21,7 @@
             <a type="button" class="btn btn-primary" th:href="@{'/pubs/removeFavoritePub/{pubId}/'(pubId=${pub.id})}">Remove From Favorites</a>
         </th:block>
 
-        <h2 th:text="${'Reviews of: ' + pub.name}">Reviews of PUb</h2>
+        <h2 th:text="${'Reviews of: ' + pub.name}">Reviews of Pub</h2>
         <a type="button" class="btn btn-primary" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a>
 
         <div>
