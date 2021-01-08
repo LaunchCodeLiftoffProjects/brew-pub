@@ -8,7 +8,7 @@
     <nav th:replace="fragments :: page-header"></nav>
 
     <div class="container body-content">
-        <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
+        <a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}"><h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1></a>
         <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
 
         <th:block th:if="${!isFavorite}">
