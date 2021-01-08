@@ -3,9 +3,11 @@ package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.Brew;
 import org.launchcode.brewpub.models.Pub;
+import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
+import org.launchcode.brewpub.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +30,9 @@ public class BrewController {
 
     @Autowired
     private BrewRepository brewRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("{pubId}/add")
     public String displayAddBrewForm(@PathVariable Integer pubId,
@@ -71,10 +77,12 @@ public class BrewController {
     @GetMapping("{pubId}/view/{brewId}")
     public String viewBrew(@PathVariable Integer pubId,
                            @PathVariable Integer brewId,
-                           Model model) {
+                           Model model,
+                           Principal principal) {
 
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
+        User user = userRepository.findByUsername(principal.getName());
 
         if (resultPub.isEmpty() || resultBrew.isEmpty()) {
             return "redirect:/pubs";
@@ -85,13 +93,40 @@ public class BrewController {
             if (resultPub.isEmpty() || resultBrew.isEmpty()) {
                 return "pubs/index";
             } else {
+                Boolean isFavorite = user.getFavoriteBrews().contains(brew);
                 model.addAttribute("brew", brew);
                 model.addAttribute("pub", pub);
                 model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
-
+                model.addAttribute("isFavorite", isFavorite);
                 return "brews/view";
             }
         }
+    }
+
+    @GetMapping("addFavoriteBrew/{brewId}")
+    public String processAddFavoriteBrew(@PathVariable Integer brewId,
+                                         Principal principal) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+        if (brewId == null || resultBrew.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            Brew brew = resultBrew.get();
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        } else if (resultUser.isPresent() && resultBrew.isPresent()) {
+            Brew brew = resultBrew.get();
+            User user = resultUser.get();
+
+            user.addFavoriteBrew(brew);
+            brew.addBrewFavoriteUser(user);
+
+            userRepository.save(user);
+            brewRepository.save(brew);
+
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        }
+        return "redirect:";
     }
 
 }
