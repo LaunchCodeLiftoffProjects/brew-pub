@@ -69,16 +69,19 @@ public class PubController {
             return "pubs/index";
         } else {
             Optional<Pub> result = pubRepository.findById(pubID);
-            User user = userRepository.findByUsername(principal.getName());
 
             if (result.isEmpty()) {
                 model.addAttribute("title", "Invalid Pub ID");
             } else {
                 Pub pub = result.get();
-                Boolean isFavorite = user.getFavoritePubs().contains(pub);
+
+                if (principal != null) {
+                    User user = userRepository.findByUsername(principal.getName());
+                    Boolean isFavorite = user.getFavoritePubs().contains(pub);
+                    model.addAttribute("isFavorite", isFavorite);
+                }
 
                 model.addAttribute("pub", pub);
-                model.addAttribute("isFavorite", isFavorite);
                 model.addAttribute("title", "Pub: " + pub.getName());
                 model.addAttribute("reviews", pubReviewRepository.findAllByPubId(pubID));
                 model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
