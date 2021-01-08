@@ -129,4 +129,29 @@ public class BrewController {
         return "redirect:";
     }
 
+    @GetMapping("removeFavoriteBrew/{brewId}")
+    public String processRemoveFavoriteBrew(@PathVariable Integer brewId,
+                                            Principal principal) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+        if (brewId == null || resultBrew.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            Brew brew = resultBrew.get();
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        } else if (resultUser.isPresent() && resultBrew.isPresent()) {
+            Brew brew = resultBrew.get();
+            User user = resultUser.get();
+
+            user.removeFavoriteBrew(brew);
+            brew.removeBrewFavoriteUser(user);
+
+            userRepository.save(user);
+            brewRepository.save(brew);
+
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        }
+        return "redirect:";
+    }
 }
