@@ -14,6 +14,9 @@ public class User extends AbstractEntity{
     @ManyToMany(mappedBy = "pubFavoriteUser")
     private final List<Pub> favoritePubs = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "brewFavoriteUser")
+    private final List<Brew> favoriteBrews = new ArrayList<>();
+
     @NotNull
     private String firstName;
 
@@ -95,5 +98,17 @@ public class User extends AbstractEntity{
 
     public void removeFavoritePub(Pub pub) {
         this.favoritePubs.remove(pub);
+    }
+
+    public List<Brew> getFavoriteBrews() {
+        return favoriteBrews;
+    }
+
+    public void addFavoriteBrew(Brew brew) {
+        this.favoriteBrews.add(brew);
+    }
+
+    public void removeFavoriteBrew(Brew brew) {
+        this.favoriteBrews.remove(brew);
     }
 }
