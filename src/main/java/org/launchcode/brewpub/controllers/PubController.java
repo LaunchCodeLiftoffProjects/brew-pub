@@ -85,6 +85,7 @@ public class PubController {
                 model.addAttribute("title", "Pub: " + pub.getName());
                 model.addAttribute("reviews", pubReviewRepository.findAllByPubId(pubID));
                 model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
+                model.addAttribute("favoritesCount", pub.getPubFavoriteUser().size());
             }
         }
         return "pubs/view";

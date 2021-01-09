@@ -16,6 +16,20 @@
             </div>
         </div>
 
+        <div class="container-fluid">
+            <div class="row justify-content-center m-2">
+                <span sec:authorize="isAuthenticated()">
+                    <th:block th:if="${!isFavorite}">
+                        <a type="button" class="btn btn-primary m-2" th:href="@{'/pubs/brews/addFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Add Brew To Favorites</a>
+                    </th:block>
+
+                    <th:block th:if="${isFavorite}">
+                        <a type="button" class="btn btn-primary m-2" th:href="@{'/pubs/brews/removeFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Remove Brew From Favorites</a>
+                    </th:block>
+                </span>
+                <span class="h5 m-2" th:text="${favoritesCount + ' people have favorited this brew.'}"></span>
+            </div>
+        </div>
 
         <div class="container-fluid">
             <div class="row">
@@ -48,43 +62,27 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    <div class="row justify-content-center">
-                        <span sec:authorize="isAuthenticated()">
-                            <th:block th:if="${!isFavorite}">
-                                <a type="button" class="btn btn-primary" th:href="@{'/pubs/brews/addFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Add Brew To Favorites</a>
-                            </th:block>
-
-                            <th:block th:if="${isFavorite}">
-                                <a type="button" class="btn btn-primary" th:href="@{'/pubs/brews/removeFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Remove Brew From Favorites</a>
-                            </th:block>
-                        </span>
-                    </div>
                 </div>
 
                 <div class="col-sm-8">
                     <div class="row justify-content-center">
                         <span class="h3 m-2" th:text="${'Reviews of : ' + brew.name}">Reviews of Brew</span>
-                        <span><a type="button" class="btn btn-primary p-1 m-2" th:href="@{/review/{pubId}/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Review This Brew</a></span>
+                        <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{/review/{pubId}/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Review This Brew</a></span>
                     </div>
 
                     <div>
                         <table   class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">Review ID</th>
-                                <th scope="col">Brew ID</th>
-                                <th scope="col">Review Title</th>
-                                <th scope="col">Rating</th>
-                                <th scope="col">Review</th>
+                                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                                <th scope="col" class="w-50 p-3 text-center">Review</th>
                             </tr>
                             </thead>
                             <tbody>
                             <th:block th:each="review : ${reviews}">
                                 <tr class="text-center">
-                                    <td scope="row" th:text="${review.id}">ID</td>
-                                    <td th:text="${review.brew.id}">BrewID</td>
-                                    <th th:text="${review.reviewTitle}">Title</th>
+                                    <td scope="row" th:text="${review.reviewTitle}">Title</td>
                                     <td th:text="${review.rating}">Rating</td>
                                     <td th:text="${review.reviewText}">ReviewText</td>
                                 </tr>

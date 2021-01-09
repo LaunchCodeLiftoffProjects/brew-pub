@@ -100,6 +100,7 @@ public class BrewController {
                 model.addAttribute("title","View Brew : " + brew.getName());
                 model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
                 model.addAttribute("isFavorite", isFavorite);
+                model.addAttribute("favoritesCount", brew.getBrewFavoriteUser().size());
                 return "brews/view";
             }
         }
