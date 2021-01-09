@@ -13,18 +13,19 @@
         <form th:action="@{/pubs/brews/add/}" method="post">
 
             <div class="form-group">
-                <label>Name</label>
-                <input class="form-control"
-                       th:field="${brew.name}"/>
+                <label>Name : <input class="form-control" th:field="${brew.name}"/></label>
                 <span th:errors="${brew.name}"
                       class="error"></span>
             </div>
 
             <div class="form-group">
-                <label>IBU</label>
-                <input class="form-control"
-                       placeholder="Optional..."
-                       th:field="${brew.ibu}"/>
+                <label>Style : <input class="form-control" placeholder="Optional..." th:field="${brew.style}"/></label>
+                <span th:errors="${brew.style}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label>IBU : <input class="form-control" placeholder="Optional..." th:field="${brew.ibu}"/></label>
                 <th:block th:if="${#fields.hasErrors('brew.ibu')}">
                     <span class="error">
                             IBU must be whole number between 0 and 3,000</span>
@@ -32,38 +33,20 @@
             </div>
 
             <div class="form-group">
-                <label>ABV</label>
-                <input class="form-control"
-                       placeholder="Optional..."
-                       th:field="${brew.abv}"/>
+                <label>ABV : <input class="form-control" placeholder="Optional..." th:field="${brew.abv}"/></label>
                 <span th:errors="${brew.abv}"
                       class="error"></span>
             </div>
 
             <div class="form-group">
-                <label>Brewer</label>
-                <input class="form-control"
-                       placeholder="Optional..."
-                       th:field="${brew.brewer}"/>
+                <label>Brewer : <input class="form-control" placeholder="Optional..." th:field="${brew.brewer}"/></label>
                 <span th:errors="${brew.brewer}"
                       class="error"></span>
             </div>
 
             <div class="form-group">
-                <label>Description</label>
-                <input class="form-control"
-                       placeholder="Optional..."
-                       th:field="${brew.description}"/>
+                <label>Description : <textarea cols="60" class="form-control" placeholder="Optional..." th:field="${brew.description}"/></label>
                 <span th:errors="${brew.description}"
-                      class="error"></span>
-            </div>
-
-            <div class="form-group">
-                <label>Style</label>
-                <input class="form-control"
-                       placeholder="Optional..."
-                       th:field="${brew.style}"/>
-                <span th:errors="${brew.style}"
                       class="error"></span>
             </div>
 
@@ -73,9 +56,7 @@
             </div>
 
             <input type="submit">
-
-            <button type="button"><a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}">Cancel</a> </button>
-
+            <a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}"><button type="button">Cancel</button></a>
         </form>
     </div>
 
