@@ -41,7 +41,7 @@ public class PubController {
 
     @GetMapping("add")
     public String displayAddPubForm(Model model) {
-        model.addAttribute("title", "Pubs");
+        model.addAttribute("title", "Add Pub");
         model.addAttribute("pubs", pubRepository.findAll());
         model.addAttribute(new Pub());
         return "/pubs/add";
@@ -50,7 +50,7 @@ public class PubController {
     @PostMapping("add")
     public String processAddPubForm(@ModelAttribute @Valid Pub newPub, Errors errors, Model model){
         if (errors.hasErrors()){
-            model.addAttribute("title", "Pubs");
+            model.addAttribute("title", "Add Pub");
             model.addAttribute("pubs", pubRepository.findAll());
             //model.addAttribute("pubs", newPub);
             return "/pubs/add";

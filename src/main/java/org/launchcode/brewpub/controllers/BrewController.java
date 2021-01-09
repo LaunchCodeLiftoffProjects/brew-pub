@@ -44,6 +44,7 @@ public class BrewController {
             return "pubs/index";
         } else {
             Pub pub = result.get();
+            model.addAttribute("title", "Add Brew For : " + pub.getName());
             model.addAttribute("pub", pub);
             model.addAttribute(new Brew());
             return "brews/add";
@@ -58,16 +59,16 @@ public class BrewController {
                                      Model model) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+        Pub pub = result.get();
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
         } else if (errors.hasErrors()) {
-            Pub pub = result.get();
             model.addAttribute("errors", errors);
+            model.addAttribute("title", "Add Brew For : " + pub.getName());
             model.addAttribute("pub", pub);
             return "brews/add";
         } else {
-            Pub pub = result.get();
             newBrew.setPub(pub);
             brewRepository.save(newBrew);
             return "redirect:/pubs/view/" + pubId;
@@ -96,6 +97,7 @@ public class BrewController {
                 Boolean isFavorite = user.getFavoriteBrews().contains(brew);
                 model.addAttribute("brew", brew);
                 model.addAttribute("pub", pub);
+                model.addAttribute("title","View Brew : " + brew.getName());
                 model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
                 model.addAttribute("isFavorite", isFavorite);
                 return "brews/view";
