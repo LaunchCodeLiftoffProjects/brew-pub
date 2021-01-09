@@ -1,6 +1,8 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.Pub;
+import org.launchcode.brewpub.models.PubReview;
+import org.launchcode.brewpub.models.Review;
 import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -80,12 +83,14 @@ public class PubController {
                     Boolean isFavorite = user.getFavoritePubs().contains(pub);
                     model.addAttribute("isFavorite", isFavorite);
                 }
+                List<PubReview> reviews = pubReviewRepository.findAllByPubId(pubID);
 
                 model.addAttribute("pub", pub);
                 model.addAttribute("title", "Pub: " + pub.getName());
-                model.addAttribute("reviews", pubReviewRepository.findAllByPubId(pubID));
+                model.addAttribute("reviews", reviews);
                 model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
                 model.addAttribute("favoritesCount", pub.getPubFavoriteUser().size());
+                model.addAttribute("averageRating", calculateAverageRating(reviews));
             }
         }
         return "pubs/view";
@@ -139,6 +144,20 @@ public class PubController {
             return "redirect:/pubs/view/" + pubId;
         }
         return "redirect:";
+    }
+
+    private Double calculateAverageRating(List<PubReview> reviews) {
+        Integer ratingTotal = 0;
+        Integer numberOfRatings = reviews.size();
+
+        for (Review review : reviews) {
+            ratingTotal += review.getRating();
+        }
+
+        Double average = ratingTotal.doubleValue() / numberOfRatings.doubleValue();
+        Long result = Math.round(average*10);
+
+        return result.doubleValue()/10;
     }
 
 

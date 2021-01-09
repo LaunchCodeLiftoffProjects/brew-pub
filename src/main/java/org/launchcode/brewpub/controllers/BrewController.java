@@ -1,9 +1,7 @@
 package org.launchcode.brewpub.controllers;
 
 
-import org.launchcode.brewpub.models.Brew;
-import org.launchcode.brewpub.models.Pub;
-import org.launchcode.brewpub.models.User;
+import org.launchcode.brewpub.models.*;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -83,7 +82,6 @@ public class BrewController {
 
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
-        User user = userRepository.findByUsername(principal.getName());
 
         if (resultPub.isEmpty() || resultBrew.isEmpty()) {
             return "redirect:/pubs";
@@ -94,16 +92,23 @@ public class BrewController {
             if (resultPub.isEmpty() || resultBrew.isEmpty()) {
                 return "pubs/index";
             } else {
-                Boolean isFavorite = user.getFavoriteBrews().contains(brew);
+
+                if (principal != null) {
+                    User user = userRepository.findByUsername(principal.getName());
+                    Boolean isFavorite = user.getFavoriteBrews().contains(brew);
+                    model.addAttribute("isFavorite", isFavorite);
+                }
+                List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
+
                 model.addAttribute("brew", brew);
                 model.addAttribute("pub", pub);
                 model.addAttribute("title","View Brew : " + brew.getName());
-                model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
-                model.addAttribute("isFavorite", isFavorite);
+                model.addAttribute("reviews", reviews);
                 model.addAttribute("favoritesCount", brew.getBrewFavoriteUser().size());
-                return "brews/view";
+                model.addAttribute("averageRating", calculateAverageRating(reviews));
             }
         }
+        return "brews/view";
     }
 
     @GetMapping("addFavoriteBrew/{brewId}")
@@ -156,5 +161,19 @@ public class BrewController {
             return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
         }
         return "redirect:";
+    }
+
+    private Double calculateAverageRating(List<BrewReview> reviews) {
+        Integer ratingTotal = 0;
+        Integer numberOfRatings = reviews.size();
+
+        for (Review review : reviews) {
+            ratingTotal += review.getRating();
+        }
+
+        Double average = ratingTotal.doubleValue() / numberOfRatings.doubleValue();
+        Long result = Math.round(average*10);
+
+        return result.doubleValue()/10;
     }
 }
