@@ -68,7 +68,7 @@ public class AuthenticationController {
         try {
             request.login(createAccountDTO.getUsername(), createAccountDTO.getPassword());
         } catch (ServletException exception) {
-
+            return "redirect:/login";
         }
 
         return "redirect:";
