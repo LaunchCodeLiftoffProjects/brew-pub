@@ -1,5 +1,6 @@
 package org.launchcode.brewpub.controllers;
 
+import org.launchcode.brewpub.models.AbstractEntity;
 import org.launchcode.brewpub.models.Brew;
 import org.launchcode.brewpub.models.Pub;
 import org.launchcode.brewpub.models.data.BrewRepository;
@@ -24,34 +25,22 @@ public class HomeController {
     @RequestMapping("")
     public String index(Model model) {
         model.addAttribute("title","Home");
-        model.addAttribute("recentPubs", getFiveMostRecentPubs(pubRepository.findAll()));
-        model.addAttribute("recentBrews", getFiveMostRecentBrews(brewRepository.findAll()));
+        model.addAttribute("recentPubs", getFiveMostRecent(pubRepository.findAll()));
+        model.addAttribute("recentBrews", getFiveMostRecent(brewRepository.findAll()));
         return "index";
     }
 
-    private List<Pub> getFiveMostRecentPubs(List<Pub> items) {
+    private List<? extends AbstractEntity> getFiveMostRecent(List<? extends AbstractEntity> items) {
         if (items.size() <= 5) {
             return items;
         } else {
-            List<Pub> pubsRecent = new ArrayList<>();
+            List<AbstractEntity> fiveMostRecent = new ArrayList<>();
             int index = items.size() - 5;
             for (int i = index; i < items.size(); i++ ) {
-                pubsRecent.add(items.get(i));
+                fiveMostRecent.add(items.get(i));
             }
-            return pubsRecent;
+            return fiveMostRecent;
         }
     }
 
-    private List<Brew> getFiveMostRecentBrews(List<Brew> items) {
-        if (items.size() <= 5) {
-            return items;
-        } else {
-            List<Brew> pubsRecent = new ArrayList<>();
-            int index = items.size() - 5;
-            for (int i = index; i < items.size(); i++) {
-                pubsRecent.add(items.get(i));
-            }
-            return pubsRecent;
-        }
-    }
 }
