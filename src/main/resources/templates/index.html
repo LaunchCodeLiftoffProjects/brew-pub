@@ -12,9 +12,9 @@
         <h1>Welcome!</h1>
 
         <div sec:authorize="!isAuthenticated()">
-            <form method="get" action="/createAccount">
+            <a th:href="@{'/createAccount'}">
                 <button type="submit">Create new account?</button>
-            </form>
+            </a>
         </div>
     </div>
 
