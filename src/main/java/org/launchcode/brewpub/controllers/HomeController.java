@@ -1,8 +1,6 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.AbstractEntity;
-import org.launchcode.brewpub.models.Brew;
-import org.launchcode.brewpub.models.Pub;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
