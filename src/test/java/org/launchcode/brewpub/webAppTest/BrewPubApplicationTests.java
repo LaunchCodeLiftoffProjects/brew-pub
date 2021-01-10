@@ -1,4 +1,4 @@
-package org.launchcode.brewpub;
+package org.launchcode.brewpub.webAppTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
