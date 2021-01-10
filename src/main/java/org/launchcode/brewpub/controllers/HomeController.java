@@ -29,7 +29,10 @@ public class HomeController {
     }
 
     private List<? extends AbstractEntity> getFiveMostRecent(List<? extends AbstractEntity> items) {
-        if (items.size() <= 5) {
+        if (items == null || items.isEmpty()) {
+            List<AbstractEntity> empty = new ArrayList<>();
+            return empty;
+        } else if (items.size() <= 5) {
             return items;
         } else {
             List<AbstractEntity> fiveMostRecent = new ArrayList<>();
