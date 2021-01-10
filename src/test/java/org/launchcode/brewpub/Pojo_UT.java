@@ -20,9 +20,7 @@ import java.util.List;
 
 public class Pojo_UT {
 
-    private String packageName = "org.launchcode.brewpub";
     private List<PojoClass> pojoClasses = new ArrayList<>();
-
 
     @Before
     public void setup() {
@@ -61,6 +59,7 @@ public class Pojo_UT {
                 .with(new NoFieldShadowingRule())
                 .with(new NoPublicFieldsExceptStaticFinalRule())
                 .build();
+        validator.validate(PojoClassFactory.getPojoClass(AbstractEntity.class));
         validator.validate(PojoClassFactory.getPojoClass(Review.class));
     }
 }

@@ -1,4 +1,4 @@
-package org.launchcode.brewpub;
+package org.launchcode.brewpub.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestingWebApplicationTest {
+public class HomeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void shouldReturnDefaultMessage() throws Exception {
+    public void homeControllerShouldReturnWelcomeMessage() throws Exception {
         this.mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(content().string(containsString("Welcome!")));
     }
+
+//    @Test
+//    public void getFiveMostRecentShouldReturnCorrectNumber() throws Exception {
+//
+//    }
 }

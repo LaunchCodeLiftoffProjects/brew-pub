@@ -1,8 +1,8 @@
-package org.launchcode.brewpub;
+package org.launchcode.brewpub.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.launchcode.brewpub.controllers.HomeController;
+import org.launchcode.brewpub.CustomUserDetailService;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.data.UserRepository;
@@ -15,13 +15,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(HomeController.class)
-public class WebLayerTest {
+@WebMvcTest(AuthenticationController.class)
+public class AuthenticationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,10 +40,16 @@ public class WebLayerTest {
     @MockBean
     private PubRepository pubRepository;
 
+    //    @WithMockUser(value = "user")
     @Test
-    public void shouldReturnDefaultMessage() throws Exception {
-        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Welcome!")));
+    public void getCreateAccountShouldReturnTitleCreateAccount() throws Exception {
+        this.mockMvc.perform(get("/createAccount")).andExpect(status().isOk()).andExpect(content().string(containsString("createAccount")));
     }
+
+
+//    @Test
+//    public void postCreateAccountShouldReturnTitleCreateAccount() throws Exception {
+//
+//    }
 
 }
