@@ -44,6 +44,7 @@ public class ReviewController {
         } else {
             Pub pub = result.get();
             model.addAttribute("brewpub", pub);
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", new PubReview());
             return "reviews/reviewPub";
         }
@@ -56,6 +57,7 @@ public class ReviewController {
                                        @RequestParam Integer pubId) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+        Pub pub = result.get();
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
@@ -63,14 +65,13 @@ public class ReviewController {
 
         if (errors.hasErrors()) {
 
-            model.addAttribute("title", "Review");
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", newPubReview);
             model.addAttribute("errors", errors);
             model.addAttribute("brewpub", result.get());
 
             return "reviews/reviewPub";
         } else {
-            Pub pub = result.get();
             newPubReview.setPub(pub);
 
             pubReviewRepository.save(newPubReview);
@@ -97,6 +98,7 @@ public class ReviewController {
             Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
 
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brew", brew);
             model.addAttribute("pub", pub);
             model.addAttribute(new BrewReview());
@@ -115,13 +117,15 @@ public class ReviewController {
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
+        Pub pub = resultPub.get();
+        Brew brew = resultBrew.get();
 
         if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty()) {
             return "pubs/index";
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Review Brew");
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brewReview", newBrewReview);
             model.addAttribute("errors", errors);
             model.addAttribute("pub", resultPub.get());
@@ -129,10 +133,6 @@ public class ReviewController {
 
             return "reviews/reviewBrew";
         } else {
-
-            Pub pub = resultPub.get();
-            Brew brew = resultBrew.get();
-
             newBrewReview.setBrew(brew);
             brewReviewRepository.save(newBrewReview);
         }
