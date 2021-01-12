@@ -82,6 +82,7 @@ public class BrewController {
 
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
         if (resultPub.isEmpty() || resultBrew.isEmpty()) {
             return "redirect:/pubs";
@@ -89,24 +90,24 @@ public class BrewController {
             Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
 
-            if (resultPub.isEmpty() || resultBrew.isEmpty()) {
-                return "pubs/index";
+            List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
+
+            if (resultUser.isPresent()) {
+                User user = resultUser.get();
+                Boolean isFavorite = user.getFavoriteBrews().contains(brew);
+                model.addAttribute("isFavorite", isFavorite);
             } else {
-
-                if (principal != null) {
-                    User user = userRepository.findByUsername(principal.getName());
-                    Boolean isFavorite = user.getFavoriteBrews().contains(brew);
-                    model.addAttribute("isFavorite", isFavorite);
-                }
-                List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
-
-                model.addAttribute("brew", brew);
-                model.addAttribute("pub", pub);
-                model.addAttribute("title","View Brew : " + brew.getName());
-                model.addAttribute("reviews", reviews);
-                model.addAttribute("favoritesCount", brew.getBrewFavoriteUser().size());
-                model.addAttribute("averageRating", calculateAverageRating(reviews));
+                model.addAttribute("isFavorite", false);
             }
+
+
+            model.addAttribute("brew", brew);
+            model.addAttribute("pub", pub);
+            model.addAttribute("title","View Brew : " + brew.getName());
+            model.addAttribute("reviews", reviews);
+            model.addAttribute("favoritesCount", brew.getBrewFavoriteUser().size());
+            model.addAttribute("averageRating", calculateAverageRating(reviews));
+
         }
         return "brews/view";
     }

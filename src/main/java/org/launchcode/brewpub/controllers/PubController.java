@@ -67,31 +67,31 @@ public class PubController {
     public String viewPubInfo(@PathVariable Integer pubID,
                               Model model,
                               Principal principal) {
+        Optional<Pub> resultPub = pubRepository.findById(pubID);
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
-        if (pubID == null) {
+        if (resultPub.isEmpty()) {
             return "pubs/index";
         } else {
-            Optional<Pub> result = pubRepository.findById(pubID);
+            Pub pub = resultPub.get();
 
-            if (result.isEmpty()) {
-                model.addAttribute("title", "Invalid Pub ID");
+            List<PubReview> reviews = pubReviewRepository.findAllByPubId(pubID);
+
+            if (resultUser.isPresent()) {
+                User user = resultUser.get();
+                Boolean isFavorite = user.getFavoritePubs().contains(pub);
+                model.addAttribute("isFavorite", isFavorite);
             } else {
-                Pub pub = result.get();
-
-                if (principal != null) {
-                    User user = userRepository.findByUsername(principal.getName());
-                    Boolean isFavorite = user.getFavoritePubs().contains(pub);
-                    model.addAttribute("isFavorite", isFavorite);
-                }
-                List<PubReview> reviews = pubReviewRepository.findAllByPubId(pubID);
-
-                model.addAttribute("pub", pub);
-                model.addAttribute("title", "Pub: " + pub.getName());
-                model.addAttribute("reviews", reviews);
-                model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
-                model.addAttribute("favoritesCount", pub.getPubFavoriteUser().size());
-                model.addAttribute("averageRating", calculateAverageRating(reviews));
+                model.addAttribute("isFavorite", false);
             }
+
+            model.addAttribute("pub", pub);
+            model.addAttribute("title", "Pub: " + pub.getName());
+            model.addAttribute("reviews", reviews);
+            model.addAttribute("brews", brewRepository.findAllByPubId(pubID));
+            model.addAttribute("favoritesCount", pub.getPubFavoriteUser().size());
+            model.addAttribute("averageRating", calculateAverageRating(reviews));
+
         }
         return "pubs/view";
     }
