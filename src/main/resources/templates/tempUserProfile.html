@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: page-header"></nav>
+
+
+<div class="container body-content">
+    <h1>
+    <span th:text ="${user.username}"></span>
+    </h1>
+    <br/>
+    <h3>Pub Reviews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Review ID</th>
+                <th scope="col">Pub ID</th>
+                <th scope="col">Review Title</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="review : ${pubReviews}">
+                <tr class="text-center">
+                    <td scope="row" th:text="${review.id}">ID</td>
+                    <td th:text="${review.pub.id}">PubID</td>
+                    <th th:text="${review.reviewTitle}">Title</th>
+                    <td th:text="${review.rating}">Rating</td>
+                    <td th:text="${review.reviewText}">ReviewText</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h3>Brew Reviews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Review ID</th>
+                <th scope="col">Brew ID</th>
+                <th scope="col">Review Title</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="review : ${brewReviews}">
+                <tr class="text-center">
+                    <td scope="row" th:text="${review.id}">ID</td>
+                    <td th:text="${review.brew.id}">BrewID</td>
+                    <th th:text="${review.reviewTitle}">Title</th>
+                    <td th:text="${review.rating}">Rating</td>
+                    <td th:text="${review.reviewText}">ReviewText</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<footer th:replace="fragments :: page-footer"></footer>
+</body>
+</html>
