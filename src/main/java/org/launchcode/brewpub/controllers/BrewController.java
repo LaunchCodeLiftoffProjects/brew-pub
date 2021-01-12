@@ -74,21 +74,20 @@ public class BrewController {
         }
     }
 
-    @GetMapping("{pubId}/view/{brewId}")
-    public String viewBrew(@PathVariable Integer pubId,
+    @GetMapping("/view/{brewId}")
+    public String viewBrew(
                            @PathVariable Integer brewId,
                            Model model,
                            Principal principal) {
 
-        Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
         Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
-        if (resultPub.isEmpty() || resultBrew.isEmpty()) {
+        if (resultBrew.isEmpty()) {
             return "redirect:/pubs";
         } else {
-            Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
+            Pub pub = brew.getPub();
 
             List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
 
@@ -99,7 +98,6 @@ public class BrewController {
             } else {
                 model.addAttribute("isFavorite", false);
             }
-
 
             model.addAttribute("brew", brew);
             model.addAttribute("pub", pub);
@@ -133,7 +131,7 @@ public class BrewController {
             userRepository.save(user);
             brewRepository.save(brew);
 
-            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+            return "redirect:/pubs/brews/view/" + brew.getId();
         }
         return "redirect:";
     }
@@ -159,7 +157,7 @@ public class BrewController {
             userRepository.save(user);
             brewRepository.save(brew);
 
-            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+            return "redirect:/pubs/brews/view/" + brew.getId();
         }
         return "redirect:";
     }

@@ -46,7 +46,7 @@
                             <th:block th:each="brew : ${recentBrews}">
                                 <tr>
                                     <td>
-                                        <span><a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}" th:text="${brew.name}">Name</a></span>
+                                        <span><a th:href="@{/pubs/brews/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}" th:text="${brew.name}">Name</a></span>
                                         <span th:text="${' at ' + brew.pub.name}">at Pub</span>
                                     </td>
                                 </tr>

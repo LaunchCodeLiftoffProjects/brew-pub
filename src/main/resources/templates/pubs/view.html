@@ -85,7 +85,7 @@
                             <tbody>
                                 <th:block th:each="brew : ${brews}">
                                     <tr class="text-center">
-                                        <td scope="row"><a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
+                                        <td scope="row"><a th:href="@{/pubs/brews/view/{brewId}/(brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
                                         <td th:text="${brew.style}">Style</td>
                                         <td th:text="${brew.ibu}">IBU</td>
                                         <th th:text="${brew.abv}">Rating</th>

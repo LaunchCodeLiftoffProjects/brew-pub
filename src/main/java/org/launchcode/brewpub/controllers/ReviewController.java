@@ -137,7 +137,7 @@ public class ReviewController {
             brewReviewRepository.save(newBrewReview);
         }
 
-        return "redirect:/pubs/brews/" + pubId + "/view/" + brewId;
+        return "redirect:/pubs/brews/view/" + brewId;
 
     }
 
