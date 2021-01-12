@@ -42,5 +42,4 @@ dependencies {
 test {
 	useJUnitPlatform()
 //	exclude 'org/launchcode/brewpub/webAppTest/**'
-	exclude 'org/launchcode/brewpub/controllers/**'
 }
