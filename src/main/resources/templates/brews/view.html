@@ -1,71 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head th:replace="fragments :: head"></head>
 
-<nav th:replace="fragments :: page-header"></nav>
+<body>
 
-<div class="container body-content">
+    <nav th:replace="fragments :: page-header"></nav>
 
-    <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
-    <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
+    <div class="container body-content">
+        <h1 th:text="${'Pub: ' + pub.name}">Pub Name</h1>
+        <h2 th:text="${'Address: ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</h2>
 
-    <h2 th:text="${'Reviews of: '}">Reviews of Brew</h2>
+        <h2 th:text="${'Reviews of: '}">Reviews of Brew</h2>
 
-    <p>
-        <table class="table table-striped">
-            <thead>
+        <p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">IBU</th>
+                        <th scope="col">ABV</th>
+                        <th scope="col">Brewer</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Style</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td scope="row" th:text="${brew.name}">Name</td>
+                        <td th:text="${brew.ibu}">IBU</td>
+                        <th th:text="${brew.abv}">Rating</th>
+                        <td th:text="${brew.brewer}">Brewer</td>
+                        <td th:text="${brew.description}">Description</td>
+                        <td th:text="${brew.style}">Style</td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+
+        <a type="button" class="btn btn-primary" th:href="@{/review/{pubId}/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Review This Brew</a>
+
+        <p>
+            <table   class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">IBU</th>
-                    <th scope="col">ABV</th>
-                    <th scope="col">Brewer</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Style</th>
+                    <th scope="col">Review ID</th>
+                    <th scope="col">Brew ID</th>
+                    <th scope="col">Review Title</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Review</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center">
-                    <td scope="row" th:text="${brew.name}">Name</td>
-                    <td th:text="${brew.ibu}">IBU</td>
-                    <th th:text="${brew.abv}">Rating</th>
-                    <td th:text="${brew.brewer}">Brewer</td>
-                    <td th:text="${brew.description}">Description</td>
-                    <td th:text="${brew.style}">Style</td>
-                </tr>
-            </tbody>
-        </table>
-    </p>
-
-    <a type="button" class="btn btn-primary" th:href="@{/review/{pubId}/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Review This Brew</a>
-
-    <p>
-        <table   class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Review ID</th>
-                <th scope="col">Brew ID</th>
-                <th scope="col">Review Title</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Review</th>
-            </tr>
-            </thead>
-            <tbody>
-            <th:block th:each="review : ${reviews}">
-                <tr class="text-center">
-                    <td scope="row" th:text="${review.id}">ID</td>
-                    <td th:text="${review.brew.id}">BrewID</td>
-                    <th th:text="${review.reviewTitle}">Title</th>
-                    <td th:text="${review.rating}">Rating</td>
-                    <td th:text="${review.reviewText}">ReviewText</td>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-    </p>
+                </thead>
+                <tbody>
+                <th:block th:each="review : ${reviews}">
+                    <tr class="text-center">
+                        <td scope="row" th:text="${review.id}">ID</td>
+                        <td th:text="${review.brew.id}">BrewID</td>
+                        <th th:text="${review.reviewTitle}">Title</th>
+                        <td th:text="${review.rating}">Rating</td>
+                        <td th:text="${review.reviewText}">ReviewText</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </p>
 
 
 
-</div>
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
 
 </body>
+
 </html>
