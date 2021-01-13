@@ -2,18 +2,15 @@ package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.UserRepository;
-import org.launchcode.brewpub.models.dto.CreateAccountDTO;
 import org.launchcode.brewpub.models.dto.NewPasswordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class NewPasswordController {
@@ -23,14 +20,14 @@ public class NewPasswordController {
 
     @GetMapping("/forgotPassword")
     public String viewForgotPasswordForm(Model model) {
-        model.addAttribute("title", "forgotPassword");
+        model.addAttribute("title","Forgot Password");
         model.addAttribute(new NewPasswordDTO());
         return "forgotPassword";
     }
 
     @PostMapping("/newPassword")
     public String newPasswordForm(Model model, NewPasswordDTO newPasswordDTO) {
-        model.addAttribute("title", "newPassword");
+        model.addAttribute("title", "New Password");
         User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
         if (existingUser == null) {
             return "redirect:";
@@ -47,9 +44,11 @@ public class NewPasswordController {
             User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
             existingUser.setPwhash(encoder.encode(newPasswordDTO.getPassword()));
             userRepository.save(existingUser);
+            model.addAttribute("title","New Password");
             model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
             model.addAttribute("successResetPassword");
         } else {
+            model.addAttribute("title","New Password");
             model.addAttribute("message","Passwords do not match.");
         }
         return "newPassword";

@@ -1,11 +1,11 @@
 package org.launchcode.brewpub.controllers;
 
 
-import org.launchcode.brewpub.models.Brew;
-import org.launchcode.brewpub.models.Pub;
+import org.launchcode.brewpub.models.*;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.launchcode.brewpub.models.data.BrewReviewRepository;
 import org.launchcode.brewpub.models.data.PubRepository;
+import org.launchcode.brewpub.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,7 +35,10 @@ public class BrewController {
     @Autowired
     private BrewRepository brewRepository;
 
+
     public static String uploadDirectory = System.getProperty("user.dir")+"/uploads";
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("{pubId}/add")
     public String displayAddBrewForm(@PathVariable Integer pubId,
@@ -45,6 +50,7 @@ public class BrewController {
             return "pubs/index";
         } else {
             Pub pub = result.get();
+            model.addAttribute("title", "Add Brew For : " + pub.getName());
             model.addAttribute("pub", pub);
             model.addAttribute(new Brew());
             return "brews/add";
@@ -59,6 +65,7 @@ public class BrewController {
                                      Model model) throws IOException {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+        Pub pub = result.get();
 
         StringBuilder fileNames = new StringBuilder();
         for(MultipartFile file : files) {
@@ -70,12 +77,11 @@ public class BrewController {
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
         } else if (errors.hasErrors()) {
-            Pub pub = result.get();
             model.addAttribute("errors", errors);
+            model.addAttribute("title", "Add Brew For : " + pub.getName());
             model.addAttribute("pub", pub);
             return "brews/add";
         } else {
-            Pub pub = result.get();
             newBrew.setPub(pub);
             brewRepository.save(newBrew);
             return "redirect:/pubs/view/" + pubId;
@@ -85,7 +91,8 @@ public class BrewController {
     @GetMapping("{pubId}/view/{brewId}")
     public String viewBrew(@PathVariable Integer pubId,
                            @PathVariable Integer brewId,
-                           Model model) {
+                           Model model,
+                           Principal principal) {
 
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
@@ -99,14 +106,90 @@ public class BrewController {
             if (resultPub.isEmpty() || resultBrew.isEmpty()) {
                 return "pubs/index";
             } else {
+
+                if (principal != null) {
+                    User user = userRepository.findByUsername(principal.getName());
+                    Boolean isFavorite = user.getFavoriteBrews().contains(brew);
+                    model.addAttribute("isFavorite", isFavorite);
+                }
+                List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
+
                 model.addAttribute("brew", brew);
                 model.addAttribute("pub", pub);
-                model.addAttribute("reviews", brewReviewRepository.findAllByBrewId(brewId));
-
-                return "brews/view";
+                model.addAttribute("title","View Brew : " + brew.getName());
+                model.addAttribute("reviews", reviews);
+                model.addAttribute("favoritesCount", brew.getBrewFavoriteUser().size());
+                model.addAttribute("averageRating", calculateAverageRating(reviews));
             }
         }
+        return "brews/view";
     }
 
+    @GetMapping("addFavoriteBrew/{brewId}")
+    public String processAddFavoriteBrew(@PathVariable Integer brewId,
+                                         Principal principal) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+        if (brewId == null || resultBrew.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            Brew brew = resultBrew.get();
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        } else if (resultUser.isPresent() && resultBrew.isPresent()) {
+            Brew brew = resultBrew.get();
+            User user = resultUser.get();
+
+            user.addFavoriteBrew(brew);
+            brew.addBrewFavoriteUser(user);
+
+            userRepository.save(user);
+            brewRepository.save(brew);
+
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        }
+        return "redirect:";
+    }
+
+    @GetMapping("removeFavoriteBrew/{brewId}")
+    public String processRemoveFavoriteBrew(@PathVariable Integer brewId,
+                                            Principal principal) {
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
+        if (brewId == null || resultBrew.isEmpty()) {
+            return "redirect:";
+        } else if (principal.getName() == null || resultUser.isEmpty()) {
+            Brew brew = resultBrew.get();
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        } else if (resultUser.isPresent() && resultBrew.isPresent()) {
+            Brew brew = resultBrew.get();
+            User user = resultUser.get();
+
+            user.removeFavoriteBrew(brew);
+            brew.removeBrewFavoriteUser(user);
+
+            userRepository.save(user);
+            brewRepository.save(brew);
+
+            return "redirect:/pubs/brews/" + brew.getPub().getId() + "/view/" + brew.getId();
+        }
+        return "redirect:";
+    }
+
+
+    private Double calculateAverageRating(List<BrewReview> reviews) {
+        Integer ratingTotal = 0;
+        Integer numberOfRatings = reviews.size();
+
+        for (Review review : reviews) {
+            ratingTotal += review.getRating();
+        }
+
+        Double average = ratingTotal.doubleValue() / numberOfRatings.doubleValue();
+        Long result = Math.round(average*10);
+
+        return result.doubleValue()/10;
+    }
 
 }
