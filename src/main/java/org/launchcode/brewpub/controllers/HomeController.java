@@ -28,37 +28,35 @@ public class HomeController {
 
         model.addAttribute("title","Home");
 
-        model.addAttribute("recentPubs", getFiveMostRecent(allPubs));
-        model.addAttribute("recentBrews", getFiveMostRecent(allBrews));
+        model.addAttribute("recentPubs", getMostRecent(allPubs, 5));
+        model.addAttribute("recentBrews", getMostRecent(allBrews, 5));
 
-        model.addAttribute("popularPubs", getFiveMostPopular(allPubs));
-        model.addAttribute("popularBrews", getFiveMostPopular(allBrews));
+        model.addAttribute("popularPubs", getMostPopular(allPubs, 5));
+        model.addAttribute("popularBrews", getMostPopular(allBrews, 5));
         return "index";
     }
 
-    private List<? extends AbstractEntity> getFiveMostRecent(List<? extends AbstractEntity> items) {
-        if (items == null || items.isEmpty()) {
-            List<AbstractEntity> empty = new ArrayList<>();
-            return empty;
-        } else if (items.size() <= 5) {
-            return items;
-        } else {
-            List<AbstractEntity> fiveMostRecent = new ArrayList<>();
-            int index = items.size() - 5;
-            for (int i = index; i < items.size(); i++ ) {
-                fiveMostRecent.add(items.get(i));
+    private List<? extends AbstractEntity> getMostRecent(List<? extends AbstractEntity> items, Integer length) {
+        List<AbstractEntity> mostRecent = new ArrayList<>();
+
+        if (items != null && !items.isEmpty()) {
+
+            length = (items.size() >= length) ? length : items.size();
+
+            int index = items.size() - length;
+            for (int i = index; i < items.size(); i++) {
+                mostRecent.add(items.get(i));
             }
-            return fiveMostRecent;
         }
+        return mostRecent;
     }
 
-    private List<? extends AbstractEntity> getFiveMostPopular(List<? extends AbstractEntity> items) {
-        if (items == null || items.isEmpty()) {
-            List<AbstractEntity> empty = new ArrayList<>();
-            return empty;
-        } else {
-            List<AbstractEntity> fiveMostPopular = new ArrayList<>();
-            int length = (items.size() >= 5) ? 5 : items.size();
+    private List<? extends AbstractEntity> getMostPopular(List<? extends AbstractEntity> items, Integer length) {
+        List<AbstractEntity> mostPopular = new ArrayList<>();
+
+        if (items != null && !items.isEmpty()) {
+
+            length = (items.size() >= length) ? length : items.size();
 
             if (items.get(0).getClass() == Brew.class) {
                 List<Brew> temp = new ArrayList<>();
@@ -75,7 +73,7 @@ public class HomeController {
                 });
 
                 for (int i = 0; i < length; i++) {
-                    fiveMostPopular.add(temp.get(i));
+                    mostPopular.add(temp.get(i));
                 }
 
             } else if (items.get(0).getClass() == Pub.class) {
@@ -93,14 +91,14 @@ public class HomeController {
                 });
 
                 for (int i = 0; i < length; i++) {
-                    fiveMostPopular.add(temp.get(i));
+                    mostPopular.add(temp.get(i));
                 }
 
-                return fiveMostPopular;
+                return mostPopular;
             }
 
-            return fiveMostPopular;
         }
+        return mostPopular;
     }
 
 }
