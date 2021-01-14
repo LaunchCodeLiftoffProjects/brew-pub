@@ -82,21 +82,17 @@ public class ReviewController {
 
     // Brew Review
 
-    @GetMapping("{pubId}/{brewId}")
-    public String viewBrewReviewForm(@PathVariable Integer pubId,
-                                     @PathVariable Integer brewId,
+    @GetMapping("brew/{brewId}")
+    public String viewBrewReviewForm(@PathVariable Integer brewId,
                                      Model model) {
 
-        // TODO: pass-in userId using session ID and session cookie to look up
-
-        Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
-        if (resultPub.isEmpty() || resultBrew.isEmpty()) {
+        if (resultBrew.isEmpty()) {
             return "redirect:/pubs";
         } else {
-            Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
+            Pub pub = brew.getPub();
 
             model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brew", brew);

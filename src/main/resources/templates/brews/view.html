@@ -68,7 +68,7 @@
                 <div class="col-sm-8">
                     <div class="row justify-content-center">
                         <span class="h3 m-2" th:text="${'Reviews of : ' + brew.name}">Reviews of Brew</span>
-                        <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{/review/{pubId}/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Review This Brew</a></span>
+                        <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{/review/brew/{brewId}/(brewId=${brew.id})}">Review This Brew</a></span>
                         <span class="h3 m-2" th:text="${'Average Rating: ' + averageRating}"></span>
                     </div>
 
