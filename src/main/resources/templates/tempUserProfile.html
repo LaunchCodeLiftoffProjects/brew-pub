@@ -16,19 +16,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Review ID</th>
-                <th scope="col">Pub ID</th>
-                <th scope="col">Review Title</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Review</th>
+                <th scope="col" class="w-25 p-3 text-center">Pub Name</th>
+                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                <th scope="col" class="w-25 p-3 text-center">Review</th>
             </tr>
             </thead>
             <tbody>
             <th:block th:each="review : ${pubReviews}">
                 <tr class="text-center">
-                    <td scope="row" th:text="${review.id}">ID</td>
-                    <td th:text="${review.pub.id}">PubID</td>
-                    <th th:text="${review.reviewTitle}">Title</th>
+                    <td> <a th:href="@{'/pubs/view/' + ${review.pub.id}}" th:text="${review.pub.name}">PubName</a></td>
+                    <td th:text="${review.reviewTitle}">Title</td>
                     <td th:text="${review.rating}">Rating</td>
                     <td th:text="${review.reviewText}">ReviewText</td>
                 </tr>
@@ -42,19 +40,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Review ID</th>
-                <th scope="col">Brew ID</th>
-                <th scope="col">Review Title</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Review</th>
+                <th scope="col" class="w-25 p-3 text-center">Brew Name</th>
+                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                <th scope="col" class="w-25 p-3 text-center">Review</th>
             </tr>
             </thead>
             <tbody>
             <th:block th:each="review : ${brewReviews}">
                 <tr class="text-center">
-                    <td scope="row" th:text="${review.id}">ID</td>
-                    <td th:text="${review.brew.id}">BrewID</td>
-                    <th th:text="${review.reviewTitle}">Title</th>
+                    <td> <a th:href="@{'/pubs/brews/'+${review.brew.pub.id}+'/view/' + ${review.brew.id}}" th:text="${review.brew.name}">BrewName</a></td>
+                    <td th:text="${review.reviewTitle}">Title</td>
                     <td th:text="${review.rating}">Rating</td>
                     <td th:text="${review.reviewText}">ReviewText</td>
                 </tr>
