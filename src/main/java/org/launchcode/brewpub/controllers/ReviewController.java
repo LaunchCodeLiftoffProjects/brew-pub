@@ -108,24 +108,22 @@ public class ReviewController {
     public String processBrewReviewForm(@ModelAttribute @Valid BrewReview newBrewReview,
                                         Errors errors,
                                         Model model,
-                                        @RequestParam Integer pubId,
                                         @RequestParam Integer brewId) {
-        Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
-        Pub pub = resultPub.get();
-        Brew brew = resultBrew.get();
-
-        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty()) {
+        if (resultBrew.isEmpty()) {
             return "pubs/index";
         }
+
+        Brew brew = resultBrew.get();
+        Pub pub = brew.getPub();
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brewReview", newBrewReview);
             model.addAttribute("errors", errors);
-            model.addAttribute("pub", resultPub.get());
-            model.addAttribute("brew", resultBrew.get());
+            model.addAttribute("pub", pub);
+            model.addAttribute("brew", brew);
 
             return "reviews/reviewBrew";
         } else {
