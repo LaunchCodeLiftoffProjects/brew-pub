@@ -58,6 +58,45 @@
             </tbody>
         </table>
     </div>
+    <br/>
+    <h3>Favorite Pubs</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-25 text-center">Favorite Pubs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="pub: ${user.favoritePubs}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+    <h3>Favorite Brews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-25 text-center">Favorite Brews</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="brew: ${user.favoriteBrews}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/brews/'+${brew.pub.id}+'/view/' + ${brew.id}}" th:text="${brew.name}"></a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
 </div>
 
 

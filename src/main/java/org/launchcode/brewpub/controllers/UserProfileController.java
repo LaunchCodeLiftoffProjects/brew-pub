@@ -38,6 +38,8 @@ public class UserProfileController {
             model.addAttribute("title", "tempUserProfile");
             model.addAttribute("pubReviews", pubReviewRepository.findAllByUserId(user.getId()));
             model.addAttribute("brewReviews", brewReviewRepository.findAllByUserId(user.getId()));
+            model.addAttribute("pubFavorites", user.getFavoritePubs());
+            model.addAttribute("brewFavorites", user.getFavoriteBrews());
             return "/tempUserProfile";
         }
     }
