@@ -7,13 +7,56 @@
 
     <nav th:replace="fragments :: page-header"></nav>
 
-    <div class="container body-content">
+    <div class="container-fluid body-content mt-3">
 
-        <h1>Welcome!</h1>
+        <div class="row justify-content-center m-2">
+            <h1>Welcome!</h1>
+        </div>
 
-        <form method="get" action="/createAccount">
-            <button type="submit">Create new account?</button>
-        </form>
+        <div class="row justify-content-center m-2">
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{'/createAccount'}">
+                    <button type="submit">Create new account?</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-2">
+                    <span class="row h3">Recently Added Pubs</span>
+                    <div class="row">
+                        <table class="table">
+                            <tbody>
+                                <th:block th:each="pub : ${recentPubs}">
+                                    <tr>
+                                        <td><a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}" th:text="${pub.name}">Pub name</a></td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col col-lg-2">
+                    <span class="row h3">Recently Added Brews</span>
+                    <div class="row">
+                        <table class="table">
+                            <tbody>
+                            <th:block th:each="brew : ${recentBrews}">
+                                <tr>
+                                    <td>
+                                        <span><a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}" th:text="${brew.name}">Name</a></span>
+                                        <span th:text="${' at ' + brew.pub.name}">at Pub</span>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 

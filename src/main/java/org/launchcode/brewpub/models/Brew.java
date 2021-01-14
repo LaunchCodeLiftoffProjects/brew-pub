@@ -1,9 +1,12 @@
 package org.launchcode.brewpub.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Brew extends AbstractEntity{
@@ -11,6 +14,8 @@ public class Brew extends AbstractEntity{
     @ManyToOne
     private Pub pub;
 
+    @ManyToMany
+    private final List<User> brewFavoriteUser = new ArrayList<>();
 
     @Size(min = 3, max = 80, message="Name must be between 4 and 80 characters")
     private String name;
@@ -99,5 +104,17 @@ public class Brew extends AbstractEntity{
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    public List<User> getBrewFavoriteUser() {
+        return brewFavoriteUser;
+    }
+
+    public void addBrewFavoriteUser(User user) {
+        this.brewFavoriteUser.add(user);
+    }
+
+    public void removeBrewFavoriteUser(User user) {
+        this.brewFavoriteUser.remove(user);
     }
 }

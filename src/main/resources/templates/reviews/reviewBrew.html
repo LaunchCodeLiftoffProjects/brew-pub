@@ -7,40 +7,39 @@
 
     <nav th:replace="fragments :: page-header"></nav>
 
-    <div class="container body-content">
+    <div class="container body-content mt-3">
 
-        <h1 th:text="${brew.name} + ' : Review'">brew-pub-name</h1>
+
+        <h1 th:text="${brew.name} + ' : Review'">brew-name</h1>
+
 
         <form th:action="@{/review/brew/}" method="post">
 
             <div class="form-group">
-                <label>Title of Review</label>
-                <input class="form-control"
-                       placeholder="Enter review title..."
-                       th:field="${brewReview.reviewTitle}"/>
+                <label>Title of Review : <input class="form-control"
+                                                placeholder="Enter review title..."
+                                                th:field="${brewReview.reviewTitle}"/></label>
                 <span th:errors="${brewReview.reviewTitle}"
                       class="error"></span>
             </div>
 
             <div class="form-group">
-                <label>Rating</label>
-                <span th:errors="${brewReview.rating}"
-                      class="error"></span>
-                <select class="form-control" th:field="${brewReview.rating}">
+                <label>Rating : <select class="form-control" th:field="${brewReview.rating}">
                     <option value=1>1</option>
                     <option value=2>2</option>
                     <option value=3>3</option>
                     <option value=4>4</option>
                     <option value=5>5</option>
-                </select>
+                </select></label>
+                <span th:errors="${brewReview.rating}"
+                      class="error"></span>
             </div>
 
             <div class="form-group">
-                <label>Review</label>
+                <label>Review : <textarea cols="80" class="form-control" th:field="${brewReview.reviewText}"
+                                          placeholder="Enter review here... (Optional)"></textarea></label>
                 <span th:errors="${brewReview.reviewText}"
                       class="errors"></span>
-                <textarea class="form-control" th:field="${brewReview.reviewText}"
-                          placeholder="Enter review here... (Optional)"></textarea>
             </div>
 
             <div hidden>
@@ -56,7 +55,7 @@
 
             <input type="submit">
 
-            <button type="button"><a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}">Cancel</a> </button>
+            <a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}"><button type="button">Cancel</button></a>
         </form>
 
     </div>

@@ -44,6 +44,7 @@ public class ReviewController {
         } else {
             Pub pub = result.get();
             model.addAttribute("brewpub", pub);
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", new PubReview());
             return "reviews/reviewPub";
         }
@@ -59,21 +60,25 @@ public class ReviewController {
         Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
 
-        if (pubId == null || result.isEmpty()) {
+        Pub pub = result.get();
+
+        if (pubId == null || result.isEmpty() || resultUser.isEmpty()) {
             return "pubs/index";
         }
 
         if (errors.hasErrors()) {
 
-            model.addAttribute("title", "Review");
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", newPubReview);
             model.addAttribute("errors", errors);
             model.addAttribute("brewpub", result.get());
 
             return "reviews/reviewPub";
         } else {
-            Pub pub = result.get();
+
+
             User user = resultUser.get();
+
             newPubReview.setPub(pub);
             newPubReview.setUser(user);
 
@@ -100,6 +105,7 @@ public class ReviewController {
             Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
 
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brew", brew);
             model.addAttribute("pub", pub);
             model.addAttribute(new BrewReview());
@@ -117,14 +123,20 @@ public class ReviewController {
                                         @RequestParam Integer brewId, Principal principal) {
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
         Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
-        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty()) {
+
+        Pub pub = resultPub.get();
+        Brew brew = resultBrew.get();
+
+
+        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty() || resultUser.isEmpty()) {
             return "pubs/index";
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Review Brew");
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brewReview", newBrewReview);
             model.addAttribute("errors", errors);
             model.addAttribute("pub", resultPub.get());
@@ -133,8 +145,9 @@ public class ReviewController {
             return "reviews/reviewBrew";
         } else {
 
-            Brew brew = resultBrew.get();
+
             User user = resultUser.get();
+
 
             newBrewReview.setBrew(brew);
             newBrewReview.setUser(user);
