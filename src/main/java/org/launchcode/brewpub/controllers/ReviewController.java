@@ -81,6 +81,61 @@ public class ReviewController {
         return "redirect:/pubs/view/" + pubId;
     }
 
+    @GetMapping("pub/{pubReviewId}/edit")
+    public String viewEditPubReviewForm(@PathVariable Integer pubReviewId,
+                                 Model model) {
+
+        Optional<PubReview> resultReview = pubReviewRepository.findById(pubReviewId);
+
+        if (resultReview.isEmpty()) {
+            return "redirect:/pubs";
+        } else {
+            PubReview pubReview = resultReview.get();
+            Pub pub = pubReview.getPub();
+
+            model.addAttribute("title", "Edit Review For : " + pub.getName());
+            model.addAttribute("pub", pub);
+            model.addAttribute("pubReview", pubReview);
+        }
+
+        return "reviews/editPubReview";
+    }
+
+
+    @PostMapping("pub/{pubReviewId}/edit")
+    public String processEditPubReviewForm(@ModelAttribute @Valid PubReview editPubReview,
+                                           Errors errors,
+                                           Model model,
+                                           @PathVariable Integer pubReviewId) {
+
+        Optional<PubReview> resultOriginalReview = pubReviewRepository.findById(pubReviewId);
+
+        if (resultOriginalReview.isEmpty()) {
+            return "pubs/index";
+        }
+
+        PubReview originalReview = resultOriginalReview.get();
+        Pub pub = originalReview.getPub();
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Review For : " + pub.getName());
+            model.addAttribute("pubReview", editPubReview);
+            model.addAttribute("errors", errors);
+            model.addAttribute("pub", pub);
+        } else {
+
+            originalReview.setReviewTitle(editPubReview.getReviewTitle());
+            originalReview.setReviewText(editPubReview.getReviewText());
+            originalReview.setRating(editPubReview.getRating());
+
+            pubReviewRepository.save(originalReview);
+        }
+
+        return "redirect:/pubs/view/" + pub.getId();
+
+    }
+
+
     // Brew Review
 
     @GetMapping("brew/{brewId}")
@@ -153,7 +208,7 @@ public class ReviewController {
             model.addAttribute("pub", pub);
             model.addAttribute("brewReview", brewReview);
 
-            return "reviews/editReview";
+            return "reviews/editBrewReview";
         }
     }
 
@@ -180,7 +235,7 @@ public class ReviewController {
             model.addAttribute("pub", pub);
             model.addAttribute("brew", brew);
 
-            return "review/editReview";
+            return "review/editBrewReview";
         } else {
 
             originalReview.setReviewTitle(editBrewReview.getReviewTitle());

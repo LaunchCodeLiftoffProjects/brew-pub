@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+<nav th:replace="fragments :: page-header"></nav>
+
+<div class="container body-content mt-3">
+
+    <h1 th:text="${pub.name} + ' : Edit Review'">brew-name</h1>
+
+    <form th:action="@{/review/pub/{reviewId}/edit/(reviewId=${pubReview.id})}" method="post">
+
+        <div class="form-group">
+            <label>Title of Review : <input class="form-control"
+                                            placeholder="Enter review title..."
+                                            th:field="${pubReview.reviewTitle}"/></label>
+            <span th:errors="${pubReview.reviewTitle}"
+                  class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Rating : <select class="form-control" th:field="${pubReview.rating}">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+            </select></label>
+            <span th:errors="${pubReview.rating}"
+                  class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Review : <textarea cols="80" class="form-control" th:field="${pubReview.reviewText}"
+                                      placeholder="Enter review here... (Optional)"></textarea></label>
+            <span th:errors="${pubReview.reviewText}"
+                  class="errors"></span>
+        </div>
+
+        <div hidden>
+            <label>pubId</label>
+            <input type="text" name="pubId" th:value="${pub.id}">
+        </div>
+
+        <input type="submit">
+
+        <a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}"><button type="button">Cancel</button></a>
+    </form>
+
+</div>
+
+<footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+</html>
