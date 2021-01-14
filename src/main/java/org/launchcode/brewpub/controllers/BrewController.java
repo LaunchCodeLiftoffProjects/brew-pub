@@ -26,6 +26,8 @@ import java.util.Optional;
 @RequestMapping("pubs/brews")
 public class BrewController {
 
+    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/uploads";
+
     @Autowired
     private PubRepository pubRepository;
 
@@ -35,8 +37,6 @@ public class BrewController {
     @Autowired
     private BrewRepository brewRepository;
 
-
-    public static String uploadDirectory = System.getProperty("user.dir")+"/uploads";
     @Autowired
     private UserRepository userRepository;
 
@@ -68,11 +68,6 @@ public class BrewController {
         Pub pub = result.get();
 
         StringBuilder fileNames = new StringBuilder();
-        for(MultipartFile file : files) {
-            Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
-            fileNames.append(file.getOriginalFilename());
-            Files.write(fileNameAndPath, file.getBytes());
-        }
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
@@ -82,6 +77,13 @@ public class BrewController {
             model.addAttribute("pub", pub);
             return "brews/add";
         } else {
+            for(MultipartFile file : files) {
+                Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+                fileNames.append(file.getOriginalFilename());
+                Files.write(fileNameAndPath, file.getBytes());
+                newBrew.setImagePath(fileNameAndPath.toString());
+            }
+
             newBrew.setPub(pub);
             brewRepository.save(newBrew);
             return "redirect:/pubs/view/" + pubId;

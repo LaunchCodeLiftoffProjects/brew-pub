@@ -37,17 +37,20 @@ public class Brew extends AbstractEntity{
     @Size(max = 80, message = "Style cannot be more than 80 characters")
     private String style;
 
+    private String imagePath;
+
 
     public Brew() {
     }
 
-    public Brew(String name, Integer ibu, BigDecimal abv, String brewer, String description, String style) {
+    public Brew(String name, Integer ibu, BigDecimal abv, String brewer, String description, String style, String imagePath) {
         this.name = name;
         this.ibu = ibu;
         this.abv = abv;
         this.brewer = brewer;
         this.description = description;
         this.style = style;
+        this.imagePath = imagePath;
     }
 
     public Pub getPub() {
@@ -104,6 +107,14 @@ public class Brew extends AbstractEntity{
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public List<User> getBrewFavoriteUser() {
