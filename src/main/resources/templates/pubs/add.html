@@ -29,12 +29,11 @@
                 <span th:errors="${pub.city}" class="error"></span>
             </div>
 
-
-            <!--Select State not working-->
             <div>
                 <label th:for="state">State</label>
                     <select th:field = "${pub.state}" name="pubState" required>
-                            <option value="''">Select State</option>
+                            <option value="" disabled>Select State</option>
+                            <option value="" disabled>------------------------</option>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AZ">AZ</option>
@@ -88,13 +87,6 @@
                         </select>
                 <span th:errors="${pub.state}" class="error"></span>
             </div>
-
-            <!--String State works-->
-            <!--<div class="form-group">
-                <label th:for="state">State</label>
-                <input class="form-control" th:field="${pub.state}" />
-                <span th:errors="${pub.state}" class="error"></span>
-            </div>-->
 
             <div class="form-group">
                 <label th:for="areaCode">Area Code</label>

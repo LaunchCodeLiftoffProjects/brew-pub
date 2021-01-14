@@ -33,18 +33,28 @@ public class SearchController {
     }
 
     @PostMapping("results")
-    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm, @RequestParam String puborbrew){
+    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm, @RequestParam String puborbrew, @RequestParam(required = false) String searchState){
         Iterable<Pub> pubs;
         Iterable<Brew> brews;
-        if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")){
+        if (searchType.toLowerCase().equals("state")) {
+            pubs = PubData.findByColumnAndValue(searchType, searchState, pubRepository.findAll());
+            brews = BrewData.findByColumnAndValue(searchType, searchState, brewRepository.findAll());
+            model.addAttribute("pubs", pubs);
+            //model.addAttribute("brews", brews);
+        } else if (searchTerm.toLowerCase().equals("all") || searchTerm.equals("")){
             pubs = pubRepository.findAll();
             brews = brewRepository.findAll();
         } else {
             pubs = PubData.findByColumnAndValue(searchType, searchTerm, pubRepository.findAll());
             brews = BrewData.findByColumnAndValue(searchType, searchTerm, brewRepository.findAll());
         }
+
+        if (searchState == null) {
+            searchState = " ";
+        }
         model.addAttribute("columns", columnChoices);
-        model.addAttribute("title", "Results with " + puborbrewChoices.get(puborbrew) +" - " + columnChoices.get(searchType) + ": " + searchTerm);
+        model.addAttribute("title", "Results with " + puborbrewChoices.get(puborbrew) +" - " + columnChoices.get(searchType) + ": " + searchTerm + searchState);
+
         if (puborbrew.toLowerCase().equals("pub")){
             model.addAttribute("pubs", pubs);
         } else if (puborbrew.toLowerCase().equals("brew")){

@@ -72,7 +72,7 @@ public class BrewData {
                 results.add(brew);
             } else if (brew.getStyle().toString().toLowerCase().contains(lower_val)) {
                 results.add(brew);
-            } else if (brew.getAbv().toString().toLowerCase().contains(lower_val)) {
+            } else if (Integer.parseInt(lower_val) == (brew.getAbv().intValue())) {
                 results.add(brew);
             } else if (brew.getDescription().toString().toLowerCase().contains(lower_val)) {
                 results.add(brew);
