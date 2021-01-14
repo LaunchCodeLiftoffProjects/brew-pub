@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -133,6 +134,63 @@ public class ReviewController {
 
         return "redirect:/pubs/brews/view/" + brewId;
 
+    }
+
+    @GetMapping("brew/{brewReviewId}/edit")
+    public String viewEditBrewReviewForm(@PathVariable Integer brewReviewId,
+                                         Model model) {
+        Optional<BrewReview> resultReview = brewReviewRepository.findById(brewReviewId);
+
+        if (resultReview.isEmpty()) {
+            return "redirect:/pubs";
+        } else {
+            BrewReview brewReview = resultReview.get();
+            Brew brew = brewReview.getBrew();
+            Pub pub = brew.getPub();
+
+            model.addAttribute("title", "Edit Review For : " + brew.getName());
+            model.addAttribute("brew", brew);
+            model.addAttribute("pub", pub);
+            model.addAttribute("brewReview", brewReview);
+
+            return "reviews/editReview";
+        }
+    }
+
+    @PostMapping("brew/{brewReviewId}/edit")
+    public String processEditBrewReviewForm(@ModelAttribute @Valid BrewReview editBrewReview,
+                                            Errors errors,
+                                            Model model,
+                                            @PathVariable Integer brewReviewId) {
+
+        Optional<BrewReview> resultOriginalReview = brewReviewRepository.findById(brewReviewId);
+
+        if (resultOriginalReview.isEmpty()) {
+            return "pubs/index";
+        }
+
+        BrewReview originalReview = resultOriginalReview.get();
+        Brew brew = originalReview.getBrew();
+        Pub pub = brew.getPub();
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Review For : " + brew.getName());
+            model.addAttribute("brewReview", editBrewReview);
+            model.addAttribute("errors", errors);
+            model.addAttribute("pub", pub);
+            model.addAttribute("brew", brew);
+
+            return "review/editReview";
+        } else {
+
+            originalReview.setReviewTitle(editBrewReview.getReviewTitle());
+            originalReview.setReviewText(editBrewReview.getReviewText());
+            originalReview.setRating(editBrewReview.getRating());
+
+            brewReviewRepository.save(originalReview);
+        }
+
+        return "redirect:/pubs/brews/view/" + brew.getId();
     }
 
 }
