@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +25,7 @@ import java.util.Optional;
 @RequestMapping("pubs/brews")
 public class BrewController {
 
-    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/uploads";
+    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/imgs";
 
     @Autowired
     private PubRepository pubRepository;
@@ -81,7 +80,9 @@ public class BrewController {
                 Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
                 fileNames.append(file.getOriginalFilename());
                 Files.write(fileNameAndPath, file.getBytes());
-                newBrew.setImagePath(fileNameAndPath.toString());
+//                Path currentPath = Paths.get(".");
+//                Path absolutePath = currentPath.toAbsolutePath();
+                newBrew.setImagePath("/imgs/" + fileNameAndPath.getFileName().toString());
             }
 
             newBrew.setPub(pub);
