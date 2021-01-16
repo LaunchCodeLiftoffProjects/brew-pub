@@ -1,13 +1,14 @@
 package org.launchcode.brewpub.models;
 
+import javax.persistence.Convert;
 import java.util.ArrayList;
 
 public class BrewData {
     /**
-     * Returns the results of searching the Jobs data by field and search term.
+     * Returns the results of searching the Brews data by field and search term.
      *
-     * For example, searching for employer "Enterprise" will include results
-     * with "Enterprise Holdings, Inc".
+     * For example, searching for brew "Shlafly" will include results
+     * with "Shlafly Taproom, Inc".
      *
      * @param column Job field that should be searched.
      * @param value Value of the field to search for.
@@ -32,11 +33,34 @@ public class BrewData {
 
             String aValue = getFieldValue(brew, column);
 
-            if(aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
-                results.add(brew);
+
+//            if(aValue != null && aValue.toLowerCase().contains(value.toLowerCase()) && !column.equals("abv")) {
+//                results.add(brew);
+//            } else {
+//                int intAbv = Integer.parseInt(aValue);
+//                int intValue = Integer.parseInt(value);
+//
+//                if (intAbv == intValue){
+//                    results.add(brew);
+//                }
+//            }
+
+
+            if (aValue != null && column.equals("abv")) {
+                double dAbv = Double.parseDouble(aValue);
+                double dValue = Double.parseDouble(value);
+                int intAbv = (int) dAbv;
+                int intValue = (int) dValue;
+
+                if (intAbv == intValue) {
+                    results.add(brew);
+                } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+                    results.add(brew);
+                }
             }
         }
         return results;
+
     }
 
     public static String getFieldValue(Brew brew, String fieldName) {
@@ -46,7 +70,7 @@ public class BrewData {
         } else if (fieldName.equals("style")) {
             theValue = brew.getStyle().toString();
         } else if (fieldName.equals("abv")) {
-            theValue = brew.getAbv().toString();
+            theValue = brew.getAbv().toBigInteger().toString();
         } else if (fieldName.equals("description")) {
             theValue = brew.getDescription().toString();
         }
@@ -55,15 +79,18 @@ public class BrewData {
     }
 
     /**
-     * Search all Job fields for the given term.
+     * Search all Brew fields for the given term.
      *
      * @param value The search term to look for.
      * @param allBrews The list of jobs to search.
-     * @return      List of all brewss with at least one field containing the value.
+     * @return      List of all brews with at least one field containing the value.
      */
 
     public static ArrayList<Brew> findByValue(String value, Iterable<Brew> allBrews) {
         String lower_val = value.toLowerCase();
+        double d = Double.parseDouble(lower_val);
+        int int_val = (int) d;
+        String str_int_val = Integer.toString(int_val);
 
         ArrayList<Brew> results = new ArrayList<>();
 
@@ -72,7 +99,7 @@ public class BrewData {
                 results.add(brew);
             } else if (brew.getStyle().toString().toLowerCase().contains(lower_val)) {
                 results.add(brew);
-            } else if (Integer.parseInt(lower_val) == (brew.getAbv().intValue())) {
+            } else if (brew.getAbv().toString().equals(str_int_val)) {
                 results.add(brew);
             } else if (brew.getDescription().toString().toLowerCase().contains(lower_val)) {
                 results.add(brew);
