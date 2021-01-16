@@ -76,13 +76,12 @@ public class BrewController {
             model.addAttribute("pub", pub);
             return "brews/add";
         } else {
+
             for(MultipartFile file : files) {
                 Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
-                fileNames.append(file.getOriginalFilename());
+                fileNames.append(file.getOriginalFilename().replaceAll("\\s", ""));
                 Files.write(fileNameAndPath, file.getBytes());
-//                Path currentPath = Paths.get(".");
-//                Path absolutePath = currentPath.toAbsolutePath();
-                newBrew.setImagePath("/imgs/" + fileNameAndPath.getFileName().toString());
+                newBrew.setImagePath("/imgs/" + fileNameAndPath.getFileName().toString().replaceAll("\\s", ""));
             }
 
             newBrew.setPub(pub);

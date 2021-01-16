@@ -37,6 +37,7 @@ public class Brew extends AbstractEntity{
     @Size(max = 80, message = "Style cannot be more than 80 characters")
     private String style;
 
+    @Size(max = 150, message = "File name cannot be more than 150 characters")
     private String imagePath;
 
 

@@ -60,11 +60,14 @@
                                 <th>Description : </th>
                                 <td th:text="${brew.description}">Description</td>
                             </tr>
+                        <tr>
+                            <td>
+                                <img th:src="@{${brew.imagePath}}" alt="image of a brew" style="width:5cm;height:auto">
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
-                    <div>
-                        <img th:src="@{${brew.imagePath}}" alt="image of a brew">
-                    </div>
+
                 </div>
 
                 <div class="col-sm-8">
