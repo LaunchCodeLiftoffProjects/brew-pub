@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class NewPasswordController {
@@ -28,14 +30,17 @@ public class NewPasswordController {
         return "forgotPassword";
     }
 
-    @PostMapping("/newPassword")
-    public String newPasswordForm(Model model, NewPasswordDTO newPasswordDTO) {
+    @RequestMapping(value="/newPassword", method = { RequestMethod.GET, RequestMethod.POST })
+    public String newPasswordForm(Model model, NewPasswordDTO newPasswordDTO, Principal principal) {
         model.addAttribute("title", "newPassword");
         User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
-        if (existingUser == null) {
+        if (existingUser == null && principal == null) {
             return "redirect:";
+        } else if (principal != null) {
+            Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        } else if (existingUser != null) {
+            model.addAttribute("newPasswordDTO", newPasswordDTO);
         }
-        model.addAttribute("newPasswordDTO", newPasswordDTO);
         return "newPassword";
     }
 
