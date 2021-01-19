@@ -25,7 +25,7 @@ import java.util.Optional;
 @RequestMapping("pubs/brews")
 public class BrewController {
 
-    public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/imgs";
+    public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/";
 
     @Autowired
     private PubRepository pubRepository;
@@ -58,7 +58,8 @@ public class BrewController {
     }
 
     @RequestMapping("add")
-    public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew, MultipartFile[] files,
+    public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew,
+                                     MultipartFile[] files,
                                      Errors errors,
                                      @RequestParam Integer pubId,
                                      Model model) {
@@ -78,14 +79,18 @@ public class BrewController {
         } else {
 
             for(MultipartFile file : files) {
-                Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename().replaceAll("\\s", ""));
-                fileNames.append(file.getOriginalFilename().replaceAll("\\s", ""));
-                try {
-                    Files.write(fileNameAndPath, file.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (!file.isEmpty()) {
+                    Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename().replaceAll("\\s", ""));
+                    fileNames.append(file.getOriginalFilename().replaceAll("\\s", ""));
+                    try {
+                        Files.write(fileNameAndPath, file.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    newBrew.setImagePath("/uploads/" + fileNameAndPath.getFileName().toString());
+                } else {
+                    newBrew.setImagePath(null);
                 }
-                newBrew.setImagePath("/imgs/" + fileNameAndPath.getFileName().toString());
             }
 
             newBrew.setPub(pub);
