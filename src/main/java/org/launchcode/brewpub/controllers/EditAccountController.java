@@ -21,14 +21,14 @@ public class EditAccountController {
     UserRepository userRepository;
 
     @GetMapping("/accountDetails")
-    public String viewEditAccountForm(Model model) {
+    public String showUserAccountInfo(Model model) {
         model.addAttribute("title", "accountDetails");
         model.addAttribute(new EditAccountDTO());
         return "accountDetails";
     }
 
     @PostMapping("/editAccount")
-    public String newPasswordForm(Model model, EditAccountDTO editAccountDTO) {
+    public String showEditAccountForm(Model model, EditAccountDTO editAccountDTO) {
         model.addAttribute("title", "editAccount");
         User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
         if (existingUser == null) {
@@ -37,22 +37,6 @@ public class EditAccountController {
         model.addAttribute("editAccountDTO", editAccountDTO);
         return "editAccount";
     }
-
-    /*@RequestMapping(value = "/resetAccountInformation", method = RequestMethod.POST)
-    public String resetUsername(Model model, EditAccountDTO editAccountDTO) {
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (editAccountDTO.getEmail() != null && editAccountDTO.getPassword().equals(editAccountDTO.getVerifyPassword())) {
-            User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
-            existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
-            userRepository.save(existingUser);
-            model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
-            model.addAttribute("successResetPassword");
-        } else {
-            model.addAttribute("message","Passwords do not match.");
-        }
-        return "editAccount";
-    }*/
 
     @RequestMapping("/resetAccountInformation")
     public String processEditAccountForm(@ModelAttribute @Valid EditAccountDTO editAccountDTO,
