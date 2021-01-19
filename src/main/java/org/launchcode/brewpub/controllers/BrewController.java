@@ -95,6 +95,14 @@ public class BrewController {
                 User user = resultUser.get();
                 Boolean isFavorite = user.getFavoriteBrews().contains(brew);
                 model.addAttribute("isFavorite", isFavorite);
+                Boolean isReviewable = true;
+                List<BrewReview> allByUserId = brewReviewRepository.findAllByUserId(user.getId());
+                for (BrewReview review : allByUserId) {
+                    if (review.getUser().getId() == user.getId() && review.getBrew().getId() == brew.getId()) {
+                        isReviewable = false;
+                    }
+                }
+                model.addAttribute("isReviewable", isReviewable);
             } else {
                 model.addAttribute("isFavorite", false);
             }

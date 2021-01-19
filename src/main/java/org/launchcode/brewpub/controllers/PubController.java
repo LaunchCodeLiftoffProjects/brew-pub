@@ -80,6 +80,16 @@ public class PubController {
             if (resultUser.isPresent()) {
                 User user = resultUser.get();
                 Boolean isFavorite = user.getFavoritePubs().contains(pub);
+                Boolean isReviewable = true;
+                List<PubReview> allByUserId = pubReviewRepository.findAllByUserId(user.getId());
+                for (PubReview review : allByUserId) {
+                    if (review.getUser().getId() == user.getId() && review.getPub().getId() == pub.getId()) {
+                        isReviewable = false;
+                    }
+
+                }
+
+                model.addAttribute("isReviewable", isReviewable);
                 model.addAttribute("isFavorite", isFavorite);
             } else {
                 model.addAttribute("isFavorite", false);

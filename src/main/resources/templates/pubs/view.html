@@ -38,7 +38,9 @@
                 <div class="col-sm">
                     <div class="row justify-content-center m-2">
                         <span class="h3 m-2" th:text="${'Reviews of: ' + pub.name}">Reviews of Pub </span>
-                        <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a></span>
+                        <th:block th:if="${isReviewable}">
+                            <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a></span>
+                        </th:block>
                         <span class="h3 m-2" th:text="${'Average Rating: ' + averageRating}"></span>
                     </div>
 
@@ -58,7 +60,7 @@
                                         <td scope="row" th:text="${review.reviewTitle}">Title</td>
                                         <td>
                                             <th:block th:if="${#authentication.name} == ${review.user.username}">
-                                                <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{/review/pub/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                                <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary" th:href="@{/review/pub/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
                                             </th:block>
                                         </td>
                                         <td th:text="${review.rating}">Rating</td>
