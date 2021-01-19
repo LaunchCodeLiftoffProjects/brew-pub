@@ -33,6 +33,9 @@
             />
             <span class="error" th:errors="${user.lastName}"></span>
         </p>
+        <div hidden>
+            <input type="text" th:field="${user.pwhash}" th:value="${user.pwhash}"/>
+        </div>
         <button type="submit">Submit</button>
         <a th:href="@{/accountDetails}"><button type="button">Cancel</button></a>
     </form>

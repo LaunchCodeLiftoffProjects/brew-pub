@@ -49,30 +49,26 @@ public class EditAccountController {
     }
 
     @RequestMapping("/resetAccountInformation")
-    public String processEditAccountForm(@ModelAttribute @Valid User user,
+    public String processEditAccountForm(@ModelAttribute @Valid User userTemp,
                                          Errors errors, Model model, Principal principal) {
         if (errors.hasErrors()) {
-            model.addAttribute("user", user);
+            model.addAttribute("user", userTemp);
             model.addAttribute("title", "editAccount");
             model.addAttribute("errors", errors);
             return "editAccount/editAccount";
+        } else {
+            Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+            if (resultUser.isEmpty()) {
+                return "index";
+            }
+            User user = resultUser.get();
+            user.setEmail(userTemp.getEmail());
+            user.setFirstName(userTemp.getFirstName());
+            user.setLastName(userTemp.getLastName());
+            user.setUsername(userTemp.getUsername());
+
+            userRepository.save(user);
         }
-
-
-//        User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
-//
-//
-//        if (editAccountDTO.getEmail() != null && editAccountDTO.getPassword().equals(editAccountDTO.getVerifyPassword())) {
-//            existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
-//            userRepository.save(existingUser);
-//            model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
-//            model.addAttribute("successResetPassword");
-//        } else {
-//            model.addAttribute("message","Passwords do not match.");
-//        }
-        return "editAccount/editAccount";
-
+        return "redirect:/accountDetails";
     }
 }
