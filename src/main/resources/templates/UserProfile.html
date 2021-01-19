@@ -49,7 +49,7 @@
             <tbody>
             <th:block th:each="review : ${brewReviews}">
                 <tr class="text-center">
-                    <td> <a th:href="@{'/pubs/brews/'+${review.brew.pub.id}+'/view/' + ${review.brew.id}}" th:text="${review.brew.name}">BrewName</a></td>
+                    <td> <a th:href="@{'/pubs/brews/view/' + ${review.brew.id}}" th:text="${review.brew.name}">BrewName</a></td>
                     <td th:text="${review.reviewTitle}">Title</td>
                     <td th:text="${review.rating}">Rating</td>
                     <td th:text="${review.reviewText}">ReviewText</td>
@@ -89,7 +89,7 @@
             <tbody>
             <th:block th:each="brew: ${user.favoriteBrews}">
                 <tr class="text-center">
-                    <td> <a th:href="@{'/pubs/brews/'+${brew.pub.id}+'/view/' + ${brew.id}}" th:text="${brew.name}"></a></td>
+                    <td> <a th:href="@{'/pubs/brews/view/' + ${brew.id}}" th:text="${brew.name}"></a></td>
                 </tr>
             </th:block>
             </tbody>
