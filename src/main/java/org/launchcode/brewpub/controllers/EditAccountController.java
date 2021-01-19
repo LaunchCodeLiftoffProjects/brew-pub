@@ -32,20 +32,20 @@ public class EditAccountController {
             User user = resultUser.get();
             model.addAttribute("user", user);
         }
-
-
         return "editAccount/accountDetails";
     }
 
-    @PostMapping("/editAccount")
-    public String showEditAccountForm(Model model, EditAccountDTO editAccountDTO) {
+    @GetMapping("/editAccount")
+    public String showEditAccountForm(Model model, Principal principal) {
         model.addAttribute("title", "editAccount");
-        User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
-        if (existingUser == null) {
-            return "redirect:";
+        Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        if (resultUser.isEmpty()) {
+            return "index";
+        } else {
+            User user = resultUser.get();
+            model.addAttribute("user", user);
         }
-        model.addAttribute("editAccountDTO", editAccountDTO);
-        return "editAccount";
+        return "editAccount/editAccount";
     }
 
     @RequestMapping("/resetAccountInformation")
@@ -57,23 +57,6 @@ public class EditAccountController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
 
-     /*   if (errors.hasErrors()) {
-            model.addAttribute("title", "editAccount");
-            model.addAttribute("errors", errors);
-            return "editAccount";
-        }
-
-        User existingUsername = userRepository.findByUsername(editAccountDTO.getUsername());
-        User existingEmail = userRepository.findByEmail(editAccountDTO.getEmail());
-
-        if (existingUsername != null) {
-            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
-            model.addAttribute("title", "editAccount");
-            return "editAccount";
-        }*/
-
-
-
 
         if (editAccountDTO.getEmail() != null && editAccountDTO.getPassword().equals(editAccountDTO.getVerifyPassword())) {
             existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
@@ -83,7 +66,7 @@ public class EditAccountController {
         } else {
             model.addAttribute("message","Passwords do not match.");
         }
-        return "editAccount";
+        return "editAccount/editAccount";
 
     }
 }

@@ -11,6 +11,15 @@
     <label>Username:</label>
     <p th:text="${user.username}">Username</p>
 </div>
+<div class="container body-content">
+    <label>Name:</label>
+    <p th:text="${user.firstName}+' '+${user.lastName}">Name</p>
+</div>
+<div class="container body-content">
+    <label>Email:</label>
+    <p th:text="${user.email}">Email</p>
+</div>
+<div><a th:href="@{/editAccount}">Edit Account</a></div>
 
 <footer th:replace="fragments :: page-footer"></footer>
 </body>

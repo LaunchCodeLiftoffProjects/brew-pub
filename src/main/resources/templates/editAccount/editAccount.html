@@ -5,43 +5,32 @@
 <body>
 <nav th:replace="fragments :: page-header"></nav>
 <div>
-    <h1 th:text="${editAccountDTO.email}"></h1>
     <h1>Edit Account</h1>
     <form th:action ="@{/resetAccountInformation}" method="post">
-        <div hidden>
-            <input th:field="${editAccountDTO.email}" th:value="${editAccountDTO.email}">
-        </div>
+        <p>
+            <label>Change Email</label>
+            <input th:field="${user.email}" th:value="${user.email}">
+        </p>
         <p>
             <label>Change Username</label>
             <input type = "text"
-                   th:field="${editAccountDTO.username}"
+                   th:field="${user.username}" th:value="${user.username}"
             />
         </p>
         <p>
             <label>Change First Name</label>
             <input type = "text"
-                   th:field="${editAccountDTO.firstName}"
+                   th:field="${user.firstName}" th:value="${user.firstName}"
             />
         </p>
         <p>
             <label>Change Last Name</label>
             <input type = "text"
-                   th:field="${editAccountDTO.lastName}"
-            />
-        </p>
-        <p>
-            <label>Change Password</label>
-            <input type = "password"
-                   th:field="${editAccountDTO.password}"
-            />
-        </p>
-        <p>
-            <label>Verify New Password</label>
-            <input type = "password"
-                   th:field="${editAccountDTO.verifyPassword}"
+                   th:field="${user.lastName}" th:value="${user.lastName}"
             />
         </p>
         <button type="submit">Submit</button>
+        <a th:href="@{/accountDetails}"><button type="button">Cancel</button></a>
     </form>
     <p th:text="${message}">
     </p>
