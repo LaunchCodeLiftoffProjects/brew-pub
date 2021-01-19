@@ -20,11 +20,11 @@ public class EditAccountController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/temporaryGetUserInfoPage")
+    @GetMapping("/accountDetails")
     public String viewEditAccountForm(Model model) {
-        model.addAttribute("title", "temporaryGetUserInfoPage");
+        model.addAttribute("title", "accountDetails");
         model.addAttribute(new EditAccountDTO());
-        return "temporaryGetUserInfoPage";
+        return "accountDetails";
     }
 
     @PostMapping("/editAccount")

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: page-header"></nav>
+
+
+
+<div class="container body-content">
+    <label>Username:</label>
+    <p th:text="${#authentication.name}">Username</p>
+</div>
+
+<footer th:replace="fragments :: page-footer"></footer>
+</body>
+</html>

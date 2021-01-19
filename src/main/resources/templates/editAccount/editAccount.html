@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
-</head>
+
+<head th:replace="fragments :: head"></head>
 <body>
+<nav th:replace="fragments :: page-header"></nav>
 <div>
     <h1 th:text="${editAccountDTO.email}"></h1>
     <h1>Edit Account</h1>
@@ -46,5 +47,6 @@
     </p>
     <p> <a th:href="@{/userLogin}">Go to login page.</a></p>
 </div>
+<footer th:replace="fragments :: page-footer"></footer>
 </body>
 </html>
