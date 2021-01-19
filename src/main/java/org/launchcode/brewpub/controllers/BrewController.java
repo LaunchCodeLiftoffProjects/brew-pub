@@ -59,15 +59,17 @@ public class BrewController {
 
     @RequestMapping("add")
     public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew,
-                                     MultipartFile[] files,
                                      Errors errors,
+                                     MultipartFile[] files,
                                      @RequestParam Integer pubId,
-                                     Model model) {
+                                     Model model,
+                                     Principal principal) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
         Pub pub = result.get();
 
-        StringBuilder fileNames = new StringBuilder();
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
@@ -79,14 +81,20 @@ public class BrewController {
         } else {
 
             for(MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename().replaceAll("\\s", ""));
-                    fileNames.append(file.getOriginalFilename().replaceAll("\\s", ""));
+                if (!file.isEmpty() && resultUser.isPresent()) {
+                    User user = resultUser.get();
+
+                    Path fileNameAndPath = Paths.get(
+                            uploadDirectory,
+                            "user" + user.getId() + "--" +
+                            file.getOriginalFilename().replaceAll("\\s", ""));
+
                     try {
                         Files.write(fileNameAndPath, file.getBytes());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     newBrew.setImagePath("/uploads/" + fileNameAndPath.getFileName().toString());
                 } else {
                     newBrew.setImagePath(null);
