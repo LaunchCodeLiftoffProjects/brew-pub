@@ -49,23 +49,29 @@ public class EditAccountController {
     }
 
     @RequestMapping("/resetAccountInformation")
-    public String processEditAccountForm(@ModelAttribute @Valid EditAccountDTO editAccountDTO,
-                                         Errors errors, HttpServletRequest request,
-                                         Model model) {
-
-        User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
-
-
-        if (editAccountDTO.getEmail() != null && editAccountDTO.getPassword().equals(editAccountDTO.getVerifyPassword())) {
-            existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
-            userRepository.save(existingUser);
-            model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
-            model.addAttribute("successResetPassword");
-        } else {
-            model.addAttribute("message","Passwords do not match.");
+    public String processEditAccountForm(@ModelAttribute @Valid User user,
+                                         Errors errors, Model model, Principal principal) {
+        if (errors.hasErrors()) {
+            model.addAttribute("user", user);
+            model.addAttribute("title", "editAccount");
+            model.addAttribute("errors", errors);
+            return "editAccount/editAccount";
         }
+
+
+//        User existingUser = userRepository.findByEmail(editAccountDTO.getEmail());
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
+//
+//
+//        if (editAccountDTO.getEmail() != null && editAccountDTO.getPassword().equals(editAccountDTO.getVerifyPassword())) {
+//            existingUser.setPwhash(encoder.encode(editAccountDTO.getPassword()));
+//            userRepository.save(existingUser);
+//            model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
+//            model.addAttribute("successResetPassword");
+//        } else {
+//            model.addAttribute("message","Passwords do not match.");
+//        }
         return "editAccount/editAccount";
 
     }

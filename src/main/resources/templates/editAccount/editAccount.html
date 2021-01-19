@@ -10,24 +10,28 @@
         <p>
             <label>Change Email</label>
             <input th:field="${user.email}" th:value="${user.email}">
+            <span class="error" th:errors="${user.email}"></span>
         </p>
         <p>
             <label>Change Username</label>
             <input type = "text"
                    th:field="${user.username}" th:value="${user.username}"
             />
+            <span class="error" th:errors="${user.username}"></span>
         </p>
         <p>
             <label>Change First Name</label>
             <input type = "text"
                    th:field="${user.firstName}" th:value="${user.firstName}"
             />
+            <span class="error" th:errors="${user.firstName}"></span>
         </p>
         <p>
             <label>Change Last Name</label>
             <input type = "text"
                    th:field="${user.lastName}" th:value="${user.lastName}"
             />
+            <span class="error" th:errors="${user.lastName}"></span>
         </p>
         <button type="submit">Submit</button>
         <a th:href="@{/accountDetails}"><button type="button">Cancel</button></a>
