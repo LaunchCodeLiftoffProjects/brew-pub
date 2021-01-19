@@ -3,9 +3,7 @@ package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.UserRepository;
-import org.launchcode.brewpub.models.dto.EditAccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
