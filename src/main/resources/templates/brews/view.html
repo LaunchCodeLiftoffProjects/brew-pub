@@ -60,7 +60,7 @@
                                 <th>Description : </th>
                                 <td th:text="${brew.description}">Description</td>
                             </tr>
-                        <tr>
+                        <tr th:if="${brew.imagePath}">
                             <td>
                                 <img th:src="@{${brew.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
                             </td>
