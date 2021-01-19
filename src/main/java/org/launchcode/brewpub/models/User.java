@@ -3,20 +3,31 @@ package org.launchcode.brewpub.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User extends AbstractEntity{
     @NotNull
+    @NotBlank
+    @Size(min =2, max = 40, message = "First name must be between 2 and 40 characters")
     private String firstName;
 
     @NotNull
+    @NotBlank
+    @Size(min =2, max = 40, message = "Last name must be between 2 and 40 characters")
     private String lastName;
 
     @NotNull
+    @Email(message = "Please enter a valid email")
+    @Size(max = 120)
     private String email;
 
     @NotNull
+    @NotBlank
+    @Size(min = 5, max =40 , message = "Invalid username. Must be between 5 and 40 characters.")
     private String username;
 
     @NotNull
