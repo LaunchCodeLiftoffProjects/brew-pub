@@ -38,6 +38,12 @@ public class NewPasswordController {
             return "redirect:";
         } else if (principal != null) {
             Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+            if (resultUser.isPresent()) {
+                User user = resultUser.get();
+                newPasswordDTO.setEmail(user.getEmail());
+                model.addAttribute("newPasswordDTO", newPasswordDTO);
+            }
+
         } else if (existingUser != null) {
             model.addAttribute("newPasswordDTO", newPasswordDTO);
         }
