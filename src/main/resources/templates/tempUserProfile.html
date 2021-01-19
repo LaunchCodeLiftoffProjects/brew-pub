@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: page-header"></nav>
+
+
+<div class="container body-content">
+    <h1>
+    <span th:text ="${user.username}"></span>
+    </h1>
+    <br/>
+    <h3>Pub Reviews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-3 text-center">Pub Name</th>
+                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                <th scope="col" class="w-25 p-3 text-center">Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="review : ${pubReviews}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/view/' + ${review.pub.id}}" th:text="${review.pub.name}">PubName</a></td>
+                    <td th:text="${review.reviewTitle}">Title</td>
+                    <td th:text="${review.rating}">Rating</td>
+                    <td th:text="${review.reviewText}">ReviewText</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h3>Brew Reviews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-3 text-center">Brew Name</th>
+                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                <th scope="col" class="w-25 p-3 text-center">Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="review : ${brewReviews}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/brews/'+${review.brew.pub.id}+'/view/' + ${review.brew.id}}" th:text="${review.brew.name}">BrewName</a></td>
+                    <td th:text="${review.reviewTitle}">Title</td>
+                    <td th:text="${review.rating}">Rating</td>
+                    <td th:text="${review.reviewText}">ReviewText</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <h3>Favorite Pubs</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-25 text-center">Favorite Pubs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="pub: ${user.favoritePubs}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+    <br/>
+    <h3>Favorite Brews</h3>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="w-25 p-25 text-center">Favorite Brews</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="brew: ${user.favoriteBrews}">
+                <tr class="text-center">
+                    <td> <a th:href="@{'/pubs/brews/'+${brew.pub.id}+'/view/' + ${brew.id}}" th:text="${brew.name}"></a></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+<footer th:replace="fragments :: page-footer"></footer>
+</body>
+</html>
