@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class EditAccountController {
@@ -21,10 +23,18 @@ public class EditAccountController {
     UserRepository userRepository;
 
     @GetMapping("/accountDetails")
-    public String showUserAccountInfo(Model model) {
+    public String showUserAccountInfo(Model model, Principal principal) {
         model.addAttribute("title", "accountDetails");
-        model.addAttribute(new EditAccountDTO());
-        return "accountDetails";
+        Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        if (resultUser.isEmpty()) {
+            return "index";
+        } else {
+            User user = resultUser.get();
+            model.addAttribute("user", user);
+        }
+
+
+        return "editAccount/accountDetails";
     }
 
     @PostMapping("/editAccount")

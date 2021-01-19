@@ -9,7 +9,7 @@
 
 <div class="container body-content">
     <label>Username:</label>
-    <p th:text="${#authentication.name}">Username</p>
+    <p th:text="${user.username}">Username</p>
 </div>
 
 <footer th:replace="fragments :: page-footer"></footer>
