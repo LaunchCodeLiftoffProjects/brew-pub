@@ -45,7 +45,7 @@ public class HomeController {
 
             int index = items.size() - length;
             for (int i = index; i < items.size(); i++) {
-                mostRecent.add(items.get(i));
+                mostRecent.add(0, items.get(i));
             }
         }
         return mostRecent;
