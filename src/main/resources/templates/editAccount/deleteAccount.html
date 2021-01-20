@@ -3,21 +3,26 @@
 <head th:replace="fragments :: head"></head>
 
 <body>
-<nav th:replace="fragments :: page-header"></nav>
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container-fluid body-content mt-3">
+
+        <div class="row justify-content-md-center">
+            <form th:action="@{/deleteAccount}" method="post">
+                <div class="row">
+                    <label class="m-2">Confirm delete account. This is permanent.</label>
+                </div>
+                <div class="row">
+                    <button class="m-2" type="submit">Delete Account</button>
+                    <a  class="m-2" th:href="@{accountDetails}"><button type="button">Cancel</button></a>
+                </div>
+            </form>
+        </div>
 
 
-<div class="container body-content">
-
-    <form th:action="@{/deleteAccount}" method="post">
-        <label>Confirm delete account. This is permanent.</label>
-        <button type="submit">Delete Account</button>
-        <a th:href="@{accountDetails}"><button type="button">Cancel</button></a>
-    </form>
+    </div>
 
 
-</div>
-
-
-<footer th:replace="fragments :: page-footer"></footer>
+    <footer th:replace="fragments :: page-footer"></footer>
 </body>
 </html>
