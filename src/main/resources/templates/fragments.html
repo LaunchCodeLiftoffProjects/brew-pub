@@ -13,6 +13,7 @@
         <div class="nav-item">
             <a th:href="@{/}" class="navbar-brand">Home</a>
             <a th:href="@{/pubs}" class="navbar-brand">View-All-Pubs</a>
+            <a th:href="@{/search}" class="navbar-brand">Search</a>
         </div>
             <div sec:authorize="!isAuthenticated()">
                 <a th:href="@{/login}" class="btn btn-secondary">Login</a>

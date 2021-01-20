@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body onload="disableBrew()">
+
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container body-content"><h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+
+        <form th:action="@{/search/results}" method = "post">
+            <h2>Search by:</h2>
+
+            <p>
+                <input
+                        type="radio"
+                        name="puborbrew"
+                        th:id="pub"
+                        th:onclick="disableBrew()"
+                        th:value="pub"
+                        th:checked="pub"/>
+                <label th:onclick="disableBrew()" th:for="puborbrew" th:text="Pub"></label>
+
+                <input
+                        type="radio"
+                        name="puborbrew"
+                        th:id="brew"
+                        th:onclick="disablePub()"
+                        th:value="brew"/>
+                <label th:onclick="disablePub()" th:for="puborbrew" th:text="Brew"></label>
+
+                <input
+                        type="radio"
+                        name="puborbrew"
+                        th:onclick="enableBothOnly()"
+                        th:id="both"
+                        th:value="both"/>
+                <label th:for="puborbrew" th:text="Both"></label>
+            </p>
+
+            <h2>Category:</h2>
+            <p>
+                <!--old code -->
+                <!--<span th:each="column : ${columns}">
+                    <input
+                            type="radio"
+                            name="searchType"
+                            th:id="${column.key}"
+                            th:value="${column.key}"
+                            th:checked="${column.key == 'all'}"/>
+                    <label th:for="${column.key}" th:text="${column.value}"></label>
+                </span>-->
+
+                <input type="radio"
+                       name="searchType"
+                       th:class="both"
+                       th:value="all"
+                       th:id="all"
+                       th:checked="all"/>
+                <label th:for="all" th:text="All"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       th:class="both"
+                       th:value="name"/>
+                <label th:for="name" th:text="Name"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="pub"
+                       th:value="address"/>
+                <label th:for="address" th:text="Address"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="pub"
+                       th:value="city"/>
+                <label th:for="city" th:text="City"></label>
+
+            <script>
+                            document.getElementById("pub").addEventListener("click", function()
+{
+    <!--document.getElementById("searchState").style.opacity = 0;-->
+    document.getElementById("state").checked = false;
+    document.getElementById("all").checked = true;
+    document.getElementById("searchState").value = "";
+}, false);
+
+                document.getElementById("brew").addEventListener("click", function()
+{
+    <!--document.getElementById("state").style.opacity = 0;-->
+    document.getElementById("state").checked = false;
+    document.getElementById("all").checked = true;
+    document.getElementById("searchState").value = "";
+}, false);
+
+                document.getElementById("both").addEventListener("click", function()
+{
+    <!--document.getElementById("state").style.opacity = 0;-->
+    document.getElementById("all").checked = true;
+    document.getElementById("state").checked = false;
+}, false);
+            </script>
+            <div>
+                <input type="radio"
+                   name="searchType"
+                   class="pub"
+                       th:id="state"
+                   th:value="state"/>
+                <label th:for="state" th:text="State"></label>
+
+                <select class="pub" name="searchState" id="searchState">
+                    <option value="">Select State</option>
+                    <option value="" disabled>------------------------</option>
+                    <option value="AL">AL</option>
+                    <option value="AK">AK</option>
+                    <option value="AZ">AZ</option>
+                    <option value="AR">AR</option>
+                    <option value="CA">CA</option>
+                    <option value="CO">CO</option>
+                    <option value="CT">CT</option>
+                    <option value="DE">DE</option>
+                    <option value="FL">FL</option>
+                    <option value="GA">GA</option>
+                    <option value="HI">HI</option>
+                    <option value="ID">ID</option>
+                    <option value="IL">IL</option>
+                    <option value="IN">IN</option>
+                    <option value="IA">IA</option>
+                    <option value="KS">KS</option>
+                    <option value="KY">KY</option>
+                    <option value="LA">LA</option>
+                    <option value="ME">ME</option>
+                    <option value="MD">MD</option>
+                    <option value="MA">MA</option>
+                    <option value="MI">MI</option>
+                    <option value="MN">MN</option>
+                    <option value="MS">MS</option>
+                    <option value="MO">MO</option>
+                    <option value="MT">MT</option>
+                    <option value="NE">NE</option>
+                    <option value="NV">NV</option>
+                    <option value="NH">NH</option>
+                    <option value="NJ">NJ</option>
+                    <option value="NM">NM</option>
+                    <option value="NY">NY</option>
+                    <option value="NC">NC</option>
+                    <option value="ND">ND</option>
+                    <option value="OH">OH</option>
+                    <option value="OK">OK</option>
+                    <option value="OR">OR</option>
+                    <option value="PA">PA</option>
+                    <option value="RI">RI</option>
+                    <option value="SC">SC</option>
+                    <option value="SD">SD</option>
+                    <option value="TN">TN</option>
+                    <option value="TX">TX</option>
+                    <option value="UT">UT</option>
+                    <option value="VT">VT</option>
+                    <option value="VA">VA</option>
+                    <option value="WA">WA</option>
+                    <option value="WV">WV</option>
+                    <option value="WI">WI</option>
+                    <option value="WY">WY</option>
+                </select>
+            </div>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="style"/>
+                <label th:for="style" th:text="Style"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="abv"/>
+                <label th:for="abv" th:text="ABV"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew"
+                       th:value="description"/>
+                <label th:for="description" th:text="Description"></label>
+            </p>
+
+            <p>
+                <label for="searchTerm">Keyword:</label>
+                <input type="text" name="searchTerm" id="searchTerm" />
+            </p>
+
+            <input type="submit" value="Search" />
+        </form>
+
+        <hr />
+
+        <table class="table table-striped job-listing">
+            <tr th:each="pub : ${pubs}">
+                <td>
+                    <p>
+                        Pub Id:
+                        <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
+                    </p>
+                    <p th:text="${'Name: ' + pub.name}"></p>
+                    <p th:text="${pub.state}"></p>
+
+                </td>
+            </tr>
+
+            <tr th:each="brew : ${brews}">
+                <td>
+                    <p> Brew Id:
+                        <a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}"
+                           th:text="${brew.id}"></a>
+                    </p>
+                    <p th:text="${'Name: ' + brew.name}"></p>
+                    <p th:text="${'Style: ' + brew.style}"></p>
+                    <p th:text="${'ABV: ' + brew.abv}"></p>
+                    <p th:text="${'Description: ' + brew.description}"></p>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+    function disableBrew() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+
+        for(var i=0; i<pubChoice.length; i++) {
+            if(pubChoice[i].disabled = true){
+                pubChoice[i].disabled = false;
+                brewChoice[i].disabled = true;
+            }
+        brewChoice[i].disabled = true;
+        }
+    }
+
+    function disablePub() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+
+        for(var i=0; i<pubChoice.length; i++) {
+pubChoice[i].disabled = true;
+brewChoice[i].disabled=false;
+        }
+    }
+
+    function enableBothOnly() {
+        var pubChoice = document.getElementsByClassName("pub");
+        var brewChoice = document.getElementsByClassName("brew");
+        var bothChoice = document.getElementsByClassName("both");
+
+        for(var i=0; i<pubChoice.length; i++) {
+            pubChoice[i].disabled = true;
+            brewChoice[i].disabled=true;
+        }
+    }
+
+    </script>
+
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+</html>
