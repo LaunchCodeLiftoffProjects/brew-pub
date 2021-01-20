@@ -9,9 +9,7 @@
 
     <div class="container body-content mt-3">
 
-
         <h1 th:text="${brew.name} + ' : Review'">brew-name</h1>
-
 
         <form th:action="@{/review/brew/}" method="post">
 
@@ -46,7 +44,6 @@
                 <label>brewId</label>
                 <input type="text" name="brewId" th:value="${brew.id}">
             </div>
-
 
             <input type="submit">
 
