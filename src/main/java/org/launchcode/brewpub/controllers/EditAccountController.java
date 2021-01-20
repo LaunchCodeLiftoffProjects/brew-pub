@@ -128,7 +128,6 @@ public class EditAccountController {
                 }
             }
 
-
             List<BrewReview> brewReviews = brewReviewRepository.findAllByUserId(user.getId());
             List<PubReview> pubReviews = pubReviewRepository.findAllByUserId(user.getId());
 
@@ -136,7 +135,6 @@ public class EditAccountController {
             pubReviewRepository.deleteAll(pubReviews);
 
             userRepository.delete(user);
-
         }
 
         return "redirect:";
