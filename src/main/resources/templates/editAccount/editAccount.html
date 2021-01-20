@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-
 <head th:replace="fragments :: head"></head>
+
 <body>
-<nav th:replace="fragments :: page-header"></nav>
-<div>
-    <h1>Edit Account</h1>
-    <form th:action ="@{/resetAccountInformation}" method="post">
-        <p>
-            <label>Change Email</label>
-            <input th:field="${user.email}" th:value="${user.email}">
-            <span class="error" th:errors="${user.email}"></span>
-        </p>
-        <p>
-            <label>Change Username</label>
-            <input type = "text"
-                   th:field="${user.username}" th:value="${user.username}"
-            />
-            <span class="error" th:errors="${user.username}"></span>
-        </p>
-        <p>
-            <label>Change First Name</label>
-            <input type = "text"
-                   th:field="${user.firstName}" th:value="${user.firstName}"
-            />
-            <span class="error" th:errors="${user.firstName}"></span>
-        </p>
-        <p>
-            <label>Change Last Name</label>
-            <input type = "text"
-                   th:field="${user.lastName}" th:value="${user.lastName}"
-            />
-            <span class="error" th:errors="${user.lastName}"></span>
-        </p>
-        <div hidden>
-            <input type="text" th:field="${user.pwhash}" th:value="${user.pwhash}"/>
-        </div>
-        <button type="submit">Submit</button>
-        <a th:href="@{/accountDetails}"><button type="button">Cancel</button></a>
-    </form>
-    <p th:text="${message}">
-    </p>
-    <p> <a th:href="@{/userLogin}">Go to login page.</a></p>
-</div>
-<footer th:replace="fragments :: page-footer"></footer>
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container body-content mt-3">
+        <h1>Edit Account</h1>
+        <form th:action ="@{/resetAccountInformation}" method="post">
+            <div class="form-group">
+                <label>Change Email</label>
+                <input th:field="${user.email}" th:value="${user.email}">
+                <span class="error" th:errors="${user.email}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Change Username</label>
+                <input type = "text"
+                       th:field="${user.username}" th:value="${user.username}"/>
+                <span class="error" th:errors="${user.username}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Change First Name</label>
+                <input type = "text"
+                       th:field="${user.firstName}" th:value="${user.firstName}"/>
+                <span class="error" th:errors="${user.firstName}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Change Last Name</label>
+                <input type = "text"
+                       th:field="${user.lastName}" th:value="${user.lastName}"/>
+                <span class="error" th:errors="${user.lastName}"></span>
+            </div>
+
+            <div hidden>
+                <input type="text" th:field="${user.pwhash}" th:value="${user.pwhash}"/>
+            </div>
+
+            <button type="submit">Submit</button>
+            <a th:href="@{/accountDetails}"><button type="button">Cancel</button></a>
+
+        </form>
+
+        <div th:text="${message}"></div>
+
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
 </body>
 </html>

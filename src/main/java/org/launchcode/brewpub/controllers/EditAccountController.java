@@ -85,7 +85,7 @@ public class EditAccountController {
             if (!user.getUsername().equals(userTemp.getUsername())) {
                 user.setUsername(userTemp.getUsername());
                 userRepository.save(user);
-                model.addAttribute("message", "Account information successfully changed.");
+                model.addAttribute("message", "Account information successfully changed. Please log back in.");
                 return "login";
             } else {
                 userRepository.save(user);
