@@ -88,9 +88,17 @@ public class EditAccountController {
 
     @PostMapping("deleteAccount")
     public String processDeleteAccount(Principal principal, HttpServletRequest request) {
-
         request.getSession().invalidate();
 
+        Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+        if (resultUser.isPresent()) {
+            User user = resultUser.get();
+            userRepository.delete(user);
+
+
+
+
+        }
 
         return "redirect:";
     }
