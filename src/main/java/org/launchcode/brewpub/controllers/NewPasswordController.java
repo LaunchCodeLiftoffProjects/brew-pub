@@ -28,7 +28,7 @@ public class NewPasswordController {
     public String viewForgotPasswordForm(Model model) {
         model.addAttribute("title","Forgot Password");
         model.addAttribute(new NewPasswordDTO());
-        return "forgotPassword";
+        return "editAccount/forgotPassword";
     }
 
     @RequestMapping(value="/newPassword", method = { RequestMethod.GET, RequestMethod.POST })
@@ -50,7 +50,7 @@ public class NewPasswordController {
         } else if (existingUser != null) {
             model.addAttribute("newPasswordDTO", newPasswordDTO);
         }
-        return "newPassword";
+        return "editAccount/newPassword";
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
@@ -60,7 +60,7 @@ public class NewPasswordController {
             model.addAttribute("title", "newPassword");
             model.addAttribute("errors", errors);
             model.addAttribute("newPasswordDTO", newPasswordDTO);
-            return "newPassword";
+            return "editAccount/newPassword";
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (newPasswordDTO.getEmail() != null && newPasswordDTO.getPassword().equals(newPasswordDTO.getVerifyPassword())) {
@@ -74,6 +74,6 @@ public class NewPasswordController {
             model.addAttribute("title","New Password");
             model.addAttribute("message","Passwords do not match.");
         }
-        return "newPassword";
+        return "editAccount/newPassword";
     }
 }
