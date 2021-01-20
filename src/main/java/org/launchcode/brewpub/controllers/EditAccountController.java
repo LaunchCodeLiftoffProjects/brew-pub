@@ -1,8 +1,8 @@
 package org.launchcode.brewpub.controllers;
 
 
-import org.launchcode.brewpub.models.User;
-import org.launchcode.brewpub.models.data.UserRepository;
+import org.launchcode.brewpub.models.*;
+import org.launchcode.brewpub.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -20,6 +22,18 @@ public class EditAccountController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    BrewReviewRepository brewReviewRepository;
+
+    @Autowired
+    PubReviewRepository pubReviewRepository;
+
+    @Autowired
+    BrewRepository brewRepository;
+
+    @Autowired
+    PubRepository pubRepository;
 
     @GetMapping("/accountDetails")
     public String showUserAccountInfo(Model model, Principal principal) {
@@ -93,10 +107,35 @@ public class EditAccountController {
         Optional<User> resultUser= Optional.ofNullable(userRepository.findByUsername(principal.getName()));
         if (resultUser.isPresent()) {
             User user = resultUser.get();
+
+            List<Brew> favoriteBrews = new ArrayList<>(user.getFavoriteBrews());
+            if (!favoriteBrews.isEmpty()) {
+                for (Brew brew : favoriteBrews) {
+                    user.removeFavoriteBrew(brew);
+                    brew.removeBrewFavoriteUser(user);
+                    userRepository.save(user);
+                    brewRepository.save(brew);
+                }
+            }
+
+            List<Pub> favoritePubs = new ArrayList<>(user.getFavoritePubs());
+            if (!favoritePubs.isEmpty()) {
+                for (Pub pub : favoritePubs) {
+                    user.removeFavoritePub(pub);
+                    pub.removePubFavoriteUser(user);
+                    userRepository.save(user);
+                    pubRepository.save(pub);
+                }
+            }
+
+
+            List<BrewReview> brewReviews = brewReviewRepository.findAllByUserId(user.getId());
+            List<PubReview> pubReviews = pubReviewRepository.findAllByUserId(user.getId());
+
+            brewReviewRepository.deleteAll(brewReviews);
+            pubReviewRepository.deleteAll(pubReviews);
+
             userRepository.delete(user);
-
-
-
 
         }
 
