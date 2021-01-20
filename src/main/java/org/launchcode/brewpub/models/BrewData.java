@@ -1,16 +1,15 @@
 package org.launchcode.brewpub.models;
 
-import javax.persistence.Convert;
 import java.util.ArrayList;
 
 public class BrewData {
     /**
      * Returns the results of searching the Brews data by field and search term.
      *
-     * For example, searching for brew "Shlafly" will include results
-     * with "Shlafly Taproom, Inc".
+     * For example, searching for brew "Schlafly" will include results
+     * with "Schlafly Taproom, Inc".
      *
-     * @param column Job field that should be searched.
+     * @param column Field that should be searched.
      * @param value Value of the field to search for.
      * @param allBrews The list of brews to search.
      * @return List of all brews matching the criteria.
@@ -32,19 +31,6 @@ public class BrewData {
         for (Brew brew : allBrews) {
 
             String aValue = getFieldValue(brew, column);
-
-
-//            if(aValue != null && aValue.toLowerCase().contains(value.toLowerCase()) && !column.equals("abv")) {
-//                results.add(brew);
-//            } else {
-//                int intAbv = Integer.parseInt(aValue);
-//                int intValue = Integer.parseInt(value);
-//
-//                if (intAbv == intValue){
-//                    results.add(brew);
-//                }
-//            }
-
 
             if (aValue != null && column.equals("abv")) {
                 double dAbv = Double.parseDouble(aValue);
