@@ -40,7 +40,7 @@ public class UserProfileController {
             model.addAttribute("brewReviews", brewReviewRepository.findAllByUserId(user.getId()));
             model.addAttribute("pubFavorites", user.getFavoritePubs());
             model.addAttribute("brewFavorites", user.getFavoriteBrews());
-            return "/tempUserProfile";
+            return "/UserProfile";
         }
     }
 }

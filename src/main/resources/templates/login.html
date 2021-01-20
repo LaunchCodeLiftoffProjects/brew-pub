@@ -19,6 +19,9 @@
             You have been logged out.
         </div>
 
+        <div th:if="${message}" th:text="${message}">
+        </div>
+
         <form th:action="@{/login}" method="post" class="form-group">
             <div>
                 <label> User Name : <input class="form-control"  type="text" name="username"/></label>

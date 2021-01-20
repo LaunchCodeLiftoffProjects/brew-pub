@@ -1,5 +1,6 @@
-package org.launchcode.brewpub.models;
+package org.launchcode.brewpub;
 
+import org.launchcode.brewpub.models.User;
 import org.launchcode.brewpub.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

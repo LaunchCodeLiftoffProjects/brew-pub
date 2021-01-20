@@ -4,9 +4,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 public class User extends AbstractEntity{
@@ -18,15 +22,23 @@ public class User extends AbstractEntity{
     private final List<Brew> favoriteBrews = new ArrayList<>();
 
     @NotNull
+    @NotBlank
+    @Size(min =2, max = 40, message = "First name must be between 2 and 40 characters")
     private String firstName;
 
     @NotNull
+    @NotBlank
+    @Size(min =2, max = 40, message = "Last name must be between 2 and 40 characters")
     private String lastName;
 
     @NotNull
+    @Email(message = "Please enter a valid email")
+    @Size(max = 120)
     private String email;
 
     @NotNull
+    @NotBlank
+    @Size(min = 5, max =40 , message = "Invalid username. Must be between 5 and 40 characters.")
     private String username;
 
     @NotNull
