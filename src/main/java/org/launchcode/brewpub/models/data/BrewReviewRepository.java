@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface BrewReviewRepository extends CrudRepository<BrewReview, Integer> {
     List<BrewReview> findAllByBrewId(int brewId);
+    List<BrewReview> findAllByUserId(int userId);
 
 }

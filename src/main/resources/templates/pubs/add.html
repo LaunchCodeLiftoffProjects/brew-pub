@@ -7,25 +7,22 @@
 
     <nav th:replace="fragments :: page-header"></nav>
 
-    <div class="container body-content">
+    <div class="container body-content mt-3">
         <h1>Add Pub</h1>
 
         <form th:action="@{/pubs/add}" method="post" style="max-width:600px;">
             <div class="form-group">
-                <label th:for="name">Pub Name</label>
-                <input class="form-control" th:field="${pub.name}" />
+                <label th:for="name">Pub Name : <input class="form-control" th:field="${pub.name}"/></label>
                 <span th:errors="${pub.name}" class="error"></span>
             </div>
 
             <div class="form-group">
-                <label th:for="address">Address</label>
-                <input class="form-control" th:field="${pub.address}" />
+                <label th:for="address">Address : <input class="form-control" th:field="${pub.address}"/></label>
                 <span th:errors="${pub.address}" class="error"></span>
             </div>
 
             <div class="form-group">
-                <label th:for="city">City</label>
-                <input class="form-control" th:field="${pub.city}" />
+                <label th:for="city">City : <input class="form-control" th:field="${pub.city}"/></label>
                 <span th:errors="${pub.city}" class="error"></span>
             </div>
 
@@ -89,12 +86,12 @@
             </div>
 
             <div class="form-group">
-                <label th:for="areaCode">Area Code</label>
-                <input class="form-control" th:field="${pub.areaCode}" />
+                <label th:for="areaCode">Area Code : <input class="form-control" th:field="${pub.areaCode}"/></label>
                 <span th:errors="${pub.areaCode}" class="error"></span>
             </div>
 
             <input type="submit" value="Add Pub" />
+            <a th:href="@{'/pubs'}"><button class="cancelbtn" type="button">Cancel</button></a>
         </form>
     </div>
 
