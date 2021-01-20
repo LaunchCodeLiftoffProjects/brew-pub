@@ -24,7 +24,8 @@
                     </button>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" th:text="${#authentication.name}" th:href="@{'/userProfile/{name}'(name=${#authentication.name})}">User</a>
+                        <a class="dropdown-item" th:text="${#authentication.name} + ' : Profile'" th:href="@{'/userProfile/{name}'(name=${#authentication.name})}">User Profile</a>
+                        <a class="dropdown-item" th:href="@{/accountDetails}">Account Details</a>
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
                 </div>
