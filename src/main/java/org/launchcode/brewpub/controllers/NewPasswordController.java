@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -51,8 +54,14 @@ public class NewPasswordController {
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetUserPassword(Model model, NewPasswordDTO newPasswordDTO) {
+    public String resetUserPassword(@ModelAttribute @Valid NewPasswordDTO newPasswordDTO, Errors errors, Model model) {
 
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "newPassword");
+            model.addAttribute("errors", errors);
+            model.addAttribute("newPasswordDTO", newPasswordDTO);
+            return "newPassword";
+        }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (newPasswordDTO.getEmail() != null && newPasswordDTO.getPassword().equals(newPasswordDTO.getVerifyPassword())) {
             User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
