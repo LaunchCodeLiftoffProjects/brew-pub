@@ -79,7 +79,7 @@
                             <thead>
                             <tr>
                                 <th scope="col" class="w-25 p-3 text-center">Review Title</th>
-                                <th scope="col" class="p-3 text-center"></th>
+                                <th scope="col" class="p-3 text-center">Reviewed By</th>
                                 <th scope="col" class="w-25 p-3 text-center">Rating</th>
                                 <th scope="col" class="w-50 p-3 text-center">Review</th>
                             </tr>
@@ -88,11 +88,12 @@
                             <th:block th:each="review : ${reviews}">
                                 <tr class="text-center">
                                     <td scope="row" th:text="${review.reviewTitle}">Title</td>
-
-
                                     <td>
                                         <th:block th:if="${#authentication.name} == ${review.user.username}">
-                                            <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary" th:href="@{/review/brew/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                            <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary p-1" th:href="@{/review/brew/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                        </th:block>
+                                        <th:block th:unless="${#authentication.name} == ${review.user.username}">
+                                            <a th:text="${review.user.username}" th:href="@{/userProfile/{username}/(username=${review.user.username})}"></a>
                                         </th:block>
                                     </td>
                                     <td th:text="${review.rating}">Rating</td>
