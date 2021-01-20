@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: page-header"></nav>
+
+
+<div class="container body-content">
+
+    <form th:action="@{/deleteAccount}" method="post">
+        <label>Confirm delete account. This is permanent.</label>
+        <button type="submit">Delete Account</button>
+        <a th:href="@{accountDetails}"><button type="button">Cancel</button></a>
+    </form>
+
+
+</div>
+
+
+<footer th:replace="fragments :: page-footer"></footer>
+</body>
+</html>

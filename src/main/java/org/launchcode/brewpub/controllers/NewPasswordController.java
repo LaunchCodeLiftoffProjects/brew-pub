@@ -42,6 +42,8 @@ public class NewPasswordController {
                 User user = resultUser.get();
                 newPasswordDTO.setEmail(user.getEmail());
                 model.addAttribute("newPasswordDTO", newPasswordDTO);
+            } else {
+                return "redirect:";
             }
 
         } else if (existingUser != null) {

@@ -79,4 +79,19 @@ public class EditAccountController {
             }
         }
     }
+
+    @GetMapping("deleteAccount")
+    public String showDeleteAccountConfirmation(Model model) {
+        model.addAttribute("title", "Delete Account");
+        return "editAccount/deleteAccount";
+    }
+
+    @PostMapping("deleteAccount")
+    public String processDeleteAccount(Principal principal, HttpServletRequest request) {
+
+        request.getSession().invalidate();
+
+
+        return "redirect:";
+    }
 }
