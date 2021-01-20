@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @MappedSuperclass
-public abstract class Review extends AbstractEntity{
+public abstract class Review extends AbstractEntity {
 
-   @ManyToOne
-   private User user;
 
+    @ManyToOne
+    private User user;
 
     @Size(max = 80, message = "Title cannot be longer than 80 characters")
     private String reviewTitle;
@@ -68,7 +68,6 @@ public abstract class Review extends AbstractEntity{
         this.rating = rating;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -76,4 +75,5 @@ public abstract class Review extends AbstractEntity{
     public void setUser(User user) {
         this.user = user;
     }
+
 }
