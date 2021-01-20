@@ -11,37 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 public class AuthenticationController {
 
     @Autowired
     UserRepository userRepository;
-
-    private static final String userSessionKey = "user";
-
-    public User getUserFromSession(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-
-        Optional<User> user = userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            return null;
-        }
-
-        return user.get();
-    }
-
-    private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
-    }
 
     @GetMapping("/createAccount")
     public String displayCreateAccountForm(Model model) {
@@ -86,7 +64,12 @@ public class AuthenticationController {
 
         User newUser = new User(createAccountDTO.getFirstName(),createAccountDTO.getLastName(), createAccountDTO.getEmail(), createAccountDTO.getUsername(), createAccountDTO.getPassword());
         userRepository.save(newUser);
-        setUserInSession(request.getSession(), newUser);
+
+        try {
+            request.login(createAccountDTO.getUsername(), createAccountDTO.getPassword());
+        } catch (ServletException exception) {
+            return "redirect:/login";
+        }
 
         return "redirect:";
     }

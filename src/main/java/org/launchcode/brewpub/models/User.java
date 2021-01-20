@@ -3,13 +3,24 @@ package org.launchcode.brewpub.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.Email;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class User extends AbstractEntity{
+
+    @ManyToMany(mappedBy = "pubFavoriteUser")
+    private final List<Pub> favoritePubs = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "brewFavoriteUser")
+    private final List<Brew> favoriteBrews = new ArrayList<>();
+
     @NotNull
     @NotBlank
     @Size(min =2, max = 40, message = "First name must be between 2 and 40 characters")
@@ -89,4 +100,27 @@ public class User extends AbstractEntity{
         return encoder.matches(password, pwhash);
     }
 
+    public List<Pub> getFavoritePubs() {
+        return favoritePubs;
+    }
+
+    public void addFavoritePub(Pub pub) {
+        this.favoritePubs.add(pub);
+    }
+
+    public void removeFavoritePub(Pub pub) {
+        this.favoritePubs.remove(pub);
+    }
+
+    public List<Brew> getFavoriteBrews() {
+        return favoriteBrews;
+    }
+
+    public void addFavoriteBrew(Brew brew) {
+        this.favoriteBrews.add(brew);
+    }
+
+    public void removeFavoriteBrew(Brew brew) {
+        this.favoriteBrews.remove(brew);
+    }
 }

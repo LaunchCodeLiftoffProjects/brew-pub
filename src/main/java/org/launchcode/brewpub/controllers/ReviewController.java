@@ -1,10 +1,7 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.*;
-import org.launchcode.brewpub.models.data.BrewRepository;
-import org.launchcode.brewpub.models.data.BrewReviewRepository;
-import org.launchcode.brewpub.models.data.PubRepository;
-import org.launchcode.brewpub.models.data.PubReviewRepository;
+import org.launchcode.brewpub.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -30,12 +28,14 @@ public class ReviewController {
     @Autowired
     private BrewRepository brewRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     // Pub Review
 
     @GetMapping("pub/{pubId}")
     public String viewPubReviewForm(Model model, @PathVariable Integer pubId) {
-        // TODO: pass-in userId using session ID and session cookie to look up
 
         Optional<Pub> result = pubRepository.findById(pubId);
 
@@ -44,6 +44,7 @@ public class ReviewController {
         } else {
             Pub pub = result.get();
             model.addAttribute("brewpub", pub);
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", new PubReview());
             return "reviews/reviewPub";
         }
@@ -53,25 +54,33 @@ public class ReviewController {
     public String processPubReviewForm(@ModelAttribute @Valid PubReview newPubReview,
                                        Errors errors,
                                        Model model,
-                                       @RequestParam Integer pubId) {
+                                       @RequestParam Integer pubId, Principal principal) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
-        if (pubId == null || result.isEmpty()) {
+
+        Pub pub = result.get();
+
+        if (pubId == null || result.isEmpty() || resultUser.isEmpty()) {
             return "pubs/index";
         }
 
         if (errors.hasErrors()) {
 
-            model.addAttribute("title", "Review");
+            model.addAttribute("title", "Add Review For : " + pub.getName());
             model.addAttribute("pubReview", newPubReview);
             model.addAttribute("errors", errors);
             model.addAttribute("brewpub", result.get());
 
             return "reviews/reviewPub";
         } else {
-            Pub pub = result.get();
+
+
+            User user = resultUser.get();
+
             newPubReview.setPub(pub);
+            newPubReview.setUser(user);
 
             pubReviewRepository.save(newPubReview);
         }
@@ -86,10 +95,9 @@ public class ReviewController {
                                      @PathVariable Integer brewId,
                                      Model model) {
 
-        // TODO: pass-in userId using session ID and session cookie to look up
-
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
+
 
         if (resultPub.isEmpty() || resultBrew.isEmpty()) {
             return "redirect:/pubs";
@@ -97,6 +105,7 @@ public class ReviewController {
             Pub pub = resultPub.get();
             Brew brew = resultBrew.get();
 
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brew", brew);
             model.addAttribute("pub", pub);
             model.addAttribute(new BrewReview());
@@ -111,17 +120,23 @@ public class ReviewController {
                                         Errors errors,
                                         Model model,
                                         @RequestParam Integer pubId,
-                                        @RequestParam Integer brewId) {
+                                        @RequestParam Integer brewId, Principal principal) {
         Optional<Pub> resultPub = pubRepository.findById(pubId);
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
 
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
 
-        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty()) {
+
+        Pub pub = resultPub.get();
+        Brew brew = resultBrew.get();
+
+
+        if (pubId == null || brewId == null || resultBrew.isEmpty() || resultPub.isEmpty() || resultUser.isEmpty()) {
             return "pubs/index";
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Review Brew");
+            model.addAttribute("title", "Add Review For : " + brew.getName());
             model.addAttribute("brewReview", newBrewReview);
             model.addAttribute("errors", errors);
             model.addAttribute("pub", resultPub.get());
@@ -130,11 +145,15 @@ public class ReviewController {
             return "reviews/reviewBrew";
         } else {
 
-            Pub pub = resultPub.get();
-            Brew brew = resultBrew.get();
+
+            User user = resultUser.get();
+
 
             newBrewReview.setBrew(brew);
+            newBrewReview.setUser(user);
+
             brewReviewRepository.save(newBrewReview);
+
         }
 
         return "redirect:/pubs/brews/" + pubId + "/view/" + brewId;
