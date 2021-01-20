@@ -169,41 +169,29 @@
                 <label th:for="description" th:text="Description"></label>
             </div>
 
-            <p>
+            <div>
                 <label for="searchTerm">Keyword:</label>
                 <input class="form-group" type="text" name="searchTerm" id="searchTerm" />
-            </p>
+            </div>
 
             <input type="submit" value="Search" /><span class="ml-3 h2" th:text="${#strings.capitalizeWords(title)}"></span>
         </form>
 
         <hr />
 
-        <table class="table table-striped job-listing">
+        <table class="table table-striped">
             <tr th:each="pub : ${pubs}">
-                <td>
-                    <p>
-                        Pub Id:
-                        <a th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.id}"></a>
-                    </p>
-                    <p th:text="${'Name: ' + pub.name}"></p>
-                    <p th:text="${pub.state}"></p>
-
-                </td>
+                <td><a scope="row" th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a></td>
+                <td scope="row" th:text="${pub.address + ', ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}"></td>
             </tr>
 
             <tr th:each="brew : ${brews}">
-                <td>
-                    <p> Brew Id:
-                        <a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${brew.pub.id}, brewId=${brew.id})}"
-                           th:text="${brew.id}"></a>
-                    </p>
-                    <p th:text="${'Name: ' + brew.name}"></p>
-                    <p th:text="${'Style: ' + brew.style}"></p>
-                    <p th:text="${'ABV: ' + brew.abv}"></p>
-                    <p th:text="${'Description: ' + brew.description}"></p>
-
-                </td>
+                <td scope="row"><a th:href="@{/pubs/brews/view/{brewId}/(brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
+                <td th:text="${brew.style}">Style</td>
+                <td th:text="${brew.ibu}">IBU</td>
+                <th th:text="${brew.abv}">Rating</th>
+                <td th:text="${brew.brewer}">Brewer</td>
+                <td class="text-center w-50 p-3" th:text="${brew.description}">Description</td>
             </tr>
         </table>
 
@@ -244,8 +232,6 @@
             }
         }
     </script>
-
-    </div>
 
     <footer th:replace="fragments :: page-footer"></footer>
 
