@@ -39,17 +39,6 @@
 
             <h2>Category:</h2>
             <p>
-                <!--old code -->
-                <!--<span th:each="column : ${columns}">
-                    <input
-                            type="radio"
-                            name="searchType"
-                            th:id="${column.key}"
-                            th:value="${column.key}"
-                            th:checked="${column.key == 'all'}"/>
-                    <label th:for="${column.key}" th:text="${column.value}"></label>
-                </span>-->
-
                 <input type="radio"
                        name="searchType"
                        th:class="both"
@@ -77,28 +66,25 @@
                 <label th:for="city" th:text="City"></label>
 
             <script>
-                            document.getElementById("pub").addEventListener("click", function()
-{
-    <!--document.getElementById("searchState").style.opacity = 0;-->
-    document.getElementById("state").checked = false;
-    document.getElementById("all").checked = true;
-    document.getElementById("searchState").value = "";
-}, false);
+                document.getElementById("pub").addEventListener("click", function() {
+                    <!--document.getElementById("searchState").style.opacity = 0;-->
+                    document.getElementById("state").checked = false;
+                    document.getElementById("all").checked = true;
+                    document.getElementById("searchState").value = "";
+                }, false);
 
-                document.getElementById("brew").addEventListener("click", function()
-{
-    <!--document.getElementById("state").style.opacity = 0;-->
-    document.getElementById("state").checked = false;
-    document.getElementById("all").checked = true;
-    document.getElementById("searchState").value = "";
-}, false);
+                document.getElementById("brew").addEventListener("click", function() {
+                    <!--document.getElementById("state").style.opacity = 0;-->
+                    document.getElementById("state").checked = false;
+                    document.getElementById("all").checked = true;
+                    document.getElementById("searchState").value = "";
+                }, false);
 
-                document.getElementById("both").addEventListener("click", function()
-{
-    <!--document.getElementById("state").style.opacity = 0;-->
-    document.getElementById("all").checked = true;
-    document.getElementById("state").checked = false;
-}, false);
+                document.getElementById("both").addEventListener("click", function() {
+                    <!--document.getElementById("state").style.opacity = 0;-->
+                    document.getElementById("all").checked = true;
+                    document.getElementById("state").checked = false;
+                }, false);
             </script>
             <div>
                 <input type="radio"
@@ -224,40 +210,39 @@
     </div>
 
     <script>
-    function disableBrew() {
-        var pubChoice = document.getElementsByClassName("pub");
-        var brewChoice = document.getElementsByClassName("brew");
+        function disableBrew() {
+            var pubChoice = document.getElementsByClassName("pub");
+            var brewChoice = document.getElementsByClassName("brew");
 
-        for(var i=0; i<pubChoice.length; i++) {
-            if(pubChoice[i].disabled = true){
-                pubChoice[i].disabled = false;
-                brewChoice[i].disabled = true;
+            for(var i=0; i<pubChoice.length; i++) {
+                if(pubChoice[i].disabled = true){
+                    pubChoice[i].disabled = false;
+                    brewChoice[i].disabled = true;
+                }
+            brewChoice[i].disabled = true;
             }
-        brewChoice[i].disabled = true;
         }
-    }
 
-    function disablePub() {
-        var pubChoice = document.getElementsByClassName("pub");
-        var brewChoice = document.getElementsByClassName("brew");
+        function disablePub() {
+            var pubChoice = document.getElementsByClassName("pub");
+            var brewChoice = document.getElementsByClassName("brew");
 
-        for(var i=0; i<pubChoice.length; i++) {
-pubChoice[i].disabled = true;
-brewChoice[i].disabled=false;
+            for(var i=0; i<pubChoice.length; i++) {
+                pubChoice[i].disabled = true;
+                brewChoice[i].disabled=false;
+            }
         }
-    }
 
-    function enableBothOnly() {
-        var pubChoice = document.getElementsByClassName("pub");
-        var brewChoice = document.getElementsByClassName("brew");
-        var bothChoice = document.getElementsByClassName("both");
+        function enableBothOnly() {
+            var pubChoice = document.getElementsByClassName("pub");
+            var brewChoice = document.getElementsByClassName("brew");
+            var bothChoice = document.getElementsByClassName("both");
 
-        for(var i=0; i<pubChoice.length; i++) {
-            pubChoice[i].disabled = true;
-            brewChoice[i].disabled=true;
+            for(var i=0; i<pubChoice.length; i++) {
+                pubChoice[i].disabled = true;
+                brewChoice[i].disabled=true;
+            }
         }
-    }
-
     </script>
 
     </div>
