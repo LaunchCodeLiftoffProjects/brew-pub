@@ -67,13 +67,12 @@ public class NewPasswordController {
             User existingUser = userRepository.findByEmail(newPasswordDTO.getEmail());
             existingUser.setPwhash(encoder.encode(newPasswordDTO.getPassword()));
             userRepository.save(existingUser);
-            model.addAttribute("title","New Password");
             model.addAttribute("message", "Password successfully reset. You can now log in with the new credentials.");
-            model.addAttribute("successResetPassword");
+            return "login";
         } else {
             model.addAttribute("title","New Password");
             model.addAttribute("message","Passwords do not match.");
+            return "editAccount/newPassword";
         }
-        return "editAccount/newPassword";
     }
 }
