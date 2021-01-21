@@ -180,6 +180,11 @@
         <hr />
 
         <table th:if="${pubs}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2">Brew Pubs</th>
+                </tr>
+            </thead>
             <tr th:each="pub : ${pubs}">
                 <td><a scope="row" th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a></td>
                 <td scope="row" th:text="${pub.address + ', ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}"></td>
@@ -189,7 +194,7 @@
         <table th:if="${brews}" class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col" class="text-center">Name</th>
+                    <th scope="col" class="text-center">Brews</th>
                     <th scope="col" class="text-center">Style</th>
                     <th scope="col" class="text-center">IBU</th>
                     <th scope="col" class="text-center">ABV</th>
