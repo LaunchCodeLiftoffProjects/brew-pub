@@ -13,7 +13,7 @@
             <div class="col-med p-3">
                 <div class="h1" th:text="${pub.name}">Pub Address</div>
                 <div class="h2" th:text="${pub.address}">Address</div>
-                <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' +pub.areaCode}">CityStateZip</div>
+                <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' + pub.areaCode}">CityStateZip</div>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="w-25 p-3 text-center">Review Title</th>
-                                    <th scope="col" class="p-3 text-center"></th>
+                                    <th scope="col" class="p-3 text-center">Reviewed By</th>
                                     <th scope="col" class="w-25 p-3 text-center">Rating</th>
                                     <th scope="col" class="w-50 p-3 text-center">Review</th>
                                 </tr>
@@ -60,7 +60,10 @@
                                         <td scope="row" th:text="${review.reviewTitle}">Title</td>
                                         <td>
                                             <th:block th:if="${#authentication.name} == ${review.user.username}">
-                                                <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary" th:href="@{/review/pub/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                                <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary p-1" th:href="@{/review/pub/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                            </th:block>
+                                            <th:block th:unless="${#authentication.name} == ${review.user.username}">
+                                                <a th:text="${review.user.username}" th:href="@{/userProfile/{username}/(username=${review.user.username})}"></a>
                                             </th:block>
                                         </td>
                                         <td th:text="${review.rating}">Rating</td>
@@ -87,7 +90,7 @@
                                     <th scope="col" class="text-center">IBU</th>
                                     <th scope="col" class="text-center">ABV</th>
                                     <th scope="col" class="text-center">Brewer</th>
-                                    <th scope="col" class="text-center w-25 p-3">Description</th>
+                                    <th scope="col" class="text-center w-50 p-3">Description</th>
                                 </tr>
                             </thead>
                             <tbody>
