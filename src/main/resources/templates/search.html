@@ -179,12 +179,24 @@
 
         <hr />
 
-        <table class="table table-striped">
+        <table th:if="${pubs}" class="table table-striped">
             <tr th:each="pub : ${pubs}">
                 <td><a scope="row" th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a></td>
                 <td scope="row" th:text="${pub.address + ', ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}"></td>
             </tr>
+        </table>
 
+        <table th:if="${brews}" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Name</th>
+                    <th scope="col" class="text-center">Style</th>
+                    <th scope="col" class="text-center">IBU</th>
+                    <th scope="col" class="text-center">ABV</th>
+                    <th scope="col" class="text-center">Brewer</th>
+                    <th scope="col" class="text-center w-50 p-3">Description</th>
+                </tr>
+            </thead>
             <tr th:each="brew : ${brews}">
                 <td scope="row"><a th:href="@{/pubs/brews/view/{brewId}/(brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
                 <td th:text="${brew.style}">Style</td>
