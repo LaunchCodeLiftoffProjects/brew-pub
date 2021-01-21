@@ -40,9 +40,9 @@ public class BrewData {
 
                 if (intAbv == intValue) {
                     results.add(brew);
-                } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
-                    results.add(brew);
                 }
+            } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+                results.add(brew);
             }
         }
         return results;
@@ -74,9 +74,16 @@ public class BrewData {
 
     public static ArrayList<Brew> findByValue(String value, Iterable<Brew> allBrews) {
         String lower_val = value.toLowerCase();
-        double d = Double.parseDouble(lower_val);
-        int int_val = (int) d;
-        String str_int_val = Integer.toString(int_val);
+        double d= 0;
+        int int_val = 0;
+        String str_int_val = "";
+        try {
+            d = Double.parseDouble(lower_val);
+            int_val = (int) d;
+            str_int_val = Integer.toString(int_val);
+        } catch (Exception e) {
+            lower_val = value.toLowerCase();
+        }
 
         ArrayList<Brew> results = new ArrayList<>();
 
