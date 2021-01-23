@@ -81,7 +81,11 @@ public class BrewController {
                            Principal principal) {
 
         Optional<Brew> resultBrew = brewRepository.findById(brewId);
-        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+
+        User user = null;
+        if (principal != null) {
+            user = userRepository.findByUsername(principal.getName());
+        }
 
         if (resultBrew.isEmpty()) {
             return "redirect:/pubs";
@@ -91,8 +95,7 @@ public class BrewController {
 
             List<BrewReview> reviews = brewReviewRepository.findAllByBrewId(brewId);
 
-            if (resultUser.isPresent()) {
-                User user = resultUser.get();
+            if (user != null) {
                 Boolean isFavorite = user.getFavoriteBrews().contains(brew);
                 model.addAttribute("isFavorite", isFavorite);
                 Boolean isReviewable = true;
