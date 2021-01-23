@@ -10,4 +10,5 @@ import java.util.List;
 public interface BrewRepository extends CrudRepository<Brew, Integer> {
     List<Brew> findAllByPubId(int pubId);
     List<Brew> findAll();
+    List<Brew> findByName(String name);
 }

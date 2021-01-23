@@ -58,6 +58,7 @@ public class BrewController {
                                      Model model) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
+        List<Brew> resultBrew = brewRepository.findByName(newBrew.getName());
         Pub pub = result.get();
 
         if (pubId == null || result.isEmpty()) {
@@ -66,12 +67,23 @@ public class BrewController {
             model.addAttribute("errors", errors);
             model.addAttribute("title", "Add Brew For : " + pub.getName());
             model.addAttribute("pub", pub);
+            model.addAttribute("newBrew", newBrew);
             return "brews/add";
-        } else {
-            newBrew.setPub(pub);
-            brewRepository.save(newBrew);
-            return "redirect:/pubs/view/" + pubId;
+        } else if (!resultBrew.isEmpty()) {
+            for (Brew brew : resultBrew) {
+                if (brew.getPub().getId() == pub.getId()) {
+                    model.addAttribute("newBrew", newBrew);
+                    model.addAttribute("message", "This brew already exists for this pub");
+                    model.addAttribute("title", "Add Brew For : " + pub.getName());
+                    model.addAttribute("pub", pub);
+                    return "brews/add";
+                }
+            }
         }
+        newBrew.setPub(pub);
+        brewRepository.save(newBrew);
+        return "redirect:/pubs/view/" + pubId;
+
     }
 
     @GetMapping("/view/{brewId}")

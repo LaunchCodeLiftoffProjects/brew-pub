@@ -57,6 +57,9 @@
 
             <input type="submit">
             <a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}"><button type="button">Cancel</button></a>
+            <div th:if="${message}">
+                <div th:text="${message}"></div>
+            </div>
         </form>
     </div>
 

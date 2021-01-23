@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PubRepository extends CrudRepository<Pub, Integer> {
     List<Pub> findAll();
+    List<Pub> findByName(String name);
+    List<Pub> findByAddress(String address);
 }
