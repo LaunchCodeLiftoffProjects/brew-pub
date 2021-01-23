@@ -68,7 +68,11 @@ public class PubController {
                               Model model,
                               Principal principal) {
         Optional<Pub> resultPub = pubRepository.findById(pubID);
-        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+
+        User user = null;
+        if (principal != null) {
+            user = userRepository.findByUsername(principal.getName());
+        }
 
         if (resultPub.isEmpty()) {
             return "pubs/index";
@@ -77,8 +81,8 @@ public class PubController {
 
             List<PubReview> reviews = pubReviewRepository.findAllByPubId(pubID);
 
-            if (resultUser.isPresent()) {
-                User user = resultUser.get();
+            if (user != null) {
+
                 Boolean isFavorite = user.getFavoritePubs().contains(pub);
                 Boolean isReviewable = true;
                 List<PubReview> allByUserId = pubReviewRepository.findAllByUserId(user.getId());
