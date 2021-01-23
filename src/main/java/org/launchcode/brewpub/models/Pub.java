@@ -36,14 +36,16 @@ public class Pub extends AbstractEntity{
     @Size(max = 5)
     private String areaCode;
 
-//    TODO: add imagePath field
+    @Size(max = 150, message = "File name cannot be more than 150 characters")
+    private String imagePath;
 
-    public Pub(String name, String address, String city, String state, String areaCode){
+    public Pub(String name, String address, String city, String state, String areaCode, String imagePath){
         this.name = name;
         this.address = address;
         this.city = city;
         this.state = state;
         this.areaCode = areaCode;
+        this.imagePath = imagePath;
     }
 
     public Pub(){ //no-arg constructor for Hibernate
@@ -87,6 +89,14 @@ public class Pub extends AbstractEntity{
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public List<User> getPubFavoriteUser() {
