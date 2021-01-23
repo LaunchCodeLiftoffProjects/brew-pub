@@ -36,6 +36,8 @@ public class Pub extends AbstractEntity{
     @Size(max = 5)
     private String areaCode;
 
+//    TODO: add imagePath field
+
     public Pub(String name, String address, String city, String state, String areaCode){
         this.name = name;
         this.address = address;

@@ -89,6 +89,10 @@
                                         <th th:text="${brew.abv}">Rating</th>
                                         <td th:text="${brew.brewer}">Brewer</td>
                                         <td th:text="${brew.description}">Description</td>
+                                        <td th:if="${pub.imagePath}">
+                                            <img th:src="@{${pub.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
+                                        </td>
+<!--                                        TODO: add td to table for brew.image-->
                                     </tr>
                                 </th:block>
                             </tbody>

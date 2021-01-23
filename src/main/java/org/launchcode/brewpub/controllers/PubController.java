@@ -52,6 +52,7 @@ public class PubController {
 
     @PostMapping("add")
     public String processAddPubForm(@ModelAttribute @Valid Pub newPub, Errors errors, Model model){
+//        TODO: update controller to process image upload
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Pub");
             model.addAttribute("pubs", pubRepository.findAll());

@@ -87,6 +87,7 @@
                 <label th:for="areaCode">Area Code : <input class="form-control" th:field="${pub.areaCode}"/></label>
                 <span th:errors="${pub.areaCode}" class="error"></span>
             </div>
+<!--            TODO : add input for pub image to form-->
 
             <input type="submit" value="Add Pub" />
             <a th:href="@{'/pubs'}"><button class="cancelbtn" type="button">Cancel</button></a>
