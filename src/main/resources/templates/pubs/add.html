@@ -87,6 +87,14 @@
                 <label th:for="areaCode">Area Code : <input class="form-control" th:field="${pub.areaCode}"/></label>
                 <span th:errors="${pub.areaCode}" class="error"></span>
             </div>
+            <div class="form-group">
+                <label th:field="${pub.imagePath}">Add a Photo</label>
+                <input type="file"
+                       name="files"
+                       accept="image/*"
+                       class="form-control"/>
+
+            </div>
 <!--            TODO : add input for pub image to form-->
 
             <input type="submit" value="Add Pub" />
