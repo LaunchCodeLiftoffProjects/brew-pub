@@ -10,7 +10,7 @@
     <div class="container body-content mt-3">
         <h1>Add Pub</h1>
 
-        <form th:action="@{/pubs/add}" method="post" style="max-width:600px;">
+        <form th:action="@{/pubs/add}" method="post" enctype="multipart/form-data" style="max-width:600px;">
             <div class="form-group">
                 <label th:for="name">Pub Name : <input class="form-control" th:field="${pub.name}"/></label>
                 <span th:errors="${pub.name}" class="error"></span>
