@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container-fluid body-content mt-3">
+
+
+        <div class="row justify-content-center m-2">
+            <span class="h3" th:text="'Username: ' + ${user.username}">Username</span>
+        </div>
+
+        <div class="row justify-content-center m-2">
+            <span class="h3" th:text="'Name: ' + ${user.firstName}+' '+${user.lastName}">Name</span>
+        </div>
+
+        <div class="row justify-content-center m-2">
+            <span class="h3" th:text="'Email: ' + ${user.email}">Email</span>
+        </div>
+
+        <div class="container-fluid body-content mt-3">
+            <div class="row justify-content-md-center"><a th:href="@{/editAccount}">Edit Account</a></div>
+            <div class="row justify-content-md-center"><a th:href="@{/newPassword}">Change Password</a></div>
+            <div class="row justify-content-md-center"><a th:href="@{/deleteAccount}">Delete Account</a></div>
+        </div>
+
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+</body>
+</html>
