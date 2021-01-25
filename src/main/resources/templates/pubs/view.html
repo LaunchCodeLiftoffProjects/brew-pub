@@ -9,9 +9,11 @@
 
     <div class="container-fluid body-content mt-3">
 
-        <div class="container-fluid">
-            <div class="row justify-content-center p-3">
-                <span class="h1" th:text="${pub.name + ' : ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</span>
+        <div class="container-fluid row justify-content-center">
+            <div class="col-med p-3">
+                <div class="h1" th:text="${pub.name}">Pub Address</div>
+                <div class="h2" th:text="${pub.address}">Address</div>
+                <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' + pub.areaCode}">CityStateZip</div>
             </div>
             <div th:if="${pub.imagePath}">
                 <img th:src="@{${pub.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
@@ -39,7 +41,9 @@
                 <div class="col-sm">
                     <div class="row justify-content-center m-2">
                         <span class="h3 m-2" th:text="${'Reviews of: ' + pub.name}">Reviews of Pub </span>
-                        <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a></span>
+                        <th:block th:if="${isReviewable}">
+                            <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{'/review/pub/'} + ${pub.id}">Review This Pub</a></span>
+                        </th:block>
                         <span class="h3 m-2" th:text="${'Average Rating: ' + averageRating}"></span>
                     </div>
 
@@ -48,6 +52,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                                    <th scope="col" class="p-3 text-center">Reviewed By</th>
                                     <th scope="col" class="w-25 p-3 text-center">Rating</th>
                                     <th scope="col" class="w-50 p-3 text-center">Review</th>
                                 </tr>
@@ -56,6 +61,14 @@
                                 <th:block th:each="review : ${reviews}">
                                     <tr class="text-center">
                                         <td scope="row" th:text="${review.reviewTitle}">Title</td>
+                                        <td>
+                                            <th:block th:if="${#authentication.name} == ${review.user.username}">
+                                                <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary p-1" th:href="@{/review/pub/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                            </th:block>
+                                            <th:block th:unless="${#authentication.name} == ${review.user.username}">
+                                                <a th:text="${review.user.username}" th:href="@{/userProfile/{username}/(username=${review.user.username})}"></a>
+                                            </th:block>
+                                        </td>
                                         <td th:text="${review.rating}">Rating</td>
                                         <td th:text="${review.reviewText}">ReviewText</td>
                                     </tr>
@@ -80,13 +93,13 @@
                                     <th scope="col" class="text-center">IBU</th>
                                     <th scope="col" class="text-center">ABV</th>
                                     <th scope="col" class="text-center">Brewer</th>
-                                    <th scope="col" class="text-center w-25 p-3">Description</th>
+                                    <th scope="col" class="text-center w-50 p-3">Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <th:block th:each="brew : ${brews}">
                                     <tr class="text-center">
-                                        <td scope="row"><a th:href="@{/pubs/brews/{pubId}/view/{brewId}/(pubId=${pub.id}, brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
+                                        <td scope="row"><a th:href="@{/pubs/brews/view/{brewId}/(brewId=${brew.id})}" th:text="${brew.name}">Name</a></td>
                                         <td th:text="${brew.style}">Style</td>
                                         <td th:text="${brew.ibu}">IBU</td>
                                         <th th:text="${brew.abv}">Rating</th>

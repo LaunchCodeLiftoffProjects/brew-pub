@@ -5,13 +5,13 @@
 
 <body>
 
-    <nav th:replace="fragments :: page-header"></nav>
+<nav th:replace="fragments :: page-header"></nav>
 
     <div class="container body-content mt-3">
 
-        <h1 th:text="${brew.name} + ' : Review'">brew-name</h1>
+        <h1 th:text="${brew.name} + ' : Edit Review'">brew-name</h1>
 
-        <form th:action="@{/review/brew/}" method="post">
+        <form th:action="@{/review/brew/{reviewId}/edit/(reviewId=${brewReview.id})}" method="post">
 
             <div class="form-group">
                 <label>Title of Review : <input class="form-control"
@@ -43,11 +43,6 @@
             <div hidden>
                 <label>brewId</label>
                 <input type="text" name="brewId" th:value="${brew.id}">
-            </div>
-
-            <div hidden>
-                <label for="">userId</label>
-                <input type="text" name="userId" th:value="${user.id}">
             </div>
 
             <input type="submit">
