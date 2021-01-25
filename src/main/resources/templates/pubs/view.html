@@ -13,6 +13,9 @@
             <div class="row justify-content-center p-3">
                 <span class="h1" th:text="${pub.name + ' : ' + pub.address + ' ' + pub.city + ', ' + pub.state + ' ' + pub.areaCode}">Pub Address</span>
             </div>
+            <div th:if="${pub.imagePath}">
+                <img th:src="@{${pub.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
+            </div>
         </div>
 
         <div class="container-fluid">
@@ -89,9 +92,6 @@
                                         <th th:text="${brew.abv}">Rating</th>
                                         <td th:text="${brew.brewer}">Brewer</td>
                                         <td th:text="${brew.description}">Description</td>
-                                        <td th:if="${pub.imagePath}">
-                                            <img th:src="@{${pub.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
-                                        </td>
                                     </tr>
                                 </th:block>
                             </tbody>
