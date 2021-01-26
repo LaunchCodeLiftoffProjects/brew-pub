@@ -52,15 +52,29 @@ public class PubController {
 
     @PostMapping("add")
     public String processAddPubForm(@ModelAttribute @Valid Pub newPub, Errors errors, Model model){
+
+
+        List<Pub> resultPubName = pubRepository.findByName(newPub.getName());
+
+
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Pub");
             model.addAttribute("pubs", pubRepository.findAll());
-            //model.addAttribute("pubs", newPub);
+            //model.addAttribute("pub", newPub);
             return "/pubs/add";
+        } else if (!resultPubName.isEmpty()) {
+            for (Pub pub : resultPubName) {
+                if (pub.getName().equals(newPub.getName()) ) {
+                    model.addAttribute("message", "A pub with this name already exists");
+                    model.addAttribute("title", "Add Pub");
+                    return "/pubs/add";
+                }
+            }
         }
 
         pubRepository.save(newPub);
         return "redirect:";
+
     }
 
     @GetMapping("view/{pubID}")

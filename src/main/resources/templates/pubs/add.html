@@ -92,6 +92,9 @@
 
             <input type="submit" value="Add Pub" />
             <a th:href="@{'/pubs'}"><button class="cancelbtn" type="button">Cancel</button></a>
+            <div th:if="${message}">
+                <div th:text="${message}"></div>
+            </div>
         </form>
     </div>
 
