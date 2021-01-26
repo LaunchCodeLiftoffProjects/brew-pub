@@ -13,8 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +27,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("pubs")
 public class PubController {
+
+    public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/";
 
     @Autowired
     private PubRepository pubRepository;
@@ -50,17 +57,44 @@ public class PubController {
         return "/pubs/add";
     }
 
-    @PostMapping("add")
-    public String processAddPubForm(@ModelAttribute @Valid Pub newPub, Errors errors, Model model){
+    @RequestMapping("add")
+    public String processAddPubForm(@ModelAttribute @Valid Pub newPub, Errors errors, MultipartFile[] files, Model model, Principal principal){
+
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Pub");
             model.addAttribute("pubs", pubRepository.findAll());
-            //model.addAttribute("pubs", newPub);
+//            model.addAttribute("pubs", newPub);
             return "/pubs/add";
+        } else {
+
+            for(MultipartFile file : files) {
+                if (!file.isEmpty() && resultUser.isPresent()) {
+                    User user = resultUser.get();
+
+                    Path fileNameAndPath = Paths.get(
+                            uploadDirectory,
+                            "user" + user.getId() + "--" +
+                                    file.getOriginalFilename().replaceAll("\\s", ""));
+
+                    try {
+                        Files.write(fileNameAndPath, file.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    newPub.setImagePath("/uploads/" + fileNameAndPath.getFileName().toString());
+                } else {
+                    newPub.setImagePath(null);
+                }
+            }
+
+            pubRepository.save(newPub);
+            return "redirect:";
         }
 
-        pubRepository.save(newPub);
-        return "redirect:";
+
     }
 
     @GetMapping("view/{pubID}")

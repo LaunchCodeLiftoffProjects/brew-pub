@@ -10,7 +10,7 @@
     <div class="container body-content mt-3">
         <h1>Add Pub</h1>
 
-        <form th:action="@{/pubs/add}" method="post" style="max-width:600px;">
+        <form th:action="@{/pubs/add}" method="post" enctype="multipart/form-data" style="max-width:600px;">
             <div class="form-group">
                 <label th:for="name">Pub Name : <input class="form-control" th:field="${pub.name}"/></label>
                 <span th:errors="${pub.name}" class="error"></span>
@@ -89,7 +89,14 @@
                 <label th:for="areaCode">Area Code : <input class="form-control" th:field="${pub.areaCode}"/></label>
                 <span th:errors="${pub.areaCode}" class="error"></span>
             </div>
+            <div class="form-group">
+                <label th:field="${pub.imagePath}">Add a Photo</label>
+                <input type="file"
+                       name="files"
+                       accept="image/*"
+                       class="form-control"/>
 
+            </div>
             <input type="submit" value="Add Pub" />
             <a th:href="@{'/pubs'}"><button class="cancelbtn" type="button">Cancel</button></a>
         </form>

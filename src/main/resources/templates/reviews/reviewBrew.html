@@ -45,6 +45,11 @@
                 <input type="text" name="brewId" th:value="${brew.id}">
             </div>
 
+            <div hidden>
+                <label for="">userId</label>
+                <input type="text" name="userId" th:value="${user.id}">
+            </div>
+
             <input type="submit">
 
             <a th:href="@{/pubs/brews/view/{brewId}/(brewId=${brew.id})}"><button type="button">Cancel</button></a>

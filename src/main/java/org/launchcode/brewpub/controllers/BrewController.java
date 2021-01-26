@@ -11,8 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +24,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("pubs/brews")
 public class BrewController {
+
+    public static String uploadDirectory = System.getProperty("user.dir")+"/uploads/";
 
     @Autowired
     private PubRepository pubRepository;
@@ -54,11 +60,16 @@ public class BrewController {
     @RequestMapping("add")
     public String processAddBrewForm(@ModelAttribute @Valid Brew newBrew,
                                      Errors errors,
+                                     MultipartFile[] files,
                                      @RequestParam Integer pubId,
-                                     Model model) {
+                                     Model model,
+                                     Principal principal) {
 
         Optional<Pub> result = pubRepository.findById(pubId);
         Pub pub = result.get();
+
+        Optional<User> resultUser = Optional.ofNullable(userRepository.findByUsername(principal.getName()));
+
 
         if (pubId == null || result.isEmpty()) {
             return "pubs/index";
@@ -68,6 +79,28 @@ public class BrewController {
             model.addAttribute("pub", pub);
             return "brews/add";
         } else {
+
+            for(MultipartFile file : files) {
+                if (!file.isEmpty() && resultUser.isPresent()) {
+                    User user = resultUser.get();
+
+                    Path fileNameAndPath = Paths.get(
+                            uploadDirectory,
+                            "user" + user.getId() + "--" +
+                            file.getOriginalFilename().replaceAll("\\s", ""));
+
+                    try {
+                        Files.write(fileNameAndPath, file.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    newBrew.setImagePath("/uploads/" + fileNameAndPath.getFileName().toString());
+                } else {
+                    newBrew.setImagePath(null);
+                }
+            }
+
             newBrew.setPub(pub);
             brewRepository.save(newBrew);
             return "redirect:/pubs/view/" + pubId;
@@ -170,6 +203,7 @@ public class BrewController {
         return "redirect:";
     }
 
+
     private Double calculateAverageRating(List<BrewReview> reviews) {
         Integer ratingTotal = 0;
         Integer numberOfRatings = reviews.size();
@@ -183,4 +217,5 @@ public class BrewController {
 
         return result.doubleValue()/10;
     }
+
 }
