@@ -33,13 +33,17 @@ public class BrewData {
             String aValue = getFieldValue(brew, column);
 
             if (aValue != null && column.equals("abv")) {
-                double dAbv = Double.parseDouble(aValue);
-                double dValue = Double.parseDouble(value);
-                int intAbv = (int) dAbv;
-                int intValue = (int) dValue;
+                try {
+                    double dAbv = Double.parseDouble(aValue);
+                    double dValue = Double.parseDouble(value);
+                    int intAbv = (int) dAbv;
+                    int intValue = (int) dValue;
 
-                if (intAbv == intValue) {
-                    results.add(brew);
+                    if (intAbv == intValue) {
+                        results.add(brew);
+                    }
+                } catch (Exception e) {
+
                 }
             } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
                 results.add(brew);
@@ -51,16 +55,19 @@ public class BrewData {
 
     public static String getFieldValue(Brew brew, String fieldName) {
         String theValue = "";
-        if (fieldName.equals("name")) {
-            theValue = brew.getName();
-        } else if (fieldName.equals("style")) {
-            theValue = brew.getStyle().toString();
-        } else if (fieldName.equals("abv")) {
-            theValue = brew.getAbv().toBigInteger().toString();
-        } else if (fieldName.equals("description")) {
-            theValue = brew.getDescription().toString();
+        try {
+            if (fieldName.equals("name")) {
+                theValue = brew.getName();
+            } else if (fieldName.equals("style")) {
+                theValue = brew.getStyle().toString();
+            } else if (fieldName.equals("abv")) {
+                theValue = brew.getAbv().toBigInteger().toString();
+            } else if (fieldName.equals("description")) {
+                theValue = brew.getDescription().toString();
+            }
+        } catch (Exception e) {
+            theValue = null;
         }
-
         return theValue;
     }
 
