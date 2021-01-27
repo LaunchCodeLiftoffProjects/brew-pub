@@ -18,16 +18,14 @@
             <a th:href="@{/search}" class="navbar-brand">Search</a>
         </div>
 
-        <div>
-            <img src="../static/images/logo.png" th:src="@{/images/logo.png}">
-        </div>
-
         <div sec:authorize="!isAuthenticated()">
+            <img src="../static/images/logo.png" th:src="@{/images/logo.png}"  class="mr-3">
             <a th:href="@{/login}" class="btn btn-secondary">Login</a>
         </div>
 
-        <div sec:authorize="isAuthenticated()">
-            <div class="nav-item dropdown">
+        <div sec:authorize="isAuthenticated()" class="row">
+            <img src="../static/images/logo.png" th:src="@{/images/logo.png}" class="mr-3">
+            <div class="nav-item dropdown m-2">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
                     UserMenu
                 </button>
