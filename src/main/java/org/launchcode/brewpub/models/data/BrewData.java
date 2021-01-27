@@ -1,4 +1,6 @@
-package org.launchcode.brewpub.models;
+package org.launchcode.brewpub.models.data;
+
+import org.launchcode.brewpub.models.Brew;
 
 import java.util.ArrayList;
 

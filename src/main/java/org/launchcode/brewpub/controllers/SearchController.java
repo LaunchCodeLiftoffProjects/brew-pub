@@ -1,10 +1,10 @@
 package org.launchcode.brewpub.controllers;
 
 import org.launchcode.brewpub.models.Pub;
-import org.launchcode.brewpub.models.PubData;
+import org.launchcode.brewpub.models.data.PubData;
 import org.launchcode.brewpub.models.data.PubRepository;
 import org.launchcode.brewpub.models.Brew;
-import org.launchcode.brewpub.models.BrewData;
+import org.launchcode.brewpub.models.data.BrewData;
 import org.launchcode.brewpub.models.data.BrewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
