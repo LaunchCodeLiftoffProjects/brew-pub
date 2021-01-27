@@ -37,13 +37,13 @@ public class BrewControllerTest {
     @Test
     @WithMockUser("normalUser")
     public void shouldRespondWith2xx() throws Exception {
-        this.mockMvc.perform(get("/pubs/brews/view/12")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/pubs/brews/view/5")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser("normalUser")
     public void shouldRespondWithBrewAndPub() throws Exception {
-        this.mockMvc.perform(get("/pubs/brews/view/4")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/pubs/view/2")).andExpect(status().isOk());
     }
 
 }
