@@ -11,8 +11,10 @@
 
         <div class="container-fluid row justify-content-center">
             <div class="col-med p-3 w-25" th:if="${brew.imagePath}">
-                <img th:src="@{${brew.imagePath}}" class="img-fluid" alt="image of a brew"
+                <a th:href="@{${brew.imagePath}}">
+                    <img th:src="@{${brew.imagePath}}" class="img-fluid" alt="image of a brew"
                      style="width:70%;height:auto;border-radius:25px">
+                </a>
             </div>
             <div class="col-med p-3 w-50">
                 <div class="h1"><a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}" th:text="${pub.name}">Pub Name</a></div>
