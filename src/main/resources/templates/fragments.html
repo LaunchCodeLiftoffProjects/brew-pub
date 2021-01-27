@@ -10,28 +10,35 @@
 
 <div th:fragment="page-header" class="navbar navbar-dark bg-dark">
     <div class="container">
+
         <div class="nav-item">
             <a th:href="@{/}" class="navbar-brand">Home</a>
             <a th:href="@{/pubs/add}" class="navbar-brand">Add Pub</a>
             <a th:href="@{/pubs}" class="navbar-brand">View-All-Pubs</a>
             <a th:href="@{/search}" class="navbar-brand">Search</a>
         </div>
-            <div sec:authorize="!isAuthenticated()">
-                <a th:href="@{/login}" class="btn btn-secondary">Login</a>
-            </div>
-            <div sec:authorize="isAuthenticated()">
-                <div class="nav-item dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
-                        UserMenu
-                    </button>
 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" th:text="${#authentication.name} + ' : Profile'" th:href="@{'/userProfile/{name}'(name=${#authentication.name})}">User Profile</a>
-                        <a class="dropdown-item" th:href="@{/accountDetails}">Account Details</a>
-                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
-                    </div>
+        <div>
+            <img src="../static/images/logo.png" th:src="@{/images/logo.png}">
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn btn-secondary">Login</a>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">
+            <div class="nav-item dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
+                    UserMenu
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" th:text="${#authentication.name} + ' : Profile'" th:href="@{'/userProfile/{name}'(name=${#authentication.name})}">User Profile</a>
+                    <a class="dropdown-item" th:href="@{/accountDetails}">Account Details</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                 </div>
             </div>
+        </div>
 
     </div>
 </div>
