@@ -212,7 +212,7 @@
             </tr>
         </table>
 
-        <div th:if="${#lists.isEmpty(pubs)} AND ${#lists.isEmpty(brews)}">
+        <div th:if="${resultsMessage}">
             <div class="h3" th:text="${resultsMessage}"></div>
         </div>
 
