@@ -15,6 +15,9 @@
                 <div class="h2" th:text="${pub.address}">Address</div>
                 <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' + pub.areaCode}">CityStateZip</div>
             </div>
+            <div th:if="${pub.imagePath}">
+                <img th:src="@{${pub.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
+            </div>
         </div>
 
         <div class="container-fluid">

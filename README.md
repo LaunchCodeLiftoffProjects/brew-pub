@@ -1,4 +1,4 @@
-## Project Name: TBD (DéjàBu, Brewposium)
+## Project Name: DéjàBru
 
 ### 1. Overview
 
