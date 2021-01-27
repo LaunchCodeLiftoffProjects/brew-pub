@@ -179,7 +179,7 @@
 
         <hr />
 
-        <table th:if="${pubs}" class="table table-striped">
+        <table th:if="${!#lists.isEmpty(pubs)}" class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col" colspan="2">Brew Pubs</th>
@@ -191,7 +191,7 @@
             </tr>
         </table>
 
-        <table th:if="${brews}" class="table table-striped">
+        <table th:if="${!#lists.isEmpty(brews)}" class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Brews</th>
@@ -211,6 +211,11 @@
                 <td class="text-center w-50 p-3" th:text="${brew.description}">Description</td>
             </tr>
         </table>
+
+        <div th:if="${#lists.isEmpty(pubs)} AND ${#lists.isEmpty(brews)}">
+            <div class="h3" th:text="${resultsMessage}"></div>
+        </div>
+
 
     </div>
 

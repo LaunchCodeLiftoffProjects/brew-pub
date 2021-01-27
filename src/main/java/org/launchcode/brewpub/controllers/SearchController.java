@@ -70,6 +70,10 @@ public class SearchController {
             model.addAttribute("brews", brews);
         }
 
+        if (!pubs.iterator().hasNext() && !brews.iterator().hasNext()) {
+            model.addAttribute("resultsMessage", "No Results");
+        }
+
         return "search";
     }
 
