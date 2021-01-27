@@ -10,15 +10,14 @@
     <div class="container-fluid body-content mt-3">
 
         <div class="container-fluid row justify-content-center">
+            <div class="col-med p-3 w-25" th:if="${pub.imagePath}">
+                <img th:src="@{${pub.imagePath}}" class="img-fluid" alt="image of a pub"
+                     style="width:70%;height:auto;border-radius:25px">
+            </div>
             <div class="col-med p-3 w-50">
                 <div class="h1" th:text="${pub.name}">Pub Address</div>
                 <div class="h2" th:text="${pub.address}">Address</div>
                 <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' + pub.areaCode}">CityStateZip</div>
-            </div>
-            <div class="col-med p-3 w-25" th:if="${pub.imagePath}">
-                <img th:src="@{${pub.imagePath}}" class="img-fluid" alt="image of a brew"
-                     style="width:70%;height:auto;border-radius:25px"
-                >
             </div>
         </div>
 
