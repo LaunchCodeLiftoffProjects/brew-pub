@@ -10,7 +10,13 @@
     <div class="container-fluid body-content mt-3">
 
         <div class="container-fluid row justify-content-center">
-            <div class="col-med p-3">
+            <div class="col-med p-3 w-25" th:if="${brew.imagePath}">
+                <a th:href="@{${brew.imagePath}}">
+                    <img th:src="@{${brew.imagePath}}" class="img-fluid" alt="image of a brew"
+                     style="width:70%;height:auto;border-radius:25px">
+                </a>
+            </div>
+            <div class="col-med p-3 w-50">
                 <div class="h1"><a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}" th:text="${pub.name}">Pub Name</a></div>
                 <div class="h2" th:text="${pub.address}">Address</div>
                 <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' +pub.areaCode}">CityStateZip</div>
@@ -61,11 +67,6 @@
                                 <th>Description</th>
                                 <td th:text="${brew.description}">Description</td>
                             </tr>
-                        <tr th:if="${brew.imagePath}">
-                            <td>
-                                <img th:src="@{${brew.imagePath}}" alt="image of a brew" style="width:70%;height:auto;border-radius:25px">
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
 
