@@ -1,23 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head th:fragment="head">
+    <title th:text="${title}">Title</title>
 
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-    <link th:href="@{/css/helloWorld.css}" rel="stylesheet" />
-    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
-<body>
-
-<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+<div th:fragment="page-header" class="navbar navbar-dark bg-dark">
     <div class="container">
-        <div class="navbar-header">
+        <div class="nav-item">
             <a th:href="@{/}" class="navbar-brand">Home</a>
+            <a th:href="@{/pubs/add}" class="navbar-brand">Add Pub</a>
+            <a th:href="@{/pubs}" class="navbar-brand">View-All-Pubs</a>
+            <a th:href="@{/search}" class="navbar-brand">Search</a>
         </div>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn btn-secondary">Login</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <div class="nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
+                        UserMenu
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:text="${#authentication.name} + ' : Profile'" th:href="@{'/userProfile/{name}'(name=${#authentication.name})}">User Profile</a>
+                        <a class="dropdown-item" th:href="@{/accountDetails}">Account Details</a>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </div>
+
     </div>
 </div>
 
-</body>
+<footer th:fragment="page-footer">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</footer>
+
 </html>

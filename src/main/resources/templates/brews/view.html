@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container-fluid body-content mt-3">
+
+        <div class="container-fluid row justify-content-center">
+            <div class="col-med p-3">
+                <div class="h1"><a th:href="@{/pubs/view/{pubId}/(pubId=${pub.id})}" th:text="${pub.name}">Pub Name</a></div>
+                <div class="h2" th:text="${pub.address}">Address</div>
+                <div class="h2" th:text="${pub.city + ', ' + pub.state + ' ' +pub.areaCode}">CityStateZip</div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center m-2">
+                <span sec:authorize="isAuthenticated()">
+                    <th:block th:if="${!isFavorite}">
+                        <a type="button" class="btn btn-primary m-2" th:href="@{'/pubs/brews/addFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Add Brew To Favorites</a>
+                    </th:block>
+
+                    <th:block th:if="${isFavorite}">
+                        <a type="button" class="btn btn-primary m-2" th:href="@{'/pubs/brews/removeFavoriteBrew/{brewId}/'(brewId=${brew.id})}">Remove Brew From Favorites</a>
+                    </th:block>
+                </span>
+                <span class="h5 m-2" th:text="${favoritesCount + ' people have favorited this brew.'}"></span>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4 mt-5">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td th:text="${brew.name}">Name</td>
+                            </tr>
+                            <tr>
+                                <th>Style</th>
+                                <td th:text="${brew.style}">Style</td>
+                            </tr>
+                            <tr>
+                                <th>IBU</th>
+                                <td th:text="${brew.ibu}">IBU</td>
+                            </tr>
+                            <tr>
+                                <th>ABV</th>
+                                <td th:text="${brew.abv}">ABV</td>
+                            </tr>
+                            <tr>
+                                <th>Brewer</th>
+                                <td th:text="${brew.brewer}">Brewer</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td th:text="${brew.description}">Description</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="row justify-content-center">
+                        <span class="h3 m-2" th:text="${'Reviews of : ' + brew.name}">Reviews of Brew</span>
+                        <th:block th:if="${isReviewable}">
+                            <span><a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary m-2" th:href="@{/review/brew/{brewId}/(brewId=${brew.id})}">Review This Brew</a></span>
+                        </th:block>
+                        <span class="h3 m-2" th:text="${'Average Rating: ' + averageRating}"></span>
+                    </div>
+
+                    <div>
+                        <table   class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="w-25 p-3 text-center">Review Title</th>
+                                <th scope="col" class="p-3 text-center">Reviewed By</th>
+                                <th scope="col" class="w-25 p-3 text-center">Rating</th>
+                                <th scope="col" class="w-50 p-3 text-center">Review</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="review : ${reviews}">
+                                <tr class="text-center">
+                                    <td scope="row" th:text="${review.reviewTitle}">Title</td>
+                                    <td>
+                                        <th:block th:if="${#authentication.name} == ${review.user.username}">
+                                            <a sec:authorize="isAuthenticated()" type="button" class="btn btn-primary p-1" th:href="@{/review/brew/{reviewId}/edit(reviewId=${review.id})}">Edit Review</a>
+                                        </th:block>
+                                        <th:block th:unless="${#authentication.name} == ${review.user.username}">
+                                            <a th:text="${review.user.username}" th:href="@{/userProfile/{username}/(username=${review.user.username})}"></a>
+                                        </th:block>
+                                    </td>
+                                    <td th:text="${review.rating}">Rating</td>
+                                    <td th:text="${review.reviewText}">ReviewText</td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+
+</html>

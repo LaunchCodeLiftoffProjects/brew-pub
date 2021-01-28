@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container body-content mt-3">
+        <h1>Add Pub</h1>
+
+        <form th:action="@{/pubs/add}" method="post" style="max-width:600px;">
+            <div class="form-group">
+                <label th:for="name">Pub Name : <input class="form-control" th:field="${pub.name}"/></label>
+                <span th:errors="${pub.name}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label th:for="address">Address : <input class="form-control" th:field="${pub.address}"/></label>
+                <span th:errors="${pub.address}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label th:for="city">City : <input class="form-control" th:field="${pub.city}"/></label>
+                <span th:errors="${pub.city}" class="error"></span>
+            </div>
+
+            <div>
+                <label th:for="state">State</label>
+                    <select th:field = "${pub.state}" name="pubState" required>
+                            <option value="" disabled>Select State</option>
+                            <option value="" disabled>------------------------</option>
+                            <option value="AL">AL</option>
+                            <option value="AK">AK</option>
+                            <option value="AZ">AZ</option>
+                            <option value="AR">AR</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="IA">IA</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="ME">ME</option>
+                            <option value="MD">MD</option>
+                            <option value="MA">MA</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MS">MS</option>
+                            <option value="MO">MO</option>
+                            <option value="MT">MT</option>
+                            <option value="NE">NE</option>
+                            <option value="NV">NV</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NY">NY</option>
+                            <option value="NC">NC</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WV">WV</option>
+                            <option value="WI">WI</option>
+                            <option value="WY">WY</option>
+                        </select>
+                <span th:errors="${pub.state}" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label th:for="areaCode">Area Code : <input class="form-control" th:field="${pub.areaCode}"/></label>
+                <span th:errors="${pub.areaCode}" class="error"></span>
+            </div>
+
+            <input type="submit" value="Add Pub" />
+            <a th:href="@{'/pubs'}"><button class="cancelbtn" type="button">Cancel</button></a>
+            <div th:if="${message}">
+                <div th:text="${message}"></div>
+            </div>
+        </form>
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+</html>

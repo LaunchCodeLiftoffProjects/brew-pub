@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container body-content mt-3">
+        <h1>Create Account</h1>
+        <form method="post" th:action="@{/createAccount}">
+            <div class="form-group">
+                <label>First Name : <input placeholder="Enter First Name" class="form-control" th:field="${createAccountDTO.firstName}"/></label>
+                <span class="error"
+                      th:errors="${createAccountDTO.firstName}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Last Name : <input placeholder="Enter Last Name" class="form-control" th:field="${createAccountDTO.lastName}"/></label>
+                <span class="error"
+                      th:errors="${createAccountDTO.lastName}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Email : <input placeholder="Enter Email" class="form-control" th:field="${createAccountDTO.email}"/></label>
+                <span class="error"
+                      th:errors="${createAccountDTO.email}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Username : <input placeholder="Enter Username" class="form-control" th:field="${createAccountDTO.username}"/></label>
+                <span class="error"
+                      th:errors="${createAccountDTO.username}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Password : <input placeholder="Enter Password" class="form-control" th:field="${createAccountDTO.password}" type="password"/></label>
+                <span class="error"
+                      th:errors="${createAccountDTO.password}"></span>
+            </div>
+
+            <div class="form-group">
+
+                <label>Confirm Password : <input placeholder="Repeat Password" class="form-control" th:field="${createAccountDTO.verifyPassword}" type="password"/></label>
+
+                <span class="error"
+                      th:errors="${createAccountDTO.verifyPassword}"></span>
+            </div>
+
+            <div class="clearfix">
+                <button class="signupbtn" type="submit">Sign Up</button>
+                <a th:href="@{'/'}"><button class="cancelbtn" type="button">Cancel</button></a>
+            </div>
+        </form>
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+</html>

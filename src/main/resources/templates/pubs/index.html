@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+    <nav th:replace="fragments :: page-header"></nav>
+
+    <div class="container body-content mt-3">
+        <div class="mt-3">
+            <h2>View All Pubs</h2>
+            <p th:unless="${pubs} and ${pubs.size()}">no pubs!</p>
+            <ul>
+                <li th:each="pub : ${pubs}">
+                    <a class="h5 text-primary" th:href="@{'/pubs/view/' + ${pub.id}}" th:text="${pub.name}"></a>
+                </li>
+            </ul>
+            <a th:href="@{'/pubs/add'}"><button type="button">Add Pub</button></a>
+        </div>
+    </div>
+
+    <footer th:replace="fragments :: page-footer"></footer>
+
+</body>
+</html>
