@@ -21,35 +21,39 @@ public class BrewData {
 
         ArrayList<Brew> results = new ArrayList<>();
 
-        if (value.toLowerCase().equals("all")) {
-            return (ArrayList<Brew>) allBrews;
-        }
-
-        if (column.equals("all")) {
-            results = findByValue(value, allBrews);
-            return results;
-        }
-
-        for (Brew brew : allBrews) {
-
-            String aValue = getFieldValue(brew, column);
-
-            if (aValue != null && column.equals("abv")) {
-                try {
-                    double dAbv = Double.parseDouble(aValue);
-                    double dValue = Double.parseDouble(value);
-                    int intAbv = (int) dAbv;
-                    int intValue = (int) dValue;
-
-                    if (intAbv == intValue) {
-                        results.add(brew);
-                    }
-                } catch (Exception e) {
-
-                }
-            } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
-                results.add(brew);
+        try {
+            if (value.toLowerCase().equals("all")) {
+                return (ArrayList<Brew>) allBrews;
             }
+
+            if (column.equals("all")) {
+                results = findByValue(value, allBrews);
+                return results;
+            }
+
+            for (Brew brew : allBrews) {
+
+                String aValue = getFieldValue(brew, column);
+
+                if (aValue != null && column.equals("abv")) {
+                    try {
+                        double dAbv = Double.parseDouble(aValue);
+                        double dValue = Double.parseDouble(value);
+                        int intAbv = (int) dAbv;
+                        int intValue = (int) dValue;
+
+                        if (intAbv == intValue) {
+                            results.add(brew);
+                        }
+                    } catch (Exception e) {
+
+                    }
+                } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+                    results.add(brew);
+                }
+            }
+        } catch (Exception e) {
+
         }
         return results;
 
