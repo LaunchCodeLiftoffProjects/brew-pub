@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<nav th:replace="fragments :: page-header"></nav>
+
+<body>
+
+    <div class="container body-content mt-3">
+
+        <h1 th:text="${pub.name} + ' : Add Brew to Menu'">Add Brew to Menu</h1>
+
+        <form th:action="@{/pubs/brews/add/}" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label>Name : <input class="form-control" th:field="${brew.name}"/></label>
+                <span th:errors="${brew.name}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Style : <input class="form-control" placeholder="Optional..." th:field="${brew.style}"/></label>
+                <span th:errors="${brew.style}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label>IBU : <input class="form-control" placeholder="Optional..." th:field="${brew.ibu}"/></label>
+                <th:block th:if="${#fields.hasErrors('brew.ibu')}">
+                    <span class="error">
+                            IBU must be whole number between 0 and 3,000</span>
+                </th:block>
+            </div>
+
+            <div class="form-group">
+                <label>ABV : <input class="form-control" placeholder="Optional..." th:field="${brew.abv}"/></label>
+                <span th:errors="${brew.abv}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Brewer : <input class="form-control" placeholder="Optional..." th:field="${brew.brewer}"/></label>
+                <span th:errors="${brew.brewer}"
+                      class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Description : <textarea cols="60" class="form-control" placeholder="Optional..." th:field="${brew.description}"/></label>
+                <span th:errors="${brew.description}"
+                      class="error"></span>
+            </div>
+            <div class="form-group">
+                <label th:field="${brew.imagePath}">Add a Photo</label>
+                <input type="file"
+                       name="files"
+                       accept="image/*"
+                       class="form-control"/>
+
+            </div>
+
+            <div th:if="${message}">
+                <span th:text="${message}"></span>
+            </div>
+
+            <div hidden>
+                <label>pubId</label>
+                <input type="text" name="pubId" th:value="${pub.id}">
+            </div>
+
+            <input type="submit">
+            <a th:href="@{/pubs/view/{pubId}(pubId=${pub.id})}"><button type="button">Cancel</button></a>
+        </form>
+
+    </div>
+
+</body>
+</html>
