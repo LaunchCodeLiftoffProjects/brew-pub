@@ -51,6 +51,8 @@ public class PubData {
             theValue = pub.getCity().toString();
         } else if (fieldName.equals("state")){
             theValue = pub.getState().toString();
+        } else if (fieldName.equals("zip code")) {
+            theValue = pub.getAreaCode().toString();
         }
 
         return theValue;
@@ -77,6 +79,8 @@ public class PubData {
             } else if (pub.getCity().toString().toLowerCase().contains(lower_val)) {
                 results.add(pub);
             } else if (pub.getState().toString().toLowerCase().contains(lower_val)) {
+                results.add(pub);
+            } else if (pub.getAreaCode().toString().toLowerCase().contains(lower_val)) {
                 results.add(pub);
             }
 
