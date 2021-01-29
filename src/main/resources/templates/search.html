@@ -65,6 +65,12 @@
                        th:value="city"/>
                 <label th:text="City"></label>
 
+                <input type="radio"
+                       name="searchType"
+                       class="pub form-group"
+                       th:value="${'zip code'}"/>
+                <label th:text="${'Zip Code'}"></label>
+
                 <script>
                     document.getElementById("pub").addEventListener("click", function() {
                         <!--document.getElementById("searchState").style.opacity = 0;-->
