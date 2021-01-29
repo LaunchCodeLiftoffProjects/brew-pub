@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static org.launchcode.brewpub.controllers.ListController.columnChoices;
-import static org.launchcode.brewpub.controllers.ListController.puborbrewChoices;
+
 
 @Controller
 @RequestMapping("search")
@@ -29,7 +28,6 @@ public class SearchController {
 
     @RequestMapping("")
     public String search(Model model) {
-        model.addAttribute("columns", columnChoices);
         return "search";
     }
 
@@ -58,8 +56,7 @@ public class SearchController {
         if (searchState == null) {
             searchState = " ";
         }
-        model.addAttribute("columns", columnChoices);
-        model.addAttribute("title", "Results with " + puborbrewChoices.get(puborbrew) +" - " + columnChoices.get(searchType) + ": " + searchTerm + searchState);
+        model.addAttribute("title", "Results with " + puborbrew +" - " + searchType + ": " + searchTerm + searchState);
 
         if (puborbrew.toLowerCase().equals("pub")){
             model.addAttribute("pubs", pubs);
