@@ -53,15 +53,11 @@
 * Thymeleaf templates
 * Gradle
 * Bootstrap (HTML, CSS, JavaScript)
-* Spring Security
-* Google Maps API
-* Google/Facebook Login Integration			
+* Spring Security		
 	
 ### 4. What we'll learn
 * Trello/Kanban
 * Scrum
 * Spring Security
-* Google Maps API
-* Google/Facebook Login Integration
 
 ### 5. Project Tracker: https://trello.com/b/N9nEERW5/liftoff-2020
