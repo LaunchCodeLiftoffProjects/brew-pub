@@ -50,6 +50,10 @@ public class BrewData {
                 }
             } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
                 results.add(brew);
+            } else if (aValue != null && column.equals("ibu")) {
+                if (aValue.equals(value)) {
+                    results.add(brew);
+                }
             }
         }
 
