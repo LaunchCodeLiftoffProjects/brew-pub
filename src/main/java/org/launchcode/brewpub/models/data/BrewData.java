@@ -68,6 +68,8 @@ public class BrewData {
                 theValue = brew.getAbv().toBigInteger().toString();
             } else if (fieldName.equals("description")) {
                 theValue = brew.getDescription().toString();
+            } else if (fieldName.equals("ibu")) {
+                theValue = brew.getIbu().toString();
             }
         } catch (Exception e) {
             System.out.println("here 77");

@@ -18,7 +18,7 @@
                         th:onclick="disableBrew()"
                         th:value="pub"
                         th:checked="pub"/>
-                <label th:onclick="disableBrew()" th:for="puborbrew" th:text="Pub"></label>
+                <label th:onclick="disableBrew()" th:text="Pub"></label>
 
                 <input  class="form-group"
                         type="radio"
@@ -26,7 +26,7 @@
                         th:id="brew"
                         th:onclick="disablePub()"
                         th:value="brew"/>
-                <label th:onclick="disablePub()" th:for="puborbrew" th:text="Brew"></label>
+                <label th:onclick="disablePub()" th:text="Brew"></label>
 
                 <input  class="form-group"
                         type="radio"
@@ -34,7 +34,7 @@
                         th:onclick="enableBothOnly()"
                         th:id="both"
                         th:value="both"/>
-                <label th:for="puborbrew" th:text="Both"></label>
+                <label th:text="Both"></label>
             </div>
 
             <div>
@@ -45,25 +45,25 @@
                        th:value="all"
                        th:id="all"
                        th:checked="all"/>
-                <label th:for="all" th:text="All"></label>
+                <label th:text="All"></label>
 
                 <input type="radio"
                        name="searchType"
                        class="both form-group"
                        th:value="name"/>
-                <label th:for="name" th:text="Name"></label>
+                <label th:text="Name"></label>
 
                 <input type="radio"
                        name="searchType"
                        class="pub form-group"
                        th:value="address"/>
-                <label th:for="address" th:text="Address"></label>
+                <label th:text="Address"></label>
 
                 <input type="radio"
                        name="searchType"
                        class="pub form-group"
                        th:value="city"/>
-                <label th:for="city" th:text="City"></label>
+                <label th:text="City"></label>
 
                 <script>
                     document.getElementById("pub").addEventListener("click", function() {
@@ -92,7 +92,7 @@
                            class="pub form-group"
                            th:id="state"
                            th:value="state"/>
-                    <label th:for="state" th:text="State"></label>
+                    <label th:text="State"></label>
 
                     <select class="pub" name="searchState" id="searchState">
                         <option value="">Select State</option>
@@ -154,19 +154,25 @@
                        name="searchType"
                        class="brew form-group"
                        th:value="style"/>
-                <label th:for="style" th:text="Style"></label>
+                <label th:text="Style"></label>
 
                 <input type="radio"
                        name="searchType"
                        class="brew form-group"
                        th:value="abv"/>
-                <label th:for="abv" th:text="ABV"></label>
+                <label th:text="ABV"></label>
+
+                <input type="radio"
+                       name="searchType"
+                       class="brew form-group"
+                       th:value="ibu"/>
+                <label th:text="IBU"></label>
 
                 <input type="radio"
                        name="searchType"
                        class="brew form-group"
                        th:value="description"/>
-                <label th:for="description" th:text="Description"></label>
+                <label th:text="Description"></label>
             </div>
 
             <div>
