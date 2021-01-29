@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
 @Controller
 @RequestMapping("search")
 public class SearchController {
@@ -56,7 +55,7 @@ public class SearchController {
         if (searchState == null) {
             searchState = " ";
         }
-        model.addAttribute("title", "Results with " + puborbrew +" - " + searchType + ": " + searchTerm + searchState);
+        model.addAttribute("title", "Results with " + puborbrew + " - " + searchType + ": " + searchTerm + searchState);
 
         if (puborbrew.toLowerCase().equals("pub")){
             model.addAttribute("pubs", pubs);
