@@ -48,12 +48,13 @@ public class BrewData {
                     System.out.println("Here 49");
                     e.printStackTrace();
                 }
-            } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
-                results.add(brew);
             } else if (aValue != null && column.equals("ibu")) {
                 if (aValue.equals(value)) {
                     results.add(brew);
                 }
+            } else if (aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+                results.add(brew);
+
             }
         }
 
@@ -120,7 +121,7 @@ public class BrewData {
                     results.add(brew);
                 } else if (brew.getDescription().toString().toLowerCase().contains(lower_val)) {
                     results.add(brew);
-                } else if (brew.getIbu().toString().toLowerCase().contains(lower_val)) {
+                } else if (brew.getIbu().toString().toLowerCase().equals(lower_val)) {
                     results.add(brew);
                 } else if (brew.getBrewer().toString().toLowerCase().contains(lower_val)) {
                     results.add(brew);
