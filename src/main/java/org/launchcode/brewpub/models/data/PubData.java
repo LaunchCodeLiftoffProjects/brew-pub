@@ -34,7 +34,11 @@ public class PubData {
 
             String aValue = getFieldValue(pub, column);
 
-            if(aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
+            if (aValue != null && column.equals("zip code")) {
+                if (aValue.equals(value)) {
+                    results.add(pub);
+                }
+            } else if(aValue != null && aValue.toLowerCase().contains(value.toLowerCase())) {
                 results.add(pub);
             }
         }
@@ -51,6 +55,8 @@ public class PubData {
             theValue = pub.getCity().toString();
         } else if (fieldName.equals("state")){
             theValue = pub.getState().toString();
+        } else if (fieldName.equals("zip code")) {
+            theValue = pub.getAreaCode().toString();
         }
 
         return theValue;
@@ -77,6 +83,8 @@ public class PubData {
             } else if (pub.getCity().toString().toLowerCase().contains(lower_val)) {
                 results.add(pub);
             } else if (pub.getState().toString().toLowerCase().contains(lower_val)) {
+                results.add(pub);
+            } else if (pub.getAreaCode().toString().toLowerCase().equals(lower_val)) {
                 results.add(pub);
             }
 
